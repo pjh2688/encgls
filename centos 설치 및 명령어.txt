@@ -1,0 +1,287 @@
+#############################################
+작업 들어갈때 iwinv 의 방화벽 꺼야한다
+#############################################
+
+******************************************************
+* mobaxterm에서 복사(ctl + tab) 불여넣기(shift + ins)
+******************************************************
+* VI 단축키
+******************************************************
+* v : 비쥬얼모드(선택모드)
+* ^ : 문장 맨 앞 이동
+* $ : 문장 맨 뒤로 이동
+* y : 복사
+* c : 잘라내기
+* p : 붙여넣기
+* yy : 현재 줄 복사
+* dd : 현재 줄 잘라내기
+* u : 실행취소(Undo)
+* ctl + r : 재실행(Redo)
+* n 또는 N : 검색시 이전/다음
+******************************************************
+******************************************************
+* 리눅스 사용 권한
+* 현재사용자/그룹사용자/기타사용자 : 600
+* Read : 4, Write : 2, eXecute : 1
+******************************************************
+******************************************************
+* chown 사용자명 대상
+* chown :그룹 대상
+* chown 사용자명:그룹 대상
+******************************************************
+
+///////////////////////////////////////////////////////
+// 이건 적용 안했는데. 다음을 위해서 적어놓는다
+///////////////////////////////////////////////////////
+0. 박화벽 끄기(centos6에서는 iptable이였지만 centoos7으로 올라오면서 firewalld로 바뀌었다)
+	A. 영구설정
+		systemctl disable firewalld
+		systemctl disable iptables
+		systemctl disable ip6tables
+	B. 일시해제
+		systemctl stop firewalld
+		systemctl stop iptables
+		systemctl stop ip6tables
+	C. 방화벽관련 명령
+		systemctl disable firewalld
+		systemctl enable firewalld
+		systemctl stop firewalld
+		systemctl start firewalld
+	D. 방화벽 상태 확인
+		㉠ CentOS7
+			service firewalld status
+			systemctl status firewalld
+		㉡ CentOS6이하
+			service iptables status
+			systemctl status iptables
+		㉢ Ubuntu
+			service ufw status
+			systemctl status ufw
+	D. 방화벽에 추가 및 적용
+		㉠ firewall-cmd --permanent --zone=public --add-port=3306/tcp
+		㉡ firewall-cmd --reload
+	E. 방화벽 설정 파일은 아래와 같다
+		vi /etc/firewalld/zones/public.xml
+
+1. 관리자 패스워드 변경
+	* 루트 기본 패스워드를 변경
+	passwd
+	-> Encgls2020!
+2. 그룹 생성
+	* 관리그룹을 생성
+	groupadd enc
+
+3. 사용자 추가
+	* 사용자를 추가함과 동시에 해당 그룹을 추가
+	adduser -g enc -m encgls
+	
+	* 기본 패스워드 변경
+	passwd encgls
+	-> Encgls2020!
+	* 그룹에 잘못 넣었을 경우 그룹에서 삭제
+	gpasswd -d encgls grp_usr
+	* 새그룹에 추가
+	gpasswd -a smarpt enc
+
+4. locale 변경
+	1) 지원되는 환경 알아보자
+		# locale
+	2) 변경
+		# vi /etc/locale.conf
+		LANG=ko_KR.utf8
+	3) 다시로그인하면 적용됨
+
+5. Tab 누르면 글자 자동 완성
+	1) 설치
+		# yum install bash-completion
+
+6. JDK 설치
+	1) 다운로드
+		wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz"
+	2) 환경설정은 /etc/profile 에서 할 수 있다
+		tar xvzf jdk-8u131-linux-x64.tar.gz
+		export JAVA_HOME="/usr/local/devenv/jdk1.8.0_131"
+		PATH="$PATH:$JAVA_HOME/bin"
+		export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+	3) 변경사항 적용
+		source /etc/profile
+
+
+7. MariaDB 설치
+	1) 설치
+yum clean metadata
+yum clean all
+yum update
+
+sudo yum install libsystemd-devel
+에러난다. 그래서 아래처럼 설치했지
+yum install dnf
+dnf install systemd-devel
+
+
+		# vi /etc/yum.repos.d/MariaDB.repo
+# MariaDB 10.4 CentOS repository list - created 2020-01-19 02:20 UTC
+# http://downloads.mariadb.org/mariadb/repositories/
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.3/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+	3) 작성이 끝났으면 저장하고 나간다
+	yum update
+
+	4) 설치
+		sudo dnf install boost-program-options
+		sudo dnf install MariaDB-server MariaDB-client --disablerepo=AppStream 
+		// 구동
+		systemctl start mariadb
+
+		// 보안설정
+		mysql_secure_installation
+	5) 실행 명령어
+		systemctl stop mariadb
+		systemctl start mariadb
+		
+		*재시작
+		service mysql restart
+	6) 보안설정 방법 : $ mysql_secure_installation
+	6) ROOT 패스워드 변경(보안설정에서 다 이루어짐)
+		mysql -u root
+		use mysql
+		UPDATE user SET password=PASSWORD('itaITA03)%') WHERE user='root';
+		FLUSH PRIVILEGES;
+		*확인
+		select host, user, password FROM user;
+	7) DB 생성
+		- 데이터 베이스 생성
+		create database encgls;
+		show databases;
+		use encgls;
+
+		- 사용자 확인
+		select host, user, password from mysql.user;
+
+		- 계정 생성
+		create user 'encgls'@'%' identified by 'Encgls2020!';
+		* id : 사용자id, % : 접근ip (외부접속이라 %로 전부 허용), password : 사용자 비밀번호
+
+
+		- 계정에 database권한 주기
+		grant all privileges on encgls.* to 'encgls'@'%';
+		//grant all privileges on database_name.* to 'id'@'%';
+		* all : crud모든권한, database_name : 권한을 줄 데이터베이스 이름과 .table_name (모든 테이블이기때문에 * 처리)
+
+
+		- 권한을 설정 후 적용
+		flush privileges;
+
+		 - 권한 확인
+		show grants for 'encgls'@'%';
+
+		- 권한 삭제
+		revoke all on database_name.* from 'id'@'%';
+
+		- 계정삭제
+		drop user 'id'@'%';
+
+	8) 방화벽 추가 및 적용
+		㉠ firewall-cmd --permanent --zone=public --add-port=3306/tcp
+		㉡ firewall-cmd --reload
+
+8. SVN 설치
+	1) 설치확인
+		#svn
+		# rpm -qa | grep subversion
+	2) 설치
+		# yum -y install subversion
+	3) 환경설정
+		# mkdir -p /usr/local/solution/svn/repos
+		# cd /usr/local/solution/svn/repos
+		# svnadmin create --fs-type fsfs /usr/local/solution/svn/repos/solution
+		# svnadmin create --fs-type fsfs /usr/local/solution/svn/repos/tools
+		# svnadmin create --fs-type fsfs /usr/local/solution/svn/repos/test
+
+	4) 환경파일 수정
+		㉠ vi svnserve.conf
+			[general]
+			#익명 접근의 권한은 none 없음
+			anon-access = none 
+			#인증 접근의 권한은 write 읽기/쓰기
+			auth-access = write
+			#사용자 패스워드 저장 파일 위치
+			password-db = passwd
+			#프로젝트 명칭
+			realm = My_First_Repository
+			#인증 접근의 권한 설정 파일 위치
+			authz-db = authz
+		㉡ passwd 파일에 사용자와 패스워드 추가
+			[root@goddaehee conf]# vi passwd
+		
+		㉢ 혹시 (optional) 권한 없음 오류시에는
+			/svn/repos/conf/authz 파일 마지막에 아래와 같이 계정 권한을 추가한다.
+			[/]
+			test1 = rw
+			test2 = rw
+
+		㉣ /etc/sysconfig/svnserve 생성
+			[root@goddaehee ~]# vi /etc/sysconfig/svnserve
+			# OPTIONS is used to pass command-line arguments to svnserve.
+			#
+			# Specify the repository location in -r parameter:
+			OPTIONS="--threads --root /usr/local/solution/svn/repos"
+	5) 방화벽 추가 및 적용
+		㉠ firewall-cmd --permanent --zone=public --add-port=3690/tcp
+		㉡ firewall-cmd --reload
+	6) 실행
+		service svnserve start
+		service svnserve stop
+	7) 실행여부 확인
+		ps -ef | grep svnserve | grep -v grep
+	8) 재부팅시 자동시작 설정
+			[root@goddaehee conf]# chkconfig svnserve on
+	9) SeLinux 권한문제 해결
+		// 테스트를 목적으로일시정지
+		setenforce 0
+		// 사용가능
+		setenforce 1
+		// 환경 추가하여 영구 해결
+		chcon -R -t svnserve_content_t /usr/local/solution/svn/repos
+
+	10) trunk 같은걸 만들때 commit 에러가 발생하는데 SVN_EDITOR 나 EDITOR를 설정해주어야 한다. 
+		모든 사용자가 사용할 수 있도록 설정을 원한다면 /etc/profile 에 추가하고, 
+		개인이 사용할 경우 자신 홈 디렉토리의 .bash_profile 에 추가하면 된다. 
+		/////////////////////////////
+		SVN_EDITOR=/usr/bin/vim
+		export SVN_EDITOR
+		/////////////////////////////
+		설정 후, 바로 적용하기 위하여 source명령을 실행한다. 
+
+		source /etc/profile (모든 사용자 설정의 경우)
+		source ~/.bash_profile (개인 사용자 설정의 경우)
+
+	11) trunk, branches, tags 추가
+		[root@ /]# svn mkdir --parents svn://127.0.0.1/solution/branches —username=jxta
+		[root@ /]# svn mkdir --parents svn://127.0.0.1/solution/trunk —username=jxta
+		[root@ /]# svn mkdir --parents svn://127.0.0.1/solution/tags —username=jxta
+
+		명렁어를 치면 처음에 사용자 계정에 대한 비밀번호를 입력하라고 나올 것입니다. 그 패스워드는 passwd에 저장한 비밀번호를 쳐주시면 됩니다. 
+		그러고 나면 갑자기 vi창이 열릴 것인데 당황하지 말고 controll+x(exit)를 누르고 창을 벗어난 이후 c 를 한번 눌러주면 connect...어쩌고 하면서 trunk가 생성됩니다. 
+		참고로 webProject1 레포지토리에서 ls를 하여 폴더를 봐도 trunk 폴더는 보이지 않습니다. 하지만 이클립스 혹은 svn클라이언트에서 보시면 정상적으로 trunk,braches,tags가 생성되어 있을 것입니다
+		
+	12) ▶ 관련 용어
+		Repository : 프로젝트 파일 및 변경 정보가 저장되는 장소
+		Import : 빈 Repository에 맨 처음 파일들을 채우는 것
+		Export : 버전 관리 파일들을 뺀 순수 파일만 빼내는 것
+		Checkout : 저장소에서 최신 버전의 소스코드를 최초로 받아오는 것 / Repository에서 프로젝트 관련 파일들을 받아온다
+		Update : 로컬 저장소에 있는 파일들을 저장소의 최신 버전으로 받아 오기
+		Commit : 로컬 저장소의 변경된 내용을 서버로 전송 / Checkout한 파일의 수정사항을 갱신
+		Revert : 로컬 저장소의 내용을 이전 상태로 돌림
+		Add : 버전관리 대상으로 파일 등록
+		Trunk : 개발 소스를 commit 했을 때 개발 소스가 모이는 곳 / 프로젝트에서 가장 중심이 되는 디렉토리, 소스와 파일 포함
+		Branch : trunk에서 분리/복사한 소스로 버전별 배포판을 만들거나 trunk와 별도로 운영환경을 위한 안정화된 소스 관리 목적으로 사용
+		Tag : 특정 시점의 상태 보존 목적으로 사용 장기적으로 1.0, 1.1 등 버전 별로 소스 코드를 따로 저장, 특정 시점에서 프로젝트의 스냅샷을 찍어두는 것
+
+9. HTTP 포트 열기
+	1) 방화벽 추가 및 적용
+		㉠ firewall-cmd --permanent --zone=public --add-port=80/tcp
+		㉡ firewall-cmd --reload
