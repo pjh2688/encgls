@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>안뇽</title>
+	
+</head>
+<body>
+	<h1>MODELANDVIEW LIST GET DATA</h1>
+	<p>member_id : <span th:text="${list.get(0).getMember_id()}"></span></p><br/>
+	<p>member_name : <span th:text="${list.get(0).getMember_name()}"></span></p><br/>
+	<p>member_age : <span th:text="${list.get(0).getMember_age()}"></span></p><br/>
+	
+	<!-- 2-1. -->
+	<h1>MODELANDVIEW MAP GET DATA</h1>
+	<p>member_id : <span th:text="${map.member_id}"></span></p><br/>
+	<p>member_name : <span th:text="${map.member_name}"></span></p><br/>
+	<p>member_age : <span th:text="${map.member_age}"></span></p><br/> 
+	
+	<!-- 2-2. 
+	<p>member_id : <span th:text="${map.m.get(0).getMember_id()}"></span></p><br/>
+	<p>member_name : <span th:text="${map.m.get(0).getMember_name()}"></span></p><br/>
+	<p>member_age : <span th:text="${map.m.get(0).getMember_age()}"></span></p><br/>
+	-->
+
+</body>
+<script src="assets/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+	
+</script>
+</html>
