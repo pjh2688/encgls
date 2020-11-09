@@ -10,4 +10,5 @@ import com.ajax.dto.Member;
 public interface IMemberMapper {
 
 	List<Member> listMembers();
+	
 }

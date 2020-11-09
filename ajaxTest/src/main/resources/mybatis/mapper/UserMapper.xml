@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ajax.dao.IUserMapper">
+	<insert id="signUp">
+		insert into user(id, pw) value(#{id}, #{pw})
+	</insert>
+	
+	<select id="id_check" resultType="int" parameterType="String">
+		select count(userid) from user where userid = #{userid}
+	</select>
+	
+	<select id="ktIdCheck" resultType="int" parameterType="String">
+		select count(ktcloudid) from user where ktcloudid = #{ktcloudid}
+	</select>
+
+</mapper>

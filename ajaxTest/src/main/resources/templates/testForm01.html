@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<h1>1.Basic</h1>
+		<button onclick="ajaxTest();">test</button><br/><br/>
+	</div>
+	
+	
+</body>
+<script src="/assets/js/jquery-3.5.1.min.js"></script> <!-- 1. static 파일은 모두 절대경로 / 를 사용  -->
+<script src="/assets/js/jquery-serialize-object.js"></script> <!-- 7. 폼 객체를 json 객체로 변환해서 보낼려면 추가. -->
+<script type="text/javascript">
+function ajaxTest() {
+	
+	// 1-1. 기본
+	var json = {"id" : "아이디", "pw" : "1234"};
+
+	$.ajax({
+		url: "/test/ajax01",  // 1. 컨트롤러에 mapping되어진 url 주소를 적어준다.
+		type: "post",   // 2. get, post 중 전송방식을 선택한다.
+		data: JSON.stringify(json),  // 3. 서버로 보낼 데이터를 지칭한다. 여기서 stringify 메소드는 json 객체를 String 객체로 변환시켜 주고 반대로 parse 메소드는 string 객체를 json 객체로 변환시켜준다. JSON.stringify(json)
+		dataType : "json",  // 4. 서버에서 받을 데이터 형식을 지정한다. 만약 지정하지 않으면 MIME 타입을 참고하여 자동 파싱된다.여기서 "json"으로 설정하는 이유는 ajax랑 통신하는 컨트롤러에 등록된  매소드가 ajax에게 json방식으로 리턴해주기 때문이다.
+		contentType: "application/json",  // 5. contentType (default: 'application/x-www-form-urlencoded; charset=UTF-8' == String) Type: Boolean or String 해더의 Content-Type을 설정한다.
+		success: function(data) {  // 6. function(dataType, data) -> dataType : 함수의 응답 본문, data : 성공했다면 success로 항상 나타난다.  function(response)랑  똑같다.
+			alert("통신 성공");
+			console.log(data);
+			console.log(data.id);
+			console.log(data.pw);
+			
+		},
+		error: function() {
+			alert("error");
+		}
+	});
+}
+
+
+
+</script>
+</html>
