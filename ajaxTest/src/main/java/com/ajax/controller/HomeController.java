@@ -18,8 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ajax.dao.IMemberMapper;
 import com.ajax.dao.IUserMapper;
 import com.ajax.dto.Member;
-import com.ajax.dto.MemberDto;
 import com.ajax.dto.TestDto;
+import com.ajax.service.UserServiceImpl;
+
 
 @Controller
 public class HomeController {
@@ -29,6 +30,9 @@ public class HomeController {
 	
 	@Autowired
 	IUserMapper um;
+	
+	@Autowired  // @Autowired : new로 객체 생성을 안해도 자동으로 객체를 만들어주고 사용할 수 있게 만들어주는 어노테이션 , 이것을 의존성 주입(dependency Injection)이라고 한다.
+	UserServiceImpl us;
 
 	@RequestMapping("hello")
 	public String hello(Model model) {
@@ -148,60 +152,6 @@ public class HomeController {
 		
 		return result;
 	}
-	
-	// 5. ajax 테스트 get 3
-	@GetMapping("/test/join")
-	public String testAjax03() {
-		return "testForm03";
-	}
-	
-	// 6. ajax 테스트 post 3
-	@PostMapping("/test/join")
-	@ResponseBody
-	public Map<String, Object> testAjax03(@RequestBody MemberDto dto) { // ajax로 날라온 데이터가 여기에 저장됨
-		Map<String, Object> result = new HashMap<String, Object>();
-
-		// 7. 응답 데이터 세팅(ajax랑 주고 받음)
-		
-		return result;
-	}
-	
-	// 8. ajax 테스트 post 3 : id 중복 체크
-	@PostMapping("/test/id_check")
-	@ResponseBody
-	public Map<String, Object> id_check(@RequestBody String id) { // ajax로 날라온 데이터가 여기에 저장됨
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		int result = 0;
-		
-		result = um.id_check(id);
-		
-		// 9. 응답 데이터 세팅(ajax랑 주고 받음)
-		map.put("check", result);
-		map.put("value", id);
-		
-		return map;
-	}
-	
-	// 10. ajax 테스트 post 3 : id 중복 체크
-	@PostMapping("/test/ktcloudid_check")
-	@ResponseBody
-	public Map<String, Object> ktcloudid_check(@RequestBody String ktcloudid) { // ajax로 날라온 데이터가 여기에 저장됨
-			
-		Map<String, Object> map = new HashMap<String, Object>();
-			
-		int result = 0;
-
-		result = um.ktIdCheck(ktcloudid);
-			
-		// 11. 응답 데이터 세팅(ajax랑 주고 받음)
-		map.put("check", result);
-		map.put("value", ktcloudid);
-			
-		return map;
-	}
-	
 }
 
 /*
@@ -242,6 +192,17 @@ public class HomeController {
   	 jquery를 이용하면 더 적은 코딩량과 동일한 코딩방법으로 대부분의 브라우저에서 같은 동작을 할 수 있게 됩니다. 
   	 jquery ajax를 사용하면, HTTP Get방식과 HTTP Post방식 모두를 사용하여 원격 서버로부터 데이터를 요청할 수 있습니다. 
   	 Jquery는 Ajax처럼 JavaScript의 라이브러리 중 하나인데 자바스크립트를 좀 더 사용하기 쉽게 패키징화 시켜놓은 것입니다. 
+  	 
+   * 싱글톤(Singleton)이란?
+  -> 웹 서버는 구조적으로 서버에 접근하는 각 클라이언트들을 스레드의 개념으로 접근시키게 한다. 스프링을 사용하지 않고 웹 프로젝트를 만든다면
+           일반적인 구조에서는 만약 3명의 사용자가 서버에 접근한다고 가정해보면 사용자가 3명이나 3개의 객체를 생성하고 그에 따라 3개의 스레들을 또 따로 만든다.
+           사용자만큼 스레들을 생성하게 되고 그 객체의 메모리가 서버의 힙 메모리 공간에 저장되게 된다. 말 그대로 100명이 접근하면 100개 객체를 만들고 100개의 스레드를 할당한다는 말.
+    
+  -> 반면 스프링프레임워크에서 제공하는 방식은 일반적인 구조처럼 클라이언트 수에 맞춰 new를 해서 객체를 계속 만들어 주는 것이 아니라
+     xml 파일에 bean(db정보 같은 것)을 정의(등록)해놓고 각각의 스레드들이 해당 자원(bean)을 공유하면서 사용하게 하는 방식이다.
+           이렇게 하면 결과적으로 서버의 힙 공간에는 스레드마다 객체의 메모리가 계속 생성되는 것이 아니라
+           서버의 힙 공간에는 1개의 bean만  처음 프로젝트가 부팅될 때 생성되고 그 bean을 가지고 해당 스레드들이 공유하는 방식을 사용하게 된다.
+           보통 등록된 bean은 @Autowired 어노테이션으로 주입해서 사용한다.
 
  */
 
