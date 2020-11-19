@@ -1,0 +1,33 @@
+1. KPC[Korea Productivity Center, 한국생산성본부] : 산업의 생산성 향상을 목적으로 설립된 공공법인체. 
+
+2. I-TOP[IT-On Productivity contest]
+ -> 전국민의 IT를 통한 생산성 향상 붐을 사회적으로 조성하여 계층간 정보격차를 해소하고, 
+     나아가 국가생산성 향상에 일조하고자 매년 전국민을 대상으로 한국생산성본부가 실시하고 있는 사회공헌 사업입니다.
+
+3. ICT[Information and Communication Technologies] : 정보기술과 통신기술의 총칭.
+
+4. GTQ[Graphic Technology Qualification] : 포토샵 프로그램을 이용한 그래픽 기술 자격시험이다.
+
+5. CAD[Computer Aided Design]
+ -> 컴퓨터 지원설계의 약어. 컴퓨터에 기억되어 있는 설계정보를 그래픽 디스플레이 장치로 추출하여 화면을 보면서 설계하는 것. 
+
+6. ITQ[Information Technology Qualification, 정보기술자격]
+ -> 정보화시대의 기업, 기관, 단체 구성원들에 대한 정보기술능력 또는 정보기술 활용능력을 객관적으로 평가하여 
+     정보기술 관리 및 실무능력 수준을 지수화 및 등급화한 시험이다.
+
+7. GTQi[Graphic Technology Qualification illustration]
+
+8. ERP[Enterprise Resource Planning, 전사적자원관리] 정보 관리사 
+ -> 기업의 모든 업무가 통합적으로 이루어져 업무중복, 업무대기시간등의 비부가가치 활동을 제거하는 등 
+     전반적인 ERP시스템에 대한 이해 및 활용이 가능한 미래지향적인 인력양성을 위해 ERP정보관리사 자격시험.
+
+9. SMAT[Service Management Ability Test, 서비스경영자격시험] : SMAT란 한국생산성본부에서 시행하는 서비스경영자격시험을 말한다. 
+
+10. IEQ(Internert Ethics Qualification) : 인터넷을 통해서 할 수 있는 바람직한 윤리적 가능성과 그것을 실현하기 위해 갖추어야 하는 지식과 능력, 기술에 대한 시험.
+
+11. DSAC[Data Scientist Academy & Certificate] : 4차 산업혁명의 필요한 핵심 인재 양성을 위해 제공되는 데이터 사이언티스 양성 교육 인증형 자격 시험.
+
+12. 3D설계실무능력평가[DAT] : 3D CAD 응용프로그램의 기능적 측면과 기초 제도에 대한 전반적인 지식과 기술을 평가하는 실무 중심의 자격시험.
+
+13. 딥 러닝[Deep Learning]
+ -> 다층구조 형태의 신경망을 기반으로 하는 머신 러닝의 한 분야로, 다량의 데이터로부터 높은 수준의 추상화 모델을 구축하고자 하는 기법이다.
