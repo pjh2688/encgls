@@ -1,0 +1,10 @@
+<div class="paginate" th:with="start=${page.getStartPage()}, end=${page.getEndPage()}">
+	<!-- 왼쪽 화살표 -->
+	<a class="direction first" th:if="${!page.prev}" href="#">&laquo;</a>
+						
+	<!-- 페이징 -->
+	<a th:each="page : ${#numbers.sequence(start,end)}" th:text="${page}"></a>
+						
+	<!-- 오른쪽 화살표 -->
+	<a class="direction last" th:if="${page.next}" href="#">&raquo;</a>
+</div>
