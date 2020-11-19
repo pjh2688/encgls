@@ -1,0 +1,160 @@
+1. 파이프라인[pipeline]
+ -> 생산 라인 등과 같이 여러 공정별로 생산 라인이 나열되어 있고 동시에 공정별 프로세서가 가능하게 하는 것으로, 
+     시스템의 효율을 높이기 위해 명령문을 수행하면서 몇 가지의 특수한 작업들을 병렬 처리하도록 설계된 하드웨어 기법. 
+     이러한 파이프라인은 각 프로세스들을 저장한 파일 이름들 사이를 수직선으로 분리시키면 셀(cell)이 인식한다.
+     즉, 수직선 왼쪽 파일의 출력이 오른쪽 파일의 입력으로 연결된다.
+
+* COVID-19와 AI가 가져온 사회 및 산업 환경의 변화
+ - 스마트 기기
+ - 스트리밍 서비스
+ - 언택트 재택
+
+* COVID-19 시대의 기술
+=>비대면, 재택, 온라인
+
+=> 라스트 마일(Last Mile) : 물류에서는 상품이 최종적으로 고객에게 도달하는 것을 말한다.
+
+*인공지능의 핵심기술
+ - 신경망
+ - Deep Learning
+ 
+* 인공지능의 발전방향
+ - 딥러닝의 한계 극복
+ - 복합지능 기술
+
+* 딥러닝 모델을 믿을 수 있을까?
+ex)
+ - 자율주행
+ - 질병진단
+
+* Qubit
+
+ eXplainable AI(X-AI): 딥러닝 모델은 무엇을 보는가?
+ GAN을 활용한 고해상도 이미지 생성 기술과 생성된 이미지 검출 방법
+ Detecting COVID-19 from X-ray Images
+ 대규모 AI 연구를 위한 효과적인 GPU 데이터 센터 구축 전략
+ AI의 한국어 이해, 어디까지 왔나?(KorQuAD 1.0 성능개선 Know-how)
+ AI 학습 편하고 자유롭게, R&D Cloud for AI!
+ 하이브리드 학습 구조를 통한 스마트한 양자회로 만들기
+ Agile을 활용한 SaaS 상품개발 A to Z
+ Pretrained Language Model을 이용한 사용자 문의 시스템 적용 사례
+ POMO: 강화학습을 이용한 조합 최적화(NeurIPS 2020)
+
+*애자일
+
+* POMO: 강화학습을 이용한 조합 최적화(NeurIPS 2020)
+
+인공지능에 기반한 조합 최적화 기술에 대한 개요, 
+그리고 최근 NeurIPS 2020에 Accept된 삼성SDS 강화학습 연구 성과(POMO: Policy Optimization with Multiple Optima for Reinforcement Learning)를
+소개합니다.
+
+
+
+(1)eXplainable AI(X-AI): 딥러닝 모델은 무엇을 보는가?
+
+AI는 실생활의 다양한 분야에서 활용되고 있지만, 딥러닝 모델의 추론결과를 설명하는 것은 어려운 일입니다. 이는 딥러닝 모델이 사람이 이해할 수 없는 매우 복잡한 모델이기 때문입니다. 이를 해결하기 위한 것이 설명가능한 AI(eXplainable AI, X-AI) 입니다. 우리는 X-AI 알고리즘을 통해 모델의 추론 결과를 이해할 수 있으며 이를 통해 모델의 신뢰 여부를 결정할 수 있습니다. 이러한 일련의 과정은 모델의 성능 개선에도 큰 도움이 됩니다. 본 발표에서는 삼성SDS AI선행연구Lab에서 새롭게 개발한 X-AI 알고리즘을 소개합니다.
+
+#AI #eXplainableAI #X-AI #DeepLearning #Interpretability
+
+speaker photo	
+정형식 프로 | 삼성SDS AI선행연구Lab
+
+주 연구분야는 Deep learning, Computer vision, Model architecture 이며 현재는 설명가능한 AI를 이용하여 딥러닝 모델의 결과를 이해하는 알고리즘을 개발하고 있습니다
+
+(2) GAN을 활용한 고해상도 이미지 생성 기술과 생성된 이미지 검출 방법
+
+딥러닝 모델은 주어진 데이터 분포를 학습하는 능력이 있으며, 이를 활용하여 진짜처럼 보이는 이미지를 생성하는 연구가 활발히 이루어지고 있습니다. 최근에는 딥러닝이 이미지 생성 뿐만 아니라, 다양한 이미지 조작 작업에도 자주 이용되기 시작하였습니다. 본 발표에서는 고해상도 이미지 생성 및 조작 기술에 대해 소개합니다. 또한, 생성된 이미지는 활용사례에 따라 산업에 큰 도움을 줄 수도 있지만, 반대로 악용된다면 큰 문제를 야기할 수 있기 때문에 생성 이미지를 검출하는 방법도 함께 소개합니다.
+
+#GAN #Generative model #Deepfake
+
+	
+정용현 프로 | 삼성SDS AI Core Lab
+
+현재 AI 기반 이미지 기반 생성 모델 및 생성 모델 검출 기술을 연구하고 있으며, Computer Vision, Generative model, Game AI, Differential Privacy 연구를 진행해 왔습니다.
+
+	
+최주영 학생(석·박 과정) | 서울대학교 DSAIL Lab
+
+데이터 사이언스 및 인공지능 연구실에서 이미지 기반 생성 모델을 연구하고 있습니다.
+
+(3) 대규모 AI 연구를 위한 효과적인 GPU 데이터 센터 구축 전략
+
+최근 SOTA language model 연구에서 촉발된 AI 연구 트렌드 중의 하나는 대용량 인프라를 기반으로 하여 대규모 데이터와 모델을 학습 시켜 성과물을 만들어 내는 것입니다. 이는 대규모 자본과 기술력이 필요하게 되는데, 특히 large-scale model parallel과 data parallel 기법을 지원하기 위해서 GPU와 GPU 서버 및 데이터센터 전반적인 설계와 기술이 고집적 GPU 시스템을 구축하고 운영하는데 최적화 되어야 한다는 것을 의미합니다. 본 세션에서는 이러한 관점에서 NVIDIA가 추구하는 효과적인 GPU 데이터 센터 구축 전략과 이를 위해서 필요한 다양한 요소 기술, 그리고 미래 AI 서비스 구축을 위해서 요구되는 차세대 데이터센터 기술의 방향성에 대해서 소개하고자 합니다.
+
+#GPU #Datacenter #Supercomputer #AI #Storage #Network
+
+speaker photo	
+정소영 상무 | NVIDIA Solutions Architect team, Leader
+
+NVIDIA Korea Solutions Architect team에서 NVIDIA accelerated computing platform을 활용하여 AI, Data Analytics, Simulation, 5G, High-performance Infrastructure 등 다양한 고객들과의 협업 업무를 리드하고 있습니다. NVIDIA 합류 이전에는 HPE global server engineering 팀의 pursuit engineer로 근무하면서 server performance engineering, system software optimization 등을 수행하였고, 네이버에서 서버 성능 평가, virtualization 및 네이버 cloud 인프라 설계 및 orchestrator 개발 등의 업무를 수행하였습니다.
+
+(4) AI의 한국어 이해, 어디까지 왔나?(KorQuAD 1.0 성능개선 Know-how)
+
+최근 AI 분야의 가장 뜨거운 주제 중 하나인 자연어 처리 분야에서 한국어 관련 연구에 대해 알아봅니다. 또한, 대표적인 한국어 모델의 성능 평가를 위한 Downstream Task 중 하나인 KorQuAD 1.0에서 1위를 기록할 수 있었던 Know-how를 공유합니다.
+
+#NLP #KorQuAD #KoreALBERT
+
+speaker photo	
+이현제 프로 | 삼성SDS AI Core Lab
+
+삼성 SDS AI연구팀에서 스타크래프트를 활용한 강화학습 플랫폼 개발에 참여하였고, 최근에는 Transfer Learning을 활용한 텍스트 이해 및 생성에 관해 연구하고 있습니다.
+
+(5) AI 학습 편하고 자유롭게, R&D Cloud for AI!
+
+GPU를 활용하여 머신러닝 연구를 진행할 때, 연구팀의 규모와 상황에 따라 달라지는 환경 구성 및 각 환경별 특성에 대해 살펴 봅니다. 또한, 대규모 학습 환경을 효율적으로 제공하는 R&D Cloud for AI에 대해 소개하고 이를 구성하는 기술들에 대해 설명하고, 사내 연구소에서 AI 用 R&D Cloud 적용을 통해 개선된 환경과 향상된 자원 효율성 사례를 소개 합니다.
+
+#GPU #Cloud #R&D Cloud #AI #Kubeflow
+
+speaker photo	
+김종성 프로 | 삼성SDS 클라우드연구Lab
+
+초창기 OpenStack 기술을 연구하며 클라우드 전문가로 자리매김 하였고, AI를 위한 다양한 플랫폼 기술을 연구하였습니다. 현재는 머신러닝을 위한 클라우드 기술과 플랫폼에 대해 연구하고 있습니다.
+
+(6) 하이브리드 학습 구조를 통한 스마트한 양자회로 만들기
+
+최근 양자 컴퓨팅 분야에서는 이론 정립의 수준에서 벗어나 응용 가능한 결과를 보여주기 위한 시도가 계속되고 있습니다. 양자 회로 학습은 기계학습(Machine Learning) 기법을 통해 양자 회로가 현재의 NISQ 컴퓨터(규모가 작고 성능이 완벽하지 않은 양자 컴퓨터)에서도 우수한 성능을 보여주도록 최적화 하는 기술입니다. 본 연구에서는 양자 회로 학습의 기본 개념에 대한 소개와 이를 활용한 이미지 특성 추출 양자 회로에 대한 연구 내용을 공유합니다.
+
+#QuantumComputing, #QuantumMachineLearning #FeatureExtraction
+
+	
+정지원 프로 | 삼성SDS Quantum Lab
+
+양자 기계학습 개발 및 양자 컴퓨팅을 쉽게 접근하는 방법에 대해 고민중입니다.
+
+	
+김동하 연구원(석사과정) | KAIST AI양자컴퓨팅 ITRC
+
+양자 기계학습 개발 및 양자 컴퓨팅을 쉽게 접근하는 방법에 대해 고민중입니다.
+
+(7) Agile을 활용한 SaaS 상품개발 A to Z
+
+본 Session을 통해 협업 솔루션 Marimba라는 신규 SaaS 제품을 만들기 위해 시도한 전 과정을 공유합니다. 새로운 조직을 구성하고, 제품개발 프로세스를 적용하고, 사용자들을 만나며 현실에서 겪은 다양한 경험들을 공유합니다. 이를 통해 Agile이 단순한 프로세스나 틀이 아닌 삶의 일환으로 현실에 녹아들어 활용된 방식에 대해 이해할 수 있습니다.
+
+#Agile #SaaS #Marimba #Collaboration #Solution
+
+speaker photo	
+신황규 그룹장 | 삼성SDS Collaboration사업개발그룹
+
+현 Marimba 제품디렉터, “Agile을 통한 지속적인 개선”을 주도해온 삼성의 Chief trouble maker입니다. ’06년 삼성 최초로 프로젝트에서 Agile을 적용하고 9년 간 개발리더 또는 Agile 코치로 일하다 ’15년 120명 규모의 Agile Core Team이라는 Agile 전문코칭/개발조직을 구성하고 리더가 되었습니다. 현재는 또다른 도전을 위해 대기업 내에서 스타트업처럼 일하는 SaaS 협업툴 Marimba의 디렉터로 일하고 있습니다.
+
+(8) Pretrained Language Model을 이용한 사용자 문의 시스템 적용 사례
+
+딥러닝 기반의 자연어 처리(NLP) 기술을 활용하여 Enterprise Business Application에 적용한 사례를 공유합니다. 언어 모델을 학습시키는 기본적인 방법을 살펴보고, 그러한 방법으로 학습한 언어 모델을 어떻게 사용할 수 있는지 소개합니다. 또한 실제 사용자 문의(VoC) 시스템에 자연어 이해(NLU) 기술을 어떻게 사용했는지 알아보고 그 결과를 공유합니다.
+
+#NLP #딥러닝 #적용사례 #텍스트 분류 #유사문 검색 #Sentence Embedding
+
+speaker photo	
+최현진 프로 | 삼성SDS AI Core Lab
+
+학부 때 경영학을 전공했지만 삼성 SDS에서 Software Engineer로 일하고 있습니다. 웹/모바일 개발, 윈도우 프로그래밍을 거쳐 현재는 AI 연구센터에서 Computational Linguistics 연구를 하고 있습니다.
+
+(9) POMO: 강화학습을 이용한 조합 최적화(NeurIPS 2020)
+
+인공지능에 기반한 조합 최적화 기술에 대한 개요, 그리고 최근 NeurIPS 2020에 Accept된 삼성SDS 강화학습 연구 성과(POMO: Policy Optimization with Multiple Optima for Reinforcement Learning)를 소개합니다.
+
+#AI #Reinforcement Learning #Combinatorial Optimization #Operations Research #TSP #POMO #NeurIPS
+
+speaker photo	
+권영대 프로 | 삼성SDS AI Core Lab
+
+Stanford University 에서 물리학을 전공하고, 양자기술 (양자컴퓨팅) 연구를 하였습니다. 산업을 변화시키는 인공지능에 대한 관심으로, 최근에는 강화학습을 통한 최적화 AI 기술 연구와 적용에 집중하고 있습니다.
