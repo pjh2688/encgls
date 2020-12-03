@@ -1,0 +1,22 @@
+1. 역내포괄적경제동반자협정[RCEP, Regional Comprehensive Economic Partnership]
+ -> 동남아시아국가연합(ASEAN) 10개국과 한·중·일 3개국, 호주·뉴질랜드 등 15개국이 관세장벽 철폐를 목표로 진행하고 있는 일종의 자유무역협정(FTA)이다.
+
+2. OECD[Organization for Economic Cooperation and Development] : 경제발전과 세계무역 촉진을 위하여 발족한 국제기구.
+
+3. 국내총생산[Gross Domestic Product, GDP] : 국내에서 일정기간 내에 발생된 재화와 용역의 순가치를 생산면에서 포착한 총합계액.
+
+4. ETRI[Electronics and Telecommunications Research Institute] : 한국전자통신연구원.
+
+5. Gbps[giga bit per second] 
+ -> 초당 얼마나 많은 양의 정보를 보낼 수 있는지를 나타내는 단위다. 1Gbps는 1초에 대략 10억비트의 데이터를 보낼 수 있다는 뜻이다.
+
+6. 무선 백홀망[Wireless Backhaul Network] 
+ -> 무선 통신망에서 주변부 망과 기간(backbone) 망 사이의 링크로 음성 트래픽 위주로 서비스를 제공하는 경우에는
+     T1/E1 급의 무선 백홀망이 사용되었으나 멀티미디어 서비스를 제공하는 3G, 4G 등 이동 통신에서는
+     수백 Mbps 이상을 전송하는 밀리미터파(millimeter wave) 백홀 링크 사용이 늘어났다.
+
+7.  백홀[Backhaul] : 스마트폰 등 사용자의 인터넷 접속기기로부터 취합된 데이터를 백본(Backbone)망으로 연결하는 시스템을 일컫는다.
+
+8. 백본[backbone] : 자신에게 연결되어 있는 소형 회선들로부터 데이터를 모아 빠르게 전송할 수 있는 대규모 전송회선.
+
+
