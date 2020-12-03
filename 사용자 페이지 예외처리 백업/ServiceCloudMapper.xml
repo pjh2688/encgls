@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.enc.mapper.IServiceCloudMapper">
+	<select id="select_status" resultType="String">
+		select service_status from service_cont where userid = #{userid}
+	</select>
+	
+	<select id="select_cwl" resultType="com.enc.dto.CloudWmptLoc">
+		select * from cloud_wmpt_loc
+	</select>
+	
+	<select id="total_cnt" resultType="int">
+		select count(*) from cloud_wmpt_loc
+	</select>
+	
+	<select id="select_user" resultType="com.enc.dto.User">
+		select * from user where userid = #{userid}
+	</select>
+	
+	<update id="update_user">
+		update user set hphone = #{hphone}, email = #{email}, comp_name = #{comp_name}, ceonm = #{ceonm}, biznum = #{biznum}, comp_addr = #{comp_addr}, comp_fax = #{comp_fax} where userid = #{userid}
+	</update>
+	
+	<select id="select_IsEmail" resultType="int">
+		select count(*) from user where email = #{email}
+	</select>
+	
+	<select id="select_email" resultType="String">
+		select email from user where userid = #{userid}
+	</select>
+</mapper>
