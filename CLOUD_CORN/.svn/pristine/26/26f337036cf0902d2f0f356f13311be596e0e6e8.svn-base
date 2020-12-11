@@ -1,0 +1,76 @@
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container">
+
+      <div class="logo float-left">
+      <!-- Uncomment below if you prefer to use an image logo -->
+       <h1 class="text-light"><a href="/"><span>CORN</span></a></h1>
+        <a href="/"><img src="/images/corn-logo.png" alt="" class="img-fluid"></a>   
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li class=""><a href="/">Home</a></li>
+          <li th:classappend="${TPMENU == '01'} ? 'drop-down active': 'drop-down'"><a href="/front/01">제품소개</a>
+                <ul>
+                  <li th:classappend="${TPMENU == '01' && TPSUB == '01'} ? 'active': ''"><a href="/front/01/01">Corn</a></li>
+                </ul>
+          </li>
+          <li th:classappend="${TPMENU == '02'} ? 'drop-down active': 'drop-down'"><a href="/front/02/01">Services</a>
+                <ul>
+                  <li th:classappend="${TPMENU == '02' && TPSUB == '01'} ? 'active': ''"><a href="/front/02/01">서비스 이용절차</a></li>
+	              <li th:classappend="${TPMENU == '02' && TPSUB == '02'} ? 'active': ''"><a href="/front/02/02">클라우드(Saas) WMS 요금체계</a></li>
+                </ul>
+          </li>
+          <li th:classappend="${TPMENU == '03'} ? 'drop-down active': 'drop-down'"><a href="/front/03/01">고객지원</a>
+                <ul>
+                  <li th:classappend="${TPMENU == '03' && TPSUB == '01'} ? 'active': ''"><a href="/front/03/01">공지사항</a></li>
+                  <li th:classappend="${TPMENU == '03' && TPSUB == '02'} ? 'active': ''"><a href="/front/03/02">FAQ</a></li>
+                  <li th:classappend="${TPMENU == '03' && TPSUB == '03'} ? 'active': ''"><a href="/front/03/03">문의하기</a></li>
+                </ul>
+          </li>
+          <li th:classappend="${TPMENU == '04'} ? 'drop-down active': 'drop-down'" th:if="${T(com.enc.config.MemberSession).isLogged(#request) && !T(com.enc.config.MemberSession).isAdmin(#request)}"><a href="/front/04/01">My Page</a>
+                <ul>
+                  <li th:classappend="${TPMENU == '04' && TPSUB == '01'} ? 'active': ''"><a href="/front/04/01">대시보드</a></li>
+                  <li th:classappend="${TPMENU == '04' && TPSUB == '02'} ? 'active': ''"><a href="/front/04/02">서비스이용현황</a></li>
+                <!--   <li th:classappend="${TPMENU == '04' && TPSUB == '03'} ? 'active': ''"><a href="/front/04/03">서비스관리</a></li> --> 
+                  <li th:classappend="${TPMENU == '04' && TPSUB == '04'} ? 'active': ''"><a href="/front/04/04">공실정보</a></li>
+                  <li th:classappend="${TPMENU == '04' && TPSUB == '05'} ? 'active': ''"><a href="/front/04/05">정보수정</a></li>
+                  <li th:classappend="${TPMENU == '04' && TPSUB == '06'} ? 'active': ''"><a href="/front/04/06">서비스탈퇴</a></li>
+                </ul>
+          </li>
+          <li th:classappend="${TPMENU == '05'} ? 'drop-down active': 'drop-down'"><a href="/front/05/01">About Us</a>
+                <ul>
+                  <li th:classappend="${TPMENU == '05' && TPSUB == '01'} ? 'active': ''"><a href="/front/05/01">회사소개</a></li>
+                  <li th:classappend="${TPMENU == '05' && TPSUB == '02'} ? 'active': ''"><a href="/front/05/02">오시는길</a></li>
+                </ul>
+          </li>
+<!--          <li><a href="team.html">Team</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="drop-down"><a href="">Drop Down</a>
+            <ul>
+              <li><a href="#">Drop Down 1</a></li>
+              <li class="drop-down"><a href="front/about.html">About Us</a>
+                <ul>
+                  <li><a href="#">Deep Drop Down 1</a></li>
+                  <li><a href="#">Deep Drop Down 2</a></li>
+                  <li><a href="#">Deep Drop Down 3</a></li>
+                  <li><a href="#">Deep Drop Down 4</a></li>
+                  <li><a href="#">Deep Drop Down 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Drop Down 3</a></li>
+              <li><a href="#">Drop Down 4</a></li>
+              <li><a href="#">Drop Down 5</a></li>
+            </ul>
+          </li>
+-->
+          <li th:unless="${T(com.enc.config.MemberSession).isLogged(#request)}"><a href="/front/member/join">회원가입</a></li>
+          <li th:unless="${T(com.enc.config.MemberSession).isLogged(#request)}"><a href="/front/member/login">로그인</a></li>
+          <li th:if="${T(com.enc.config.MemberSession).isLogged(#request)}"><a href="/front/member/logout">로그아웃</a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+  

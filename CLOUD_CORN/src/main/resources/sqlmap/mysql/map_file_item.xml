@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enc.mapper.FileItemSQLMapper">
+	<insert id="insert" parameterType="JSON">
+		INSERT INTO FILE_ITEM (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(fileuid)">
+			FILEUID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_len)">
+			FILE_LEN, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			FILE_NAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_ext)">
+			FILE_EXT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbl_name)">
+			TBL_NAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbluid)">
+			TBLUID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			REGDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_fieldnum)">
+			FILE_FIELDNUM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			FILE_ORIGINAL_NAME, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(fileuid)">
+			#{fileuid, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_len)">
+			#{file_len, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			#{file_name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_ext)">
+			#{file_ext, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbl_name)">
+			#{tbl_name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbluid)">
+			#{tbluid, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			#{regdt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_fieldnum)">
+			#{file_fieldnum, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			#{file_original_name, jdbcType=VARCHAR}, 
+			</if>
+			
+		</trim>
+		)
+	</insert>
+	<select id="count" parameterType="JSON" resultType="java.lang.Integer">
+	SELECT
+		COUNT(*)
+	FROM FILE_ITEM
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(fileuid)">
+			AND FILEUID 				= #{fileuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_len)">
+			AND FILE_LEN 				= #{file_len} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_ext)">
+			AND FILE_EXT 				= #{file_ext} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbl_name)">
+			AND TBL_NAME 				= #{tbl_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbluid)">
+			AND TBLUID 				= #{tbluid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_fieldnum)">
+			AND FILE_FIELDNUM 				= #{file_fieldnum} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	</select>
+	<select id="select" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  FILEUID
+			, FILE_LEN
+			, FILE_NAME
+			, FILE_EXT
+			, TBL_NAME
+			, TBLUID
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, FILE_FIELDNUM
+			, FILE_ORIGINAL_NAME
+			
+	FROM FILE_ITEM
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(fileuid)">
+			AND FILEUID 				= #{fileuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_len)">
+			AND FILE_LEN 				= #{file_len} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_ext)">
+			AND FILE_EXT 				= #{file_ext} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbl_name)">
+			AND TBL_NAME 				= #{tbl_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbluid)">
+			AND TBLUID 				= #{tbluid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_fieldnum)">
+			AND FILE_FIELDNUM 				= #{file_fieldnum} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_dynamic" parameterType="JSON" resultType="JSON">
+	SELECT 
+        <foreach collection="fieldset" item="field" index="index" separator=",">
+            ${field}
+        </foreach>
+	FROM FILE_ITEM
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(fileuid)">
+			AND FILEUID 				= #{fileuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_len)">
+			AND FILE_LEN 				= #{file_len} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_ext)">
+			AND FILE_EXT 				= #{file_ext} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbl_name)">
+			AND TBL_NAME 				= #{tbl_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbluid)">
+			AND TBLUID 				= #{tbluid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_fieldnum)">
+			AND FILE_FIELDNUM 				= #{file_fieldnum} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_row" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  FILEUID
+			, FILE_LEN
+			, FILE_NAME
+			, FILE_EXT
+			, TBL_NAME
+			, TBLUID
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, FILE_FIELDNUM
+			, FILE_ORIGINAL_NAME
+			
+	FROM FILE_ITEM
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(fileuid)">
+			AND FILEUID 				= #{fileuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_len)">
+			AND FILE_LEN 				= #{file_len} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_ext)">
+			AND FILE_EXT 				= #{file_ext} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbl_name)">
+			AND TBL_NAME 				= #{tbl_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tbluid)">
+			AND TBLUID 				= #{tbluid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_fieldnum)">
+			AND FILE_FIELDNUM 				= #{file_fieldnum} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	LIMIT 1
+	</select>
+	<update id="update" parameterType="JSON">
+		UPDATE FILE_ITEM
+		<set>
+		<if test="_parameter.containsKey('file_len')">
+			FILE_LEN 				= #{file_len}, 
+		</if>
+		<if test="_parameter.containsKey('file_name')">
+			FILE_NAME 				= #{file_name}, 
+		</if>
+		<if test="_parameter.containsKey('file_ext')">
+			FILE_EXT 				= #{file_ext}, 
+		</if>
+		<if test="_parameter.containsKey('regdt')">
+			REGDT 				= #{regdt}, 
+		</if>
+		<if test="_parameter.containsKey('file_fieldnum')">
+			FILE_FIELDNUM 				= #{file_fieldnum}, 
+		</if>
+		<if test="_parameter.containsKey('file_original_name')">
+			FILE_ORIGINAL_NAME 				= #{file_original_name}, 
+		</if>
+		
+		</set>
+		WHERE FILEUID 		= #{fileuid} AND TBLUID 		= #{tbluid} AND TBL_NAME 		= #{tbl_name}
+	</update>
+	<delete id="delete" parameterType="JSON">
+		DELETE FROM FILE_ITEM
+		WHERE FILEUID 		= #{fileuid} AND TBLUID 		= #{tbluid} AND TBL_NAME 		= #{tbl_name}
+	</delete>
+</mapper>

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enc.mapper.CloudWmptLocSQLMapper">
+	<insert id="insert" parameterType="JSON">
+		INSERT INTO CLOUD_WMPT_LOC (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dct_cd)">
+			DCT_CD, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_cbm)">
+			TOT_LOC_CBM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_count)">
+			TOT_LOC_COUNT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_cbm)">
+			USE_LOC_CBM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_count)">
+			USE_LOC_COUNT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_cbm)">
+			NOT_USE_LOC_CBM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_count)">
+			NOT_USE_LOC_COUNT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_user)">
+			REG_USER, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_user)">
+			UPT_USER, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_date)">
+			REG_DATE, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_date)">
+			UPT_DATE, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			USERID, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dct_cd)">
+			#{dct_cd, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_cbm)">
+			#{tot_loc_cbm, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_count)">
+			#{tot_loc_count, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_cbm)">
+			#{use_loc_cbm, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_count)">
+			#{use_loc_count, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_cbm)">
+			#{not_use_loc_cbm, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_count)">
+			#{not_use_loc_count, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_user)">
+			#{reg_user, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_user)">
+			#{upt_user, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_date)">
+			#{reg_date, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_date)">
+			#{upt_date, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			#{userid, jdbcType=VARCHAR}, 
+			</if>
+			
+		</trim>
+		)
+	</insert>
+	<select id="count" parameterType="JSON" resultType="java.lang.Integer">
+	SELECT
+		COUNT(*)
+	FROM CLOUD_WMPT_LOC
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dct_cd)">
+			AND DCT_CD 				= #{dct_cd} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_cbm)">
+			AND TOT_LOC_CBM 				= #{tot_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_count)">
+			AND TOT_LOC_COUNT 				= #{tot_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_cbm)">
+			AND USE_LOC_CBM 				= #{use_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_count)">
+			AND USE_LOC_COUNT 				= #{use_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_cbm)">
+			AND NOT_USE_LOC_CBM 				= #{not_use_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_count)">
+			AND NOT_USE_LOC_COUNT 				= #{not_use_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_user)">
+			AND REG_USER 				= #{reg_user} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_user)">
+			AND UPT_USER 				= #{upt_user} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_date)">
+			AND REG_DATE 				= #{reg_date} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_date)">
+			AND UPT_DATE 				= #{upt_date} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		
+	</where>
+	</select>
+	<select id="select" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  DCT_CD
+			, TOT_LOC_CBM
+			, TOT_LOC_COUNT
+			, USE_LOC_CBM
+			, USE_LOC_COUNT
+			, NOT_USE_LOC_CBM
+			, NOT_USE_LOC_COUNT
+			, REG_USER
+			, UPT_USER
+			, DATE_FORMAT(REG_DATE, '%Y-%m-%d %H:%i:%s') AS REG_DATE
+			, DATE_FORMAT(UPT_DATE, '%Y-%m-%d %H:%i:%s') AS UPT_DATE
+			, USERID
+			
+	FROM CLOUD_WMPT_LOC
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dct_cd)">
+			AND DCT_CD 				= #{dct_cd} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_cbm)">
+			AND TOT_LOC_CBM 				= #{tot_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_count)">
+			AND TOT_LOC_COUNT 				= #{tot_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_cbm)">
+			AND USE_LOC_CBM 				= #{use_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_count)">
+			AND USE_LOC_COUNT 				= #{use_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_cbm)">
+			AND NOT_USE_LOC_CBM 				= #{not_use_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_count)">
+			AND NOT_USE_LOC_COUNT 				= #{not_use_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_user)">
+			AND REG_USER 				= #{reg_user} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_user)">
+			AND UPT_USER 				= #{upt_user} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_date)">
+			AND REG_DATE 				= #{reg_date} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_date)">
+			AND UPT_DATE 				= #{upt_date} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_dynamic" parameterType="JSON" resultType="JSON">
+	SELECT 
+        <foreach collection="fieldset" item="field" index="index" separator=",">
+            ${field}
+        </foreach>
+	FROM CLOUD_WMPT_LOC
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dct_cd)">
+			AND DCT_CD 				= #{dct_cd} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_cbm)">
+			AND TOT_LOC_CBM 				= #{tot_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_count)">
+			AND TOT_LOC_COUNT 				= #{tot_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_cbm)">
+			AND USE_LOC_CBM 				= #{use_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_count)">
+			AND USE_LOC_COUNT 				= #{use_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_cbm)">
+			AND NOT_USE_LOC_CBM 				= #{not_use_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_count)">
+			AND NOT_USE_LOC_COUNT 				= #{not_use_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_user)">
+			AND REG_USER 				= #{reg_user} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_user)">
+			AND UPT_USER 				= #{upt_user} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_date)">
+			AND REG_DATE 				= #{reg_date} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_date)">
+			AND UPT_DATE 				= #{upt_date} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_row" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  DCT_CD
+			, TOT_LOC_CBM
+			, TOT_LOC_COUNT
+			, USE_LOC_CBM
+			, USE_LOC_COUNT
+			, NOT_USE_LOC_CBM
+			, NOT_USE_LOC_COUNT
+			, REG_USER
+			, UPT_USER
+			, DATE_FORMAT(REG_DATE, '%Y-%m-%d %H:%i:%s') AS REG_DATE
+			, DATE_FORMAT(UPT_DATE, '%Y-%m-%d %H:%i:%s') AS UPT_DATE
+			, USERID
+			
+	FROM CLOUD_WMPT_LOC
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dct_cd)">
+			AND DCT_CD 				= #{dct_cd} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_cbm)">
+			AND TOT_LOC_CBM 				= #{tot_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tot_loc_count)">
+			AND TOT_LOC_COUNT 				= #{tot_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_cbm)">
+			AND USE_LOC_CBM 				= #{use_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(use_loc_count)">
+			AND USE_LOC_COUNT 				= #{use_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_cbm)">
+			AND NOT_USE_LOC_CBM 				= #{not_use_loc_cbm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(not_use_loc_count)">
+			AND NOT_USE_LOC_COUNT 				= #{not_use_loc_count} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_user)">
+			AND REG_USER 				= #{reg_user} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_user)">
+			AND UPT_USER 				= #{upt_user} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(reg_date)">
+			AND REG_DATE 				= #{reg_date} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(upt_date)">
+			AND UPT_DATE 				= #{upt_date} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	LIMIT 1
+	</select>
+	<update id="update" parameterType="JSON">
+		UPDATE CLOUD_WMPT_LOC
+		<set>
+		<if test="_parameter.containsKey('tot_loc_cbm')">
+			TOT_LOC_CBM 				= #{tot_loc_cbm}, 
+		</if>
+		<if test="_parameter.containsKey('tot_loc_count')">
+			TOT_LOC_COUNT 				= #{tot_loc_count}, 
+		</if>
+		<if test="_parameter.containsKey('use_loc_cbm')">
+			USE_LOC_CBM 				= #{use_loc_cbm}, 
+		</if>
+		<if test="_parameter.containsKey('use_loc_count')">
+			USE_LOC_COUNT 				= #{use_loc_count}, 
+		</if>
+		<if test="_parameter.containsKey('not_use_loc_cbm')">
+			NOT_USE_LOC_CBM 				= #{not_use_loc_cbm}, 
+		</if>
+		<if test="_parameter.containsKey('not_use_loc_count')">
+			NOT_USE_LOC_COUNT 				= #{not_use_loc_count}, 
+		</if>
+		<if test="_parameter.containsKey('reg_user')">
+			REG_USER 				= #{reg_user}, 
+		</if>
+		<if test="_parameter.containsKey('upt_user')">
+			UPT_USER 				= #{upt_user}, 
+		</if>
+		<if test="_parameter.containsKey('reg_date')">
+			REG_DATE 				= #{reg_date}, 
+		</if>
+		<if test="_parameter.containsKey('upt_date')">
+			UPT_DATE 				= #{upt_date}, 
+		</if>
+		
+		</set>
+		WHERE DCT_CD 		= #{dct_cd} AND USERID 		= #{userid}
+	</update>
+	<delete id="delete" parameterType="JSON">
+		DELETE FROM CLOUD_WMPT_LOC
+		WHERE DCT_CD 		= #{dct_cd} AND USERID 		= #{userid}
+	</delete>
+</mapper>

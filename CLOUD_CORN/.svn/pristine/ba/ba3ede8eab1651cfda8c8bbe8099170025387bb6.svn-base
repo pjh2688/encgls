@@ -1,0 +1,10 @@
+package com.enc.mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.enc.dto.BoardQna;
+
+@Mapper
+public interface IBbsQnaMapper {
+	int insertQna(BoardQna qna);
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='04', TPSUB='01'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>클라우드 : CORN</title>
+  <th:block th:include="/front/inc_head"></th:block>
+</head>
+<body>
+<th:block th:include="/front/inc_topmenu"></th:block>
+
+<!-- Start #main -->
+<div id="main">
+	
+    <section class="breadcrumbs">
+        <h2>대시보드</h2>
+    </section>
+    
+	<section class="blog" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+    	<div class="container">
+        	<div class="row">
+            	<div class="col-lg-12 entries">
+            		<div class="real-cont" style="padding-top: 3%; padding-bottom: 23%;">
+            			<table class="table table-hover" id="tbl_list">
+                    		<thead class="thead-light">
+                     			<tr>
+                            		<th scope="col" style="width: 8%;">번호</th>
+                                	<th scope="col">업체VM</th>
+                                	<th scope="col" style="width: 15%;">CPU사용량</th>
+                                	<th scope="col" style="width: 15%;">메모리사용량</th>
+                                	<th scope="col" style="width: 15%;">디스크R</th>
+                                	<th scope="col" style="width: 15%;">네트웍IN</th>
+                                	<th scope="col" style="width: 15%;">네트웍OUT</th>
+                            	</tr>
+                        	</thead>
+                        	<tbody>
+                        		<tr style="visibility: hidden; display: none;">
+                            		<td>&nbsp;</td>
+                                	<td>&nbsp;</td>
+                                	<td>&nbsp;</td>
+                                	<td>&nbsp;</td>
+                                	<td>&nbsp;</td>
+                                	<td>&nbsp;</td>
+                                	<td>&nbsp;</td>
+                            	</tr>
+                            	<tr>
+                            		<td colspan="7" height="35" align="center">데이터가 존재하지 않습니다.</td>
+                            	</tr>
+                        	</tbody>
+						</table>
+                     
+                    	<!--pagination start-->
+	                	<div class="blog-pagination">
+	                		<ul class="justify-content-center" id="page">
+	                    	</ul>
+	                	</div>
+                 		<!--pagination end-->
+                 	</div>	
+            	</div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- End #main -->
+
+<th:block th:include="/front/inc_footer"></th:block>
+</body>
+
+<!-- 타임리프 방식으로 서버단에서 보낸 데이터를 javascript에서 사용하는 방식 -->
+<script th:inline="javascript">
+	
+	$(document).ready(function() {
+		var service_status = [[${service_status}]];
+		
+		$.ajax({
+			data : service_status,  // 서버로 보낼 데이터
+			url : "/front/04/01",  // 서버쪽 컨트롤러에 매핑될 url
+			type : "post",  // 데이터를 전송하는 방법을 지정한다. get, post를 사용할 수 있다.
+			dataType : "json",  // 서버 쪽에서 전송한 데이터를 어떤 형식의 데이터로 해석할 것인가를 지정한다. 값으로 올 수 있는 것은 xml, json, script, html이다.
+			contentType : "application/json; charset=UTF-8",
+			success : function(data) {
+				/*
+					1. JSON.parse : json 포맷 데이터를 json 객체로 변환.
+					2. JSON.stringify : json 객체를 json 포맷 데이터로 변환.
+				*/
+				if(data.service_status == 'A') {
+					alert("서비스 신청 및 VM 자동 생성중인 회원입니다.");
+					return;
+				}
+				if(data.service_status == 'C') {
+					alert("서비스 신청이 완료된 회원이니 대쉬보드가 표시된다.");
+					return;
+				}
+				
+				if(data.service_status == 'D') {
+					alert("서비스 계약 종료된 회원이며 계약 완료일을 보여줘야한다.");
+					return;
+				} 
+				
+				if(data.service_status == 'E') {
+					alert("서비스 생성중 에러가 발생한 회원입니다.");
+					return;
+				}
+				
+				if(data.service_status == 'N') {
+					alert("서비스가 없는 회원입니다. 신청부터 하고 오세요.");
+					return;
+				}
+				
+			},
+			error: function() {
+				alert("error");
+			}
+		});
+	});
+
+</script>
+
+</html>

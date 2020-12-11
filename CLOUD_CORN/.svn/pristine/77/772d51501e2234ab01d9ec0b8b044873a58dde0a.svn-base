@@ -1,0 +1,404 @@
+package com.enc.business.front;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.enc.aop.AdminLoginAspect;
+import com.enc.business.admin.ADM02Controller;
+import com.enc.config.SolutionConfig;
+import com.enc.dto.BoardQna;
+import com.enc.dto.PageMaker;
+import com.typhoon.framework.HttpServletResponseUtil;
+import com.typhoon.framework.file.FileDownloader;
+import com.typhoon.framework.json.JSONResMessage;
+import com.typhoon.framework.json.JSONUtil;
+
+@Controller
+@RequestMapping({"/front/03"})
+public class BIZ03Controller {
+	private final org.slf4j.Logger LOGGER 			= org.slf4j.LoggerFactory.getLogger("TYPHOON_LOG");
+	
+	public static String FILE_SUB_DIR_BBS 			= ADM02Controller.FILE_SUB_DIR_BBS;
+	
+	public static String FILE_SUB_DIR_FAQ 			= ADM02Controller.FILE_SUB_DIR_FAQ;
+	
+	public static String FILE_SUB_DIR_QNA 			= ADM02Controller.FILE_SUB_DIR_QNA;
+	
+	
+	@Autowired
+    private SolutionConfig solutionConfig;
+	
+	@Autowired
+	private BIZ03Service bIZ03Service;
+	
+	
+    
+    
+	@PostMapping("/01AL")
+	public @ResponseBody JSON adm_01AL(HttpServletRequest request, @RequestBody JSONObject paramJson) throws Exception {
+		JSONResMessage resJson 		= null;
+		try {
+			resJson 				= this.bIZ03Service.adm_01AL(paramJson);
+		} catch(Exception e) {
+			LOGGER.error("adm_01AL", e);
+			resJson 				= new JSONResMessage(JSONResMessage.FAIL, "요청작업 처리중 오류가 발생했습니다");
+		}
+		
+		return resJson.getResponseMessage();
+	}
+	
+	@PostMapping("/01PA")
+	public ModelAndView adm_01PA(HttpServletRequest request, @RequestBody JSONObject paramJson) throws Exception {
+		ModelAndView mv 			= new ModelAndView("/front/03/01PA");
+		JSONObject bean 			= null;
+		try {
+			bean 					= this.bIZ03Service.adm_01PA(paramJson, (request.getHeader("X-FORWARDED-FOR") != null)? request.getHeader("X-FORWARDED-FOR") : request.getRemoteAddr());
+			mv.addObject("bean", bean);
+		} catch(Exception e) {
+			LOGGER.error("adm_01PA", e);
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("/01FD")
+	@AdminLoginAspect
+	public void dn_01FD(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		JSONObject paramJson 	= JSONUtil.makeJSONObjectFromRequest(request);
+		
+		String downloadName 	= paramJson.getString("original");
+		String webFilePath 		= paramJson.getString("filepath");
+		String realDirPath 		= solutionConfig.getUploaddir(); //request.getSession().getServletContext().getRealPath("/");
+		//System.out.println("realFilePath:" + realDirPath);
+		File dir 				= new File(realDirPath, FILE_SUB_DIR_BBS);
+		File file 				= new File(dir, webFilePath);
+		//System.out.println("file:" + file.getAbsolutePath());
+		try {
+			FileDownloader.download(request, response, file, downloadName);
+		} catch(FileNotFoundException e) {
+			HttpServletResponseUtil.writeLayerAlertMessage(response, "요청하신 파일은 존재하지않습니다");
+		} catch(Exception e) {
+			HttpServletResponseUtil.writeLayerAlertMessage(response, "전송중 기타 오류 발생");
+		}
+	}
+	
+	
+	/**
+     * 공지사항
+     * 
+     * @return
+     */
+    @GetMapping({"", "/", "/index", "/01"})
+	public ModelAndView biz03_01(HttpServletRequest request) {
+    	HttpSession session = request.getSession(true);
+    	
+    	String userid = (String)session.getAttribute("MEMBER_USERID");
+    	
+    	if(session.getAttribute("MEMBER_USERID") == null) {
+    		System.out.println("비회원입니다.");
+    	} else {
+    		System.out.println("회원입니다. " + userid);
+    		
+    	}
+    	
+    	PageMaker pageMaker = new PageMaker();
+    	
+    	String page = request.getParameter("page");
+		
+		int contentNum = 10;
+		
+		if(page == null) {
+			page = "1";
+		}
+		
+		int cpage = Integer.parseInt(page);  // 현재 페이지 번호를 int로 변환.
+		
+		pageMaker.setTotalCount(bIZ03Service.countNoticeService());  // 전체 게시글 수 지정
+		pageMaker.setPageNum(cpage);  // 현재 페이지로 설정
+		pageMaker.setContentNum(contentNum);  // 한 페이지당 보여줄 게시글 수 지정.
+		pageMaker.setCurrentBlock(cpage);  // 현재 페이지 번호로 페이지 블록의 번호를 지정한다. (endPae 계산을 위해 필요)
+		pageMaker.setLastBlock(pageMaker.getTotalCount());  // 전체 게시글 수로 마지막 페이지 블록의 번호를 지정한다.
+		pageMaker.setStartPage(pageMaker.getCurrentBlock());  // 현재 페이지 블록의 번호르 시작페이지 번호를 구해온다.
+		pageMaker.setEndPage(pageMaker.getCurrentBlock(), pageMaker.getLastBlock());  // 현재 페이지 블록번호와 마지막 블록의 번호로 현제 페이지 블록의 끝 페이지 번호를 구해온다.
+		pageMaker.prevnext(cpage);  // 현재 페이지 번호로 화살표를 나타낼지 구해온다.
+    	
+    	ModelAndView mv = new ModelAndView("/front/03/01");
+    	
+    	System.out.println("전체 게시글 수 : " + pageMaker.getTotalCount());
+	    System.out.println("현재 페이지 번호 : " + pageMaker.getPageNum());
+	    System.out.println("한 페이지 당 보여줄 게시글 수 : " + pageMaker.getContentNum());
+	    System.out.println("현재 페이지 블록 번호 : " + pageMaker.getCurrentBlock());
+	    System.out.println("마지막 페이지의 블록 번호 : " + pageMaker.getLastBlock());
+	    System.out.println("현재 페이지 블록의 시작 페이지 번호 : " + pageMaker.getStartPage());
+	    System.out.println("현재 페이지 블록의 마지막 페이지 번호 : " + pageMaker.getEndPage());
+	    System.out.println("한 블록 당 페이지 수 : " + pageMaker.getPageCount());
+	    System.out.println("prev : " + pageMaker.isPrev());
+	    System.out.println("next : " + pageMaker.isNext());
+    	
+	    mv.addObject("list", bIZ03Service.selectNoticeService(pageMaker));
+	    mv.addObject("page", pageMaker);
+    	
+		return mv;
+	}
+    
+    /**
+     * 공지사항 상세 보기
+     * 
+     * @return
+     */
+    @GetMapping("/01/contentView")
+    public ModelAndView biz01_contentView(HttpServletRequest request) {
+    	String bbs_noticeuid = request.getParameter("bbs_noticeuid");
+    	
+    	System.out.println(bbs_noticeuid);
+    	
+    	ModelAndView mv = new ModelAndView("/front/01/contentView");
+    	
+    	return mv;
+    }
+		
+    
+    /**
+     * FAQ 목록
+     * 
+     * @return
+     */
+    @GetMapping({"/02"})
+	public ModelAndView biz_02(HttpServletRequest request) throws Exception {
+    	ModelAndView mv = new ModelAndView("/front/03/02");
+    	mv.addObject("list", this.bIZ03Service.biz_02(new JSONObject()));
+    	
+		return mv;
+	}
+    
+    /**
+     * 문의하기
+     * 
+     * @return
+     */
+    @GetMapping("/03")
+	public ModelAndView biz_03(HttpServletRequest request) {
+    	HttpSession session = request.getSession(true);
+    	
+    	String userid = (String)session.getAttribute("MEMBER_USERID");
+    	
+    	if(session.getAttribute("MEMBER_USERID") == null) {
+    		System.out.println("비회원입니다.");
+    	} else {
+    		System.out.println("회원입니다. " + userid);
+    		
+    	}
+    	
+    	PageMaker pageMaker = new PageMaker();
+    	
+    	String page = request.getParameter("page");
+		
+		int contentNum = 10;
+		
+		if(page == null) {
+			
+			page = "1";
+			
+		}
+		
+		int cpage = Integer.parseInt(page);  // 현재 페이지 번호를 int로 변환.
+		
+		pageMaker.setTotalCount(bIZ03Service.countQnaService());  // 전체 게시글 수 지정
+		pageMaker.setPageNum(cpage);  // 현재 페이지로 설정
+		pageMaker.setContentNum(contentNum);  // 한 페이지당 보여줄 게시글 수 지정.
+		pageMaker.setCurrentBlock(cpage);  // 현재 페이지 번호로 페이지 블록의 번호를 지정한다. (endPae 계산을 위해 필요)
+		pageMaker.setLastBlock(pageMaker.getTotalCount());  // 전체 게시글 수로 마지막 페이지 블록의 번호를 지정한다.
+		pageMaker.setStartPage(pageMaker.getCurrentBlock());  // 현재 페이지 블록의 번호르 시작페이지 번호를 구해온다.
+		pageMaker.setEndPage(pageMaker.getCurrentBlock(), pageMaker.getLastBlock());  // 현재 페이지 블록번호와 마지막 블록의 번호로 현제 페이지 블록의 끝 페이지 번호를 구해온다.
+		pageMaker.prevnext(cpage);  // 현재 페이지 번호로 화살표를 나타낼지 구해온다.
+    	
+    	ModelAndView mv = new ModelAndView("/front/03/03");
+    	
+    	System.out.println("전체 게시글 수 : " + pageMaker.getTotalCount());
+	    System.out.println("현재 페이지 번호 : " + pageMaker.getPageNum());
+	    System.out.println("한 페이지 당 보여줄 게시글 수 : " + pageMaker.getContentNum());
+	    System.out.println("현재 페이지 블록 번호 : " + pageMaker.getCurrentBlock());
+	    System.out.println("마지막 페이지의 블록 번호 : " + pageMaker.getLastBlock());
+	    System.out.println("현재 페이지 블록의 시작 페이지 번호 : " + pageMaker.getStartPage());
+	    System.out.println("현재 페이지 블록의 마지막 페이지 번호 : " + pageMaker.getEndPage());
+	    System.out.println("한 블록 당 페이지 수 : " + pageMaker.getPageCount());
+	    System.out.println("prev : " + pageMaker.isPrev());
+	    System.out.println("next : " + pageMaker.isNext());
+    	
+	    mv.addObject("list", bIZ03Service.selectQnaService(pageMaker));
+	    mv.addObject("page", pageMaker);
+    	
+		return mv;
+	}
+    
+    /**
+     * 문의글쓰기 - get
+     * 
+     * @return
+     */
+    @GetMapping("/03/inquire")
+    public ModelAndView biz03_inquire(HttpServletRequest request) {
+    	HttpSession session = request.getSession(true);
+    	
+    	String userid = (String)session.getAttribute("MEMBER_USERID");
+    	
+    	if(session.getAttribute("MEMBER_USERID") == null) {
+    		System.out.println("비회원입니다.");
+    	} else {
+    		System.out.println("회원입니다. " + userid);
+    		
+    	}
+    	
+    	ModelAndView mv = new ModelAndView("/front/03/inquire");
+    	
+		return mv;
+	}
+    
+    // 2020-12-07 -> 문의하기 파일업로드 텍스트만 성공. 다음에 실제 파일업로드 해야 한다.
+    /**
+     * 문의글쓰기 - post
+     * 
+     * @return
+     */
+    @PostMapping("/03/inquire")
+   	@ResponseBody
+   	public Map<String, Object> biz03_inquire(HttpServletRequest request, @RequestParam(value = "file") @Nullable MultipartFile file, BoardQna board) throws Exception { // ajax로 날라온 데이터가 여기에 저장됨
+    	
+    	HttpSession session = request.getSession(true);
+    	
+    	String userid = (String)session.getAttribute("MEMBER_USERID");
+    	
+    	if(session.getAttribute("MEMBER_USERID") == null) {
+    		System.out.println("비회원입니다.");
+    	
+    	} else {
+    		System.out.println("회원입니다. " + userid);
+    		
+    		/* 1. 회원이면 해당 계정의 이메일을 board에 등록. */
+    		board.setWriter_mail(bIZ03Service.selectEmailService(userid));
+    	}
+    	
+   		Map<String, Object> map = new HashMap<String, Object>();
+   		
+   		/* 2. DB에 저장된 컬럼의 파일 이름을 출력 : 처음에는 없어야 정상 */
+   		System.out.println(board.getFile_original_name());
+   		
+   		/* 3. 사용자가 파일을 등록했다면 폼에서 넘어온 file객체의 오리지널 이름을 board 객체에 등록 */
+   		if(file != null) {
+   			board.setFile_original_name(file.getOriginalFilename()); // 파일 이름 등록
+   		}
+   	
+   		/* 4. 문의하기 폼에서 넘어왔으니 게시글 타입[DOC_TYPE]을 H로 설정*/
+   		board.setDoc_type("H");
+   		
+   		try {
+   			
+   			InetAddress ip = InetAddress.getLocalHost();
+   			System.out.println(ip.getHostAddress());
+   			
+   			/* 5. 문의하기를 등록하는 사람의 로컬 컴퓨터 ip를 board 객체에 등록 */
+   			board.setWriter_ip(ip.getHostAddress());
+   			
+   		} catch(Exception e) {
+   			e.printStackTrace();
+   		}
+   		
+   		/* board 엔티티에 등록된 파일이름을 출력 : 이름이 떠야 정상 */
+   		System.out.println(board.getFile_original_name());
+   		
+   		bIZ03Service.insertQnaService(board);
+   	
+   		// 9. 응답 데이터 세팅(ajax랑 주고 받음)
+   		map.put("qna", board);
+   
+   		return map;
+   	}
+    
+    /**
+     * 문의하기 상세 보기
+     * 
+     * @return
+     */
+    @GetMapping("/03/contentView")
+    public ModelAndView biz03_contentView(HttpServletRequest request) {
+    	String bbs_qnauid = request.getParameter("bbs_qnauid");
+    	
+    	System.out.println(bbs_qnauid);
+    	
+    	BoardQna board = bIZ03Service.selectOneService(bbs_qnauid);
+    	
+    	System.out.println(board.getTitle());
+    	
+    	ModelAndView mv = new ModelAndView("/front/03/contentView");
+    	
+    	mv.addObject("qna", board);
+ 
+    	return mv;
+    }
+    
+    /**
+     * 문의하기 글 수정 : get
+     * 
+     * @return
+     */
+    @GetMapping("/03/modify")
+    public ModelAndView biz03_modify(HttpServletRequest request) {
+    	ModelAndView mv = new ModelAndView("/front/03/modifyForm");
+    	
+    	String bbs_qnauid = request.getParameter("bbs_qnauid");
+    	
+    	System.out.println(bbs_qnauid);
+    	
+    	mv.addObject("bbs_qnauid", bbs_qnauid);
+    	return mv;
+    }
+    
+    /**
+     * 문의글쓰기 - post(2020-12-10 -> 여기까지 했음)
+     * 
+     * @return
+     */
+    @PostMapping("/03/modify")
+   	@ResponseBody
+   	public Map<String, Object> biz03_modify(HttpServletRequest request, String bbs_qnauid) {
+    	
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	
+    	return map;
+    	
+    }
+    
+
+    
+   
+ 
+   
+    
+    
+}

@@ -1,0 +1,840 @@
+package com.enc.batch;
+
+import java.io.File;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.enc.config.CODESET;
+import com.enc.mapper.KtapiCommSQLMapper;
+import com.enc.mapper.ServiceCloudSQLMapper;
+import com.enc.mapper.ServiceContSQLMapper;
+import com.enc.mapper.VmcBtcSQLMapper;
+import com.google.common.collect.Lists;
+
+/**
+ * 
+ * 초    |   분   |   시   |   일   |   월   |  요일  |   연도
+ * 0~59 | 0~59 | 0~23 | 1~31 | 1~12  |   0~6  | 생략가능
+ * 
+ * 
+ *요일 : 0 (일요일) ~ 6( 토요일)
+ *
+ *? : 설정 값 없을 때 - 일과 요일 에서만 사용가능
+ *
+ ** : 모든조건
+ *
+ *시작시간/단위 : 시작시간부터 해당 단위 때
+ *
+ *시작범위-끝범위 : 시작범위 부터 끝범위까지
+ *
+ *L : 마지막 - 일, 요일 에서만 사용가능
+ *
+ *W : 가장 가까운 평일 찾는다 - 일 에서만 사용가능
+ *
+ *ex) 10W
+ *
+ *-10일이 평일 일 때 : 10일에 실행
+ *
+ *-10일이 토요일 일 때 : 가장 가까운 평일인 금요일(9일)에 참
+ *
+ *-10일이 일요일 일 때 : 가장 가까운 평일인 월요일(11일)에 참
+ *
+ *# : 몇주 째인지 찾는다 - 요일 에서만 사용가능
+ *
+ *ex) 3#2 : 수요일#2째주 에 참
+ * 
+ * 
+ * 
+ * ********************************************
+ * 예제
+ * ********************************************
+ * 
+ * 1) 매월 10일 오전 1시 1분
+ * 0  1  1  10  *  *
+ * 
+ * 2) 매일 오후 2시 5분 0초
+ * 0  5  14  *  *  *
+ * 
+ * 3) 10분마다 도는 스케줄러 : 10분 0초, 20분 0초...
+ * 0  0/10  *  *  *
+ * 
+ * 4) 조건에서만 실행되는 스케줄러 : 10분 0초, 11분 0초 ~ 15분 0초까지 실행
+ * 
+ * 0  10-15  *  *  *
+ * 
+ * 
+ * 
+ * cron = "* * * * * *"
+ * 왼쪽부터 작은 단위 [초 분 시 일 월 요일 년(생략가능)]
+ */
+
+@Component
+public class VMManageScheduler extends VMManageExt {
+	private final org.slf4j.Logger LOGGER 			= org.slf4j.LoggerFactory.getLogger("TYPHOON_LOG");
+	
+	@Autowired
+	private ServiceContSQLMapper serviceContSQLMapper;
+	
+	@Autowired
+	private VmcBtcSQLMapper vmcBtcSQLMapper;
+	
+	@Autowired
+	private KtapiCommSQLMapper ktapiCommSQLMapper;
+	
+	@Autowired
+	private ServiceCloudSQLMapper serviceCloudSQLMapper;
+	
+	
+	/**
+	 * 멀티 스레드로 작업되는 업무를 하나의 리스트로 관리하여 중복 작업을 회피. 그러면서도 멀티 스레드가 진행될 수 있도록 구현 처리
+	 * 
+	 */
+	private static final Map<Integer, JSONObject> dataRowMap 	= new HashMap<Integer, JSONObject>();
+	
+	/**
+	 * 
+	 */
+	private static final Map<Integer, JSONObject> usingDataRowMap 	= new HashMap<Integer, JSONObject>();
+	
+	private int BAT_NEXT;
+	
+	/**
+	 * 1분에 한번씩 돌면서 메모리에 통계를 쌓아놓는다
+	 * 
+	 */
+    @Scheduled(fixedDelay=60000)
+    public void executeUsageVmAnalyze() {
+    	UsageVmAnalyze usageVmAnalyze 	= new UsageVmAnalyze();
+    	try {
+    		usageVmAnalyze.usageProcess();
+    		//UsageVmAnalyze.VMMETRICMAP.get("enc-cloud-test-1(bb1a5ee7-c54f-4fcc-9012-ee0bc25aa073)");
+    		Iterator<String> iterator 	= UsageVmAnalyze.VMMETRICMAP.getkeyIterator();
+    		//System.out.println(">>>>>>>>>>>SIZE:" + UsageVmAnalyze.VMMETRICMAP.size());
+    		int next 				= 0;
+    		while (iterator.hasNext()) {
+    			String key 			= iterator.next();
+    			VmMetric metric 	= UsageVmAnalyze.VMMETRICMAP.get(key);
+    			if (metric != null) {
+    				// 5분동안 변화가 없었다면 삭제된거다
+    				if (System.currentTimeMillis() - metric.getLastUpdateTime() > 1000*60*5) {
+    					UsageVmAnalyze.VMMETRICMAP.remove(key);
+    				}
+    				/*
+    				System.out.println((++next) + "START ---------------------------------------------");
+    				printMetric(metric.getVmName(), metric.getByInfo(VmMeticBean.INFO_TYPE_CPUU));
+    				printMetric(metric.getVmName(), metric.getByInfo(VmMeticBean.INFO_TYPE_MEMT));
+    				printMetric(metric.getVmName(), metric.getByInfo(VmMeticBean.INFO_TYPE_MEMF));
+    				printMetric(metric.getVmName(), metric.getByInfo(VmMeticBean.INFO_TYPE_DISKR));
+    				printMetric(metric.getVmName(), metric.getByInfo(VmMeticBean.INFO_TYPE_DISKW));
+    				printMetric(metric.getVmName(), metric.getByInfo(VmMeticBean.INFO_TYPE_NETI));
+    				printMetric(metric.getVmName(), metric.getByInfo(VmMeticBean.INFO_TYPE_NETO));
+    				System.out.println("END ---------------------------------------------");
+    				*/
+    			}
+    		}
+    	} catch(Exception e) {
+    		LOGGER.error("TYPHOON", e);
+    	}
+    }
+    
+    private void printMetric(String vmName, VmMeticBean bean) {
+    	System.out.println("[" + bean.getInfoType() + ", " + vmName + "[" + bean.getMaximum() + ":" + bean.getMinimum() + ":" + bean.getAverage() + bean.getUnit() + "]");
+    }
+	
+	/**
+	 * 
+	 * - DBMAP에서 검사할때 상태값을 VMCBAT_STATUS_READY, VMCBAT_STATUS_CHECK 둘다할 수 있도록 수정할 것
+	 * 
+	 */
+	//@Scheduled(cron="0 0/1 * * * ?")
+    @Scheduled(fixedDelay=3000)
+    @Transactional(rollbackFor = { Exception.class })
+    public void execute() {
+    	int size 					= 0;
+    	JSONArray list 				= null;
+    	JSONObject sqlJson 			= new JSONObject();
+    	sqlJson.put("find_vmc_btc_status", new String[] {CODESET.VMCBAT_STATUS_READY, CODESET.VMCBAT_STATUS_CHECK}); 	// 대기 이거나 체킹중인것
+    	
+    	try {
+    		list 					= this.vmcBtcSQLMapper.select(sqlJson);
+    		size 					= (list == null)? 0 : list.size();
+    		if (++BAT_NEXT%3 == 0) {
+    			List<Integer> vmcBtcuidList 	= null;
+        		synchronized(dataRowMap) {
+        			vmcBtcuidList 		= Lists.newArrayList(dataRowMap.keySet().iterator());
+        			Collections.sort(vmcBtcuidList, Collections.reverseOrder());
+        			int count 			= (vmcBtcuidList == null)? 0 : vmcBtcuidList.size();
+        			for (int i = 0; i < size; i++) {
+        				boolean isContain 	= false;
+        				JSONObject bean = list.getJSONObject(i);
+            			B:for (int j = 0; j < count; j++) {
+            				int uid 	= vmcBtcuidList.get(j);
+            				if (bean.getIntValue("VMC_BTCUID") == uid) {
+            					isContain = true;
+            					break B;
+                			}
+            			}
+        				
+        				if (!isContain) {
+        					List<Integer> usingBtcuidList 	= Lists.newArrayList(usingDataRowMap.keySet().iterator());
+        					int leng 	= (usingBtcuidList == null)? 0 : usingBtcuidList.size();
+        					for (int j = 0; j < leng; j++) {
+        						int uid 	= usingBtcuidList.get(j);
+                				if (bean.getIntValue("VMC_BTCUID") == uid) {
+                					isContain = true;
+                					break;
+                    			}
+        					}
+        					
+        					if (!isContain) {
+        						dataRowMap.put(bean.getInteger("VMC_BTCUID"), bean);
+        					}
+        				}
+        			}
+        		}
+    		}
+
+    		
+    		// 목록에서 하나를 꺼내와서 처리? 꺼내면 안되지... 
+    		if (dataRowMap != null && (size = dataRowMap.size()) > 0) {
+    			List<Integer> vmcBtcuidList 		= Lists.newArrayList(dataRowMap.keySet().iterator());
+    			Collections.sort(vmcBtcuidList, Collections.reverseOrder());
+    			
+    			// 본작업 시작
+    			JSONObject bean 	= dataRowMap.remove(vmcBtcuidList.get(0));
+    			usingDataRowMap.put(bean.getInteger("VMC_BTCUID"), bean);
+    			process(bean);
+    			System.out.println("NEXT:" + bean.getIntValue("VMC_BTCUID"));
+    		}
+    		
+	        //LOGGER.info("◁  SCHEDULER(" + this.getClass().getName() + ") END");
+		} catch(Exception e) {
+			LOGGER.error("● SCHEDULER ERROR(VM생성준비단계)", e);
+		}
+    }
+    
+    
+    /**
+     * 객체의 상태에 따른 업무를 처리
+     * 
+     * @param bean
+     */
+    private void process(JSONObject bean) {
+    	int step 		= bean.getIntValue("VMC_BTC_STEP");
+    	String status 	= bean.getString("VMC_BTC_STATUS");
+    	
+    	try {
+    		if (step == CODESET.VMCBAT_STEP_MKDBVM) { 				// DB VM 만들고
+    			if (CODESET.VMCBAT_STATUS_READY.equalsIgnoreCase(status)) { 		// 실행대기
+    				process_VMCBAT_STEP_MKDBVM(bean);
+    			} else if (CODESET.VMCBAT_STATUS_CHECK.equalsIgnoreCase(status)) { 	// ASYNC로 인한 검증 단계
+    				process_VMCBAT_STEP_PING(bean);
+    			}
+    		} else if (step == CODESET.VMCBAT_STEP_MKVM) { 			// WAS VM 만들고
+    			// Tomcat이 올라갈 VM을 생성한다.
+    			// DB IP 정보를 userdata로 전달하여 shell을 통해 was가 돌아갈 수 있는 환경을 구축하여야 한다
+    			if (CODESET.VMCBAT_STATUS_READY.equalsIgnoreCase(status)) { 		// 실행대기
+    				process_VMCBAT_STEP_MWASVM(bean);
+    			} else if (CODESET.VMCBAT_STATUS_CHECK.equalsIgnoreCase(status)) { 	// ASYNC로 인한 검증 단계
+    				process_VMCBAT_STEP_PING(bean);
+    			}
+    		} else if (step == CODESET.VMCBAT_STEP_PUBLICIP) { 		// 공인외부 IP 만들고
+    			if (CODESET.VMCBAT_STATUS_READY.equalsIgnoreCase(status)) { 		// 실행대기
+    				process_PUBLICIP(bean);
+    			} else if (CODESET.VMCBAT_STATUS_CHECK.equalsIgnoreCase(status)) { 	// ASYNC로 인한 검증 단계
+    				process_VMCBAT_STEP_PING(bean);
+    			}
+    		} else if (step == CODESET.VMCBAT_STEP_STATICNAT) { 	// STATICNAT으로 등록
+    			process_StaticNat(bean);
+    		} else if (step == CODESET.VMCBAT_STEP_ADDWAS) {
+    			process_AddWas(bean); 								// L4에 생성한 VM을 추가
+    		} else if (step == CODESET.VMCBAT_STEP_MKL4) { 			// L4 만들고
+    			process_L4(bean);
+    		} else if (step == CODESET.VMCBAT_STEP_COMPLETE) { 		// 완료
+    			System.out.println("완료");
+    		} else {
+    			System.out.println("기타");
+    		}
+    	} catch(Exception e) {
+    		LOGGER.error("● SCHEDULER ERROR(VM처리단계)", e);
+    		try { 
+    			this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_ERROR));
+    		} catch(Exception ex) {
+    			LOGGER.error("● SCHEDULER ERROR(VM에러처리단계에서 업데이트 오류발생)", e);
+    		}
+    		
+    		try {
+    			JSONObject sqlJson 	= new JSONObject();
+    	    	sqlJson.put("userid", bean.getString("USERID"));
+    	    	sqlJson.put("cont_no", bean.getIntValue("CONT_NO"));
+    	    	sqlJson.put("service_status", CODESET.SERVICE_STATUS_ERROR);
+    			this.serviceContSQLMapper.update(sqlJson);
+    		} catch(Exception ex) {
+    			
+    		}
+    	} finally {
+    		usingDataRowMap.remove(bean.getInteger("VMC_BTCUID"));
+    	}
+    }
+    
+    /**
+     * VM 생성처리 배치 상태값 변경을 위한 JSON을 반환
+     * 
+     * @param vmcBtcJson
+     * @param vmc_btcStatus
+     * @return
+     */
+    private JSONObject getVmcBtcUPdateJson(JSONObject vmcBtcJson, String vmc_btcStatus) {
+    	JSONObject updateJson 		= new JSONObject();
+    	updateJson.put("vmc_btcuid", vmcBtcJson.getIntValue("VMC_BTCUID"));
+    	updateJson.put("vmc_btc_status", vmc_btcStatus);
+    	
+    	return updateJson;
+    }
+    
+    private JSONObject getVmcBtcInsertJson(JSONObject vmcBtcJson, int step, String vmc_btcStatus) {
+    	JSONObject updateJson 		= new JSONObject();
+    	updateJson.put("vmc_btcuid", vmcBtcJson.getIntValue("VMC_BTCUID"));
+    	updateJson.put("vmc_btc_status", vmc_btcStatus);
+    	
+    	return updateJson;
+    }
+    
+    /**
+     * DBVM 생성
+     * 
+     * @param bean
+     */
+    private void process_VMCBAT_STEP_MKDBVM(JSONObject bean) throws Exception {
+    	////////////////////////////////////////////////////
+    	// 사용자가 요청한 스팩에 맞는 DB-VM 생성 시작
+    	////////////////////////////////////////////////////
+    	// 1. 진행중으로 업데이트
+    	if (this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_WORKING)) > 0) {
+        	// 계약 정보 조회
+    		JSONObject sqlJson 			= new JSONObject();
+        	sqlJson.put("userid", bean.getString("USERID"));
+        	sqlJson.put("cont_no", bean.getIntValue("CONT_NO"));
+        	JSONObject contInfoBean 	= this.serviceContSQLMapper.select_row(sqlJson);
+        	String serviceType 			= contInfoBean.getString("SERVICE_TYPE_PL");
+        	
+    		// 2. HOST 이름 설정
+    		String imageTemplateName 	= geDbtVmImageNameStruct(serviceType, contInfoBean.getString("SERVICE_BLOCK_YN"), contInfoBean.getString("SERVICE_IOT_YN"));
+    		// 3. DB 생성 요청
+    		String userdata 			= toBase64String(replaceUserData(new String(remove_r(readFile(new File("help/dbvm_userdata.txt"))), Charset.forName("UTF-8")), "@USERID@", bean.getString("USERID")).getBytes(Charset.forName("UTF-8")));
+    		
+    		KTAProtocol protocolMsg 	= null;
+        	if (CODESET.SERVICE_TYPE_LITE6.equalsIgnoreCase(serviceType)) {
+        		protocolMsg 			= makeVmByTemplateCentOs76_4x8(imageTemplateName, getDbVmNameStruct(bean.getString("USERID"), bean.getIntValue("CONT_NO")), true, userdata);
+        	} else if (CODESET.SERVICE_TYPE_LITE8.equalsIgnoreCase(serviceType)) {
+        		protocolMsg 			= makeVmByTemplateCentOs76_4x16(imageTemplateName, getDbVmNameStruct(bean.getString("USERID"), bean.getIntValue("CONT_NO")), true, userdata);
+        	} else if (CODESET.SERVICE_TYPE_LITE10.equalsIgnoreCase(serviceType)) {
+        		protocolMsg 			= makeVmByTemplateCentOs76_8x32(imageTemplateName, getDbVmNameStruct(bean.getString("USERID"), bean.getIntValue("CONT_NO")), true, userdata);
+        	} else if (CODESET.SERVICE_TYPE_PREMIUM.equalsIgnoreCase(serviceType)) {
+        		protocolMsg 			= makeVmByTemplateCentOs76_16x32(imageTemplateName, getDbVmNameStruct(bean.getString("USERID"), bean.getIntValue("CONT_NO")), true, userdata);
+        	} else {
+        		throw new Exception("존재하지 않는 하드웨어 타입[" + serviceType + "]");
+        	}
+    		
+    		// 3-1. 전문 저장
+    		this.ktapiCommSQLMapper.insert(getKtApiCommunicationProtocol(bean.getIntValue("VMC_BTCUID"), protocolMsg));
+    		// 4. 응답을 분석하여 요청성공이면 DB 체킹으로 업데이트, 실패면 fail로 업데이트
+    		// {
+    		//   "deployvirtualmachineresponse" : {
+    		//     "id" : "6f0e41a0-32a4-4bac-98c7-bebeed74fee0",
+    		//     "jobid" : "e59caf23-846b-4f3e-a58a-a1db8af860af",
+    		//     "rootid" : "175b8197-8b79-4b82-9ceb-e945cfab3b78"
+    		//   }
+    		// }
+    		if (protocolMsg.getResponseJson() != null && protocolMsg.getResponseJson().lastIndexOf("jobid") != -1) {
+    			// 생성 요청 성공
+    			this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_CHECK));
+    			// 다음 bat로 넘긴다
+    		} else {
+    			// 생성 요청 실패
+    			this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_ERROR));
+    		}
+    	}
+    }
+    
+    /**
+     * WASVM 생성
+     * 
+     * @param bean
+     */
+    private void process_VMCBAT_STEP_MWASVM(JSONObject bean) throws Exception {
+    	////////////////////////////////////////////////////
+    	// 사용자가 요청한 스팩에 맞는 DB-VM 생성 시작
+    	////////////////////////////////////////////////////
+    	// 1. 진행중으로 업데이트
+    	if (this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_WORKING)) > 0) {
+        	// 계약 정보 조회
+    		JSONObject sqlJson 			= new JSONObject();
+        	sqlJson.put("userid", bean.getString("USERID"));
+        	sqlJson.put("cont_no", bean.getIntValue("CONT_NO"));
+        	JSONObject contInfoBean 	= this.serviceContSQLMapper.select_row(sqlJson);
+        	String serviceType 			= contInfoBean.getString("SERVICE_TYPE_PL");
+        	
+    		// 2. HOST 이름 설정
+    		String imageTemplateName 	= geDbtVmImageNameStruct(serviceType, contInfoBean.getString("SERVICE_BLOCK_YN"), contInfoBean.getString("SERVICE_IOT_YN"));
+    		// 3. WASVM 생성 요청
+    		///// 전에 만들어놨던 DB의 IP를 갖고온다
+    		JSONObject serviceInfoJson 	= this.serviceCloudSQLMapper.select_row(sqlJson);
+    		if (serviceInfoJson != null && serviceInfoJson.containsKey("CLOUD_DB_VMIP") && serviceInfoJson.getString("CLOUD_DB_VMIP") != null) {
+        		String userdata 			= toBase64String(replaceUserData(new String(remove_r(readFile(new File("help/wasvm_userdata.txt"))), Charset.forName("UTF-8")), "@USERID@", bean.getString("USERID")).getBytes(Charset.forName("UTF-8")));
+        		KTAProtocol protocolMsg 	= null;
+            	if (CODESET.SERVICE_TYPE_LITE6.equalsIgnoreCase(serviceType)) {
+            		protocolMsg 			= makeVmByTemplateCentOs76_4x4(imageTemplateName, getWasVmNameStruct(bean.getString("USERID"), bean.getIntValue("CONT_NO")), true, userdata);
+            	} else if (CODESET.SERVICE_TYPE_LITE8.equalsIgnoreCase(serviceType)) {
+            		protocolMsg 			= makeVmByTemplateCentOs76_4x4(imageTemplateName, getWasVmNameStruct(bean.getString("USERID"), bean.getIntValue("CONT_NO")), true, userdata);
+            	} else if (CODESET.SERVICE_TYPE_LITE10.equalsIgnoreCase(serviceType)) {
+            		protocolMsg 			= makeVmByTemplateCentOs76_4x4(imageTemplateName, getWasVmNameStruct(bean.getString("USERID"), bean.getIntValue("CONT_NO")), true, userdata);
+            	} else if (CODESET.SERVICE_TYPE_PREMIUM.equalsIgnoreCase(serviceType)) {
+            		protocolMsg 			= makeVmByTemplateCentOs76_8x8(imageTemplateName, getWasVmNameStruct(bean.getString("USERID"), bean.getIntValue("CONT_NO")), true, userdata);
+            	} else {
+            		throw new Exception("존재하지 않는 하드웨어 타입[" + serviceType + "]");
+            	}
+        		
+        		// 3-1. 전문 저장
+        		this.ktapiCommSQLMapper.insert(getKtApiCommunicationProtocol(bean.getIntValue("VMC_BTCUID"), protocolMsg));
+        		// 4. 응답을 분석하여 요청성공이면 DB 체킹으로 업데이트, 실패면 fail로 업데이트
+        		// {
+        		//   "deployvirtualmachineresponse" : {
+        		//     "id" : "6f0e41a0-32a4-4bac-98c7-bebeed74fee0",
+        		//     "jobid" : "e59caf23-846b-4f3e-a58a-a1db8af860af",
+        		//     "rootid" : "175b8197-8b79-4b82-9ceb-e945cfab3b78"
+        		//   }
+        		// }
+        		if (protocolMsg.getResponseJson() != null && protocolMsg.getResponseJson().lastIndexOf("jobid") != -1) {
+        			// 생성 요청 성공
+        			this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_CHECK));
+        			// 다음 bat로 넘긴다
+        		} else {
+        			// 생성 요청 실패
+        			this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_ERROR));
+        		}
+    		} else {
+    			// DB 정보가 없다. 에러로 떨군다
+    			this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_ERROR));
+    		}
+    	}
+    }
+    
+    /**
+     * 외부아이피 생성
+     * 응답 : "associateipaddressresponse" : { "jobid" : "6b6e96a4-9f6d-4443-8b53-c7e139b25e0f" }
+     * 
+     * @param bean
+     * @throws Exception
+     */
+    private void process_PUBLICIP(JSONObject bean) throws Exception {
+    	KTAProtocol protocolMsg 	= makeAssociateIp();
+		// 3-1. 전문 저장
+		this.ktapiCommSQLMapper.insert(getKtApiCommunicationProtocol(bean.getIntValue("VMC_BTCUID"), protocolMsg));
+		if (protocolMsg.getResponseJson() != null && protocolMsg.getResponseJson().lastIndexOf("jobid") != -1) {
+			// 생성 요청 성공
+			this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_CHECK));
+			// 다음 bat로 넘긴다
+		} else {
+			// 생성 요청 실패
+			this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_ERROR));
+		}
+    }
+    
+    /**
+     * STATIC NAT 설정
+     * 
+     * @param bean
+     * @throws Exception
+     */
+    private void process_StaticNat(JSONObject bean) throws Exception {
+    	////////////////////////////////////////////////////////////////////////////////////////
+    	// STATIC NAT 설정
+    	////////////////////////////////////////////////////////////////////////////////////////
+    	JSONObject sqlJson 		= new JSONObject();
+    	sqlJson.put("userid", bean.getString("USERID"));
+    	sqlJson.put("cont_no", bean.getIntValue("CONT_NO"));
+    	JSONObject serviceInfoJson 	= this.serviceCloudSQLMapper.select_row(sqlJson);
+    	KTAProtocol protocolMsg 	= enableL4StaticNat(serviceInfoJson.getString("CLOUD_L4_PUBLIC_IPID"), serviceInfoJson.getString("CLOUD_L4_LOADBALANCERID"));
+    	System.out.println("STATICNAT:" + protocolMsg);
+    	
+		// 3-1. 전문 저장
+		this.ktapiCommSQLMapper.insert(getKtApiCommunicationProtocol(bean.getIntValue("VMC_BTCUID"), protocolMsg));
+		
+		// 방화벽 추가
+		protocolMsg 	= createFirewallRule(serviceInfoJson.getString("CLOUD_L4_PUBLIC_IPID"), 80);
+    	
+    	System.out.println("방화벽:" + protocolMsg);
+    	
+		// 3-1. 전문 저장
+		this.ktapiCommSQLMapper.insert(getKtApiCommunicationProtocol(bean.getIntValue("VMC_BTCUID"), protocolMsg));
+		this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_COMPLETE));
+		
+		
+		///////////////////////////////////////////////////////////////////////
+		// WAS에 생성한 VM을 연동
+		///////////////////////////////////////////////////////////////////////
+		insertNextJob(CODESET.VMCBAT_STEP_ADDWAS, bean);
+    }
+    
+    /**
+     * L4에 생성한 VM 등록
+     * 
+     * @param bean
+     * @throws Exception
+     */
+    private void process_AddWas(JSONObject bean) throws Exception {
+		/////////////////////////////////////////////////////////////////////////////////////////////////
+		// L4에 만든 WAS VM 연동
+		/////////////////////////////////////////////////////////////////////////////////////////////////
+    	JSONObject sqlJson 		= new JSONObject();
+		sqlJson.clear();
+    	sqlJson.put("userid", bean.getString("USERID"));
+    	sqlJson.put("cont_no", bean.getIntValue("CONT_NO"));
+    	JSONObject serviceInfoJson 	= this.serviceCloudSQLMapper.select_row(sqlJson);
+    	
+    	KTAProtocol protocolMsg 	= addL4WebServer(serviceInfoJson.getString("CLOUD_L4_LOADBALANCERID"), serviceInfoJson.getString("CLOUD_WASVM_ID"), serviceInfoJson.getString("CLOUD_WASVM_DEFAULT_VMIP"));
+    	// 3-1. 전문 저장
+		this.ktapiCommSQLMapper.insert(getKtApiCommunicationProtocol(bean.getIntValue("VMC_BTCUID"), protocolMsg));
+		System.out.println("L4에VM추가:" + protocolMsg);
+
+		this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_COMPLETE));
+		
+		/////////////////////////////////////////////////////////////////////////////////////////////////
+		// 
+		//
+		// 서비스완료처리
+		//
+		//
+		/////////////////////////////////////////////////////////////////////////////////////////////////
+		sqlJson.clear();
+    	sqlJson.put("userid", bean.getString("USERID"));
+    	sqlJson.put("cont_no", bean.getIntValue("CONT_NO"));
+    	sqlJson.put("service_status", CODESET.SERVICE_STATUS_COMPLETE);
+		this.serviceContSQLMapper.update(sqlJson);
+		// 다음 bat로 넘긴다
+    }
+    
+    /**
+     * L4를 생성한다
+     * 
+     * @param bean
+     * @throws Exception
+     */
+    private void process_L4(JSONObject bean) throws Exception {
+    	
+//    	L4 생성요청(생성을 요청하면 정지상태이다)
+    	
+//    	KTAProtocol [origianlPath=command=createLoadBalancer&zoneid=d7d0177e-6cda-404a-a46f-a5b356d2874e&networkid=8cce3f82-35b7-470d-9845-32f1f745e55d&name=Corn3-L4-test&loadbalanceroption=sourceiphash&serviceport=80&servicetype=http&healthchecktype=http&healthcheckurl=/&response=json, requestPath=https://api.ucloudbiz.olleh.com/loadbalancer/v2/client/api?command=createLoadBalancer&zoneid=d7d0177e-6cda-404a-a46f-a5b356d2874e&networkid=8cce3f82-35b7-470d-9845-32f1f745e55d&name=Corn3-L4-test&loadbalanceroption=sourceiphash&serviceport=80&servicetype=http&healthchecktype=http&healthcheckurl=%2F&response=json&apiKey=CTl-GqCYBH1SPPnWwsJ4KcGecZEDME-GkKpJ-76NQ_-rvKfC_H7lZ0lBIuTSCfxQBhn7DSSsgtq9yBEmr-S7xA&signature=uM6LTsTVgPqCmzn6U4jTztOZRTI%3D, responseJson={
+//    		  "createloadbalancerresponse" : {
+//    		    "loadbalancerid" : "19831",
+//    		    "zoneid" : "d7d0177e-6cda-404a-a46f-a5b356d2874e",
+//    		    "zonename" : "KOR-Seoul M2",
+//    		    "serviceip" : "172.16.0.182", 		// 내부아이피
+//    		    "serviceport" : "80",
+//    		    "name" : "Corn3-L4-test",
+//    		    "loadbalanceroption" : "sourceiphash",
+//    		    "servicetype" : "http",
+//    		    "healthchecktype" : "http",
+//    		    "healthcheckurl" : "/"
+//    		  }
+//    		}]
+    	
+    	
+//    	L4 삭제요청
+//    	KTAProtocol [origianlPath=command=deleteLoadBalancer&loadbalancerid=19831&response=json, requestPath=https://api.ucloudbiz.olleh.com/loadbalancer/v2/client/api?command=deleteLoadBalancer&loadbalancerid=19831&response=json&apiKey=CTl-GqCYBH1SPPnWwsJ4KcGecZEDME-GkKpJ-76NQ_-rvKfC_H7lZ0lBIuTSCfxQBhn7DSSsgtq9yBEmr-S7xA&signature=IBEvD80eUpxc1eOmBUp1sQLD4Y4%3D, responseJson={
+//    		  "deleteloadbalancerresponse" : {
+//    		    "success" : true,
+//    		    "displaytext" : "19831 loadbalancer is deleted."
+//    		  }
+//    		}]
+    	
+    	////////////////////////////////////////////////////////////////////////////////////////
+    	// 2. L4 생성
+    	////////////////////////////////////////////////////////////////////////////////////////
+    	KTAProtocol protocolMsg 	= makeL4(getL4NameStruct(bean.getString("USERID"), bean.getIntValue("CONT_NO")));
+		// 3-1. 전문 저장
+		this.ktapiCommSQLMapper.insert(getKtApiCommunicationProtocol(bean.getIntValue("VMC_BTCUID"), protocolMsg));
+		
+		if (protocolMsg.getResponseJson() != null && protocolMsg.getResponseJson().lastIndexOf("serviceip") != -1) {
+			// 생성 요청 성공
+			// L4의 내부 아이피 추가
+			JSONObject resObj 		= JSONObject.parseObject(protocolMsg.getResponseJson());
+			JSONObject virtualmachine = resObj.getJSONObject("createloadbalancerresponse");
+    		
+    		JSONObject sqlJson 		= new JSONObject();
+    		sqlJson.put("userid", bean.getString("USERID"));
+    		sqlJson.put("cont_no", bean.getIntValue("CONT_NO"));
+    		sqlJson.put("cloud_l4_vmip", virtualmachine.getString("serviceip"));
+    		sqlJson.put("cloud_l4_loadbalancerid", virtualmachine.getString("loadbalancerid"));
+    		sqlJson.put("cloud_l4_name", virtualmachine.getString("name"));
+    		
+    		this.serviceCloudSQLMapper.insertORupdate(sqlJson);
+    		
+    		// 3-1. 전문 저장
+    		//this.ktapiCommSQLMapper.insert(getKtApiCommunicationProtocol(bean.getIntValue("VMC_BTCUID"), protocolMsg));
+    		this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_COMPLETE));
+    		
+    		///////////////////////////////////////////////////////////////////////
+    		// PUBLIC_IP를 STATIC NAT으로 등록
+    		///////////////////////////////////////////////////////////////////////
+    		insertNextJob(CODESET.VMCBAT_STEP_STATICNAT, bean);
+		} else {
+			// 생성 요청 실패
+			this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_ERROR));
+		}
+    }
+    
+    /**
+     * 정보 치환
+     * replaceUserInfo("you are @USERID@", '@USERID@' , 'god');
+     * 
+     * @param originalText
+     * @param tag
+     * @param altMsg
+     * @return
+     */
+    private String replaceUserData(String originalText, String tag, String altMsg) {
+    	return originalText.replaceAll(tag, altMsg);
+    }
+    
+    private JSONObject getKtApiCommunicationProtocol(int vmcBtcuid, KTAProtocol protocolMsg) {
+    	JSONObject sqlJson 				= new JSONObject();
+    	sqlJson.put("ktapi_comm", protocolMsg.getApiCommand());
+    	sqlJson.put("ktapi_req", protocolMsg.getRequestPath());
+    	sqlJson.put("ktapi_res", protocolMsg.getResponseJson());
+    	sqlJson.put("vmc_btcuid", vmcBtcuid);
+    	
+    	return sqlJson;
+    }
+    
+    /**
+     * 생성 완료 여부 체크
+     * 
+     * @param bean
+     * @throws Exception
+     */
+    //@Transactional(rollbackFor = { Exception.class })
+    private void process_VMCBAT_STEP_PING(JSONObject bean) throws Exception {
+    	int step 		= bean.getIntValue("VMC_BTC_STEP");
+    	
+    	JSONObject sqlJson 		= new JSONObject();
+    	sqlJson.put("vmc_btcuid", bean.getIntValue("VMC_BTCUID"));
+    	sqlJson.put("sort", "KTAPI_COMMUID DESC");
+    	
+    	JSONObject resInfoJson 	= this.ktapiCommSQLMapper.select_row(sqlJson);
+    	// jobid 파싱
+    	String jobid 			= null;
+    	KTAProtocol protocolMsg = null;
+    	JSONObject resObj 		= null;
+    	
+    	if (step == CODESET.VMCBAT_STEP_MKDBVM || step == CODESET.VMCBAT_STEP_MKVM) {
+    		jobid 				= getJobIdAfterDeployVirtualMachine(resInfoJson.getString("KTAPI_RES"));
+    	} else if (step == CODESET.VMCBAT_STEP_PUBLICIP) {
+    		jobid 				= getJobIdAfterPublicIP(resInfoJson.getString("KTAPI_RES"));
+    	}
+    	protocolMsg 			= getVmQueryAsyncJobResult(jobid);
+    	resObj 					= JSONObject.parseObject(protocolMsg.getResponseJson());
+    	
+    	// jobstatus : 현재 작업 상태. (0:진행 중, 1:성공, 2:실패 [jobresult 에 결과 표시])
+    	int jobStatus 			= resObj.getJSONObject("queryasyncjobresultresponse").getIntValue("jobstatus");
+    	//System.out.println("protocolMsg:" + protocolMsg);
+    	
+    	if (jobStatus == 0) {
+    		// 진행중
+    	} else if (jobStatus == 1) {
+    		// 성공
+    		this.ktapiCommSQLMapper.insert(getKtApiCommunicationProtocol(bean.getIntValue("VMC_BTCUID"), protocolMsg));
+    		this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_COMPLETE));
+    		// 사용자의 계약에 대응되는 서버 정보 테이블에 생성된 DBVM의 환경을저장한다
+    		
+    		///////////////////////////////////////////////////////////////////////.
+    		if (step == CODESET.VMCBAT_STEP_MKDBVM) { 	// DBVM생성
+    			JSONObject virtualmachine = resObj.getJSONObject("queryasyncjobresultresponse").getJSONObject("jobresult").getJSONObject("virtualmachine");
+        		sqlJson.clear();
+        		sqlJson.put("userid", bean.getString("USERID"));
+        		sqlJson.put("cont_no", bean.getIntValue("CONT_NO"));
+        		sqlJson.put("cloud_dbvm_host_name", virtualmachine.getString("name"));
+        		sqlJson.put("cloud_dbvm_templatename", virtualmachine.getString("templatename"));
+        		sqlJson.put("cloud_dbvm_osinfo", virtualmachine.getString("serviceofferingname"));
+        		sqlJson.put("cloud_dbvm_password", virtualmachine.getString("password"));
+        		sqlJson.put("cloud_dbvm_id", virtualmachine.getString("id"));
+        		sqlJson.put("cloud_db_vmip", virtualmachine.getJSONArray("nic").getJSONObject(0).getString("ipaddress"));
+        		
+        		this.serviceCloudSQLMapper.insertORupdate(sqlJson);
+        		///////////////////////////////////////////////////////////////////////
+        		// DBVM을 생성완료했으니 WAS용 VM을 생성하자
+        		///////////////////////////////////////////////////////////////////////
+        		insertNextJob(CODESET.VMCBAT_STEP_MKVM, bean);
+    		} else if (step == CODESET.VMCBAT_STEP_MKVM) { 	// VM생성
+    			JSONObject virtualmachine = resObj.getJSONObject("queryasyncjobresultresponse").getJSONObject("jobresult").getJSONObject("virtualmachine");
+        		sqlJson.clear();
+        		sqlJson.put("userid", bean.getString("USERID"));
+        		sqlJson.put("cont_no", bean.getIntValue("CONT_NO"));
+        		sqlJson.put("cloud_wasvm_host_name", virtualmachine.getString("name"));
+        		sqlJson.put("cloud_wasvm_templatename", virtualmachine.getString("templatename"));
+        		sqlJson.put("cloud_wasvm_osinfo", virtualmachine.getString("serviceofferingname"));
+        		sqlJson.put("cloud_wasvm_password", virtualmachine.getString("password"));
+        		sqlJson.put("cloud_wasvm_id", virtualmachine.getString("id"));
+        		sqlJson.put("cloud_wasvm_default_vmip", virtualmachine.getJSONArray("nic").getJSONObject(0).getString("ipaddress"));
+        		
+        		this.serviceCloudSQLMapper.insertORupdate(sqlJson);
+        		///////////////////////////////////////////////////////////////////////
+        		// WASVM을 생성완료했으니 L4를 위해서 공인IP를 생성하자
+        		///////////////////////////////////////////////////////////////////////
+        		insertNextJob(CODESET.VMCBAT_STEP_PUBLICIP, bean);
+    		} else if (step == CODESET.VMCBAT_STEP_PUBLICIP) { 	// 공인아이피 신청
+//    			KTAProtocol [origianlPath=command=queryAsyncJobResult&jobid=bc7d6717-12fb-4dcd-a14c-c89d20dd6969&response=json, requestPath=https://api.ucloudbiz.olleh.com/server/v2/client/api?command=queryAsyncJobResult&jobid=bc7d6717-12fb-4dcd-a14c-c89d20dd6969&response=json&apiKey=CTl-GqCYBH1SPPnWwsJ4KcGecZEDME-GkKpJ-76NQ_-rvKfC_H7lZ0lBIuTSCfxQBhn7DSSsgtq9yBEmr-S7xA&signature=ip7etl4TzBhiQtLyqZAaKCdcelA%3D, responseJson={
+//    				  "queryasyncjobresultresponse" : {
+//    				    "result" : {
+//    				      "ipaddress" : "210.179.174.159",
+//    				      "displaytext" : "",
+//    				      "success" : true,
+//    				      "id" : "a46d4e18-4b08-4d16-a3e1-cbc67da88ea9"
+//    				    },
+//    				    "jobstatus" : 1
+//    				  }
+//    				}]
+//    						
+    			JSONObject publicIPObj = resObj.getJSONObject("queryasyncjobresultresponse").getJSONObject("result");
+        		sqlJson.clear();
+        		sqlJson.put("userid", bean.getString("USERID"));
+        		sqlJson.put("cont_no", bean.getIntValue("CONT_NO"));
+        		sqlJson.put("cloud_l4_public_ip", publicIPObj.getString("ipaddress"));
+        		sqlJson.put("cloud_l4_public_ipid", publicIPObj.getString("id"));
+        		this.serviceCloudSQLMapper.insertORupdate(sqlJson);
+        		
+        		///////////////////////////////////////////////////////////////////////
+        		// L4신청
+        		///////////////////////////////////////////////////////////////////////
+        		insertNextJob(CODESET.VMCBAT_STEP_MKL4, bean);
+    		}
+    	} else { 		// 2 실패
+    		// 에러
+    		// 에러 전문도 넣어줄까?
+    		this.vmcBtcSQLMapper.update(getVmcBtcUPdateJson(bean, CODESET.VMCBAT_STATUS_ERROR));
+    	}
+    	
+    }
+    
+    
+    private void insertNextJob(int jobId, JSONObject bean) throws Exception {
+    	JSONObject sqlJson 		= new JSONObject();
+    	if (jobId == CODESET.VMCBAT_STEP_MKL4) {
+    		///////////////////////////////////////////////////////////////////////
+    		// L4신청
+    		///////////////////////////////////////////////////////////////////////
+    	} else if (jobId == CODESET.VMCBAT_STEP_PUBLICIP) {
+    		///////////////////////////////////////////////////////////////////////
+    		// PUBLIC_IP를 STATIC NAT으로 등록
+    		///////////////////////////////////////////////////////////////////////
+    	} else if (jobId == CODESET.VMCBAT_STEP_STATICNAT) {
+    		///////////////////////////////////////////////////////////////////////
+    		// DBVM을 생성완료했으니 WAS용 VM을 생성하자
+    		///////////////////////////////////////////////////////////////////////
+    	} else if (jobId == CODESET.VMCBAT_STEP_PUBLICIP) {
+    		///////////////////////////////////////////////////////////////////////
+    		// WASVM을 생성완료했으니 L4를 위해서 공인IP를 생성하자
+    		///////////////////////////////////////////////////////////////////////
+    	}
+    	
+    	sqlJson.put("vmc_btc_step", jobId);
+		sqlJson.put("vmc_btc_status", CODESET.VMCBAT_STATUS_READY);
+		sqlJson.put("vmc_btc_status_msg", CODESET.getVmBatStepMessage(jobId));
+		sqlJson.put("userid", bean.getString("USERID"));
+		sqlJson.put("cont_no", bean.getIntValue("CONT_NO"));
+		this.vmcBtcSQLMapper.insert(sqlJson);
+    }
+    
+    
+    /**
+     * 이미지로 구워져 있는 DB VM의 이름을 반환
+     * 
+     * @param serviceType
+     * @param useBlockChainYn
+     * @param useIotYn
+     * @returnr
+     * @throws Exception
+     */
+    private String geDbtVmImageNameStruct(String serviceType, String useBlockChainYn, String useIotYn) throws Exception {
+    	StringBuilder buffer 	= new StringBuilder();
+    	buffer.append("db");
+    	if (CODESET.SERVICE_TYPE_LITE6.equalsIgnoreCase(serviceType)) {
+    		buffer.append("-light6");
+    	} else if (CODESET.SERVICE_TYPE_LITE8.equalsIgnoreCase(serviceType)) {
+    		buffer.append("-light8");
+    	} else if (CODESET.SERVICE_TYPE_LITE10.equalsIgnoreCase(serviceType)) {
+    		buffer.append("-light10");
+    	} else if (CODESET.SERVICE_TYPE_PREMIUM.equalsIgnoreCase(serviceType)) {
+    		buffer.append("-premium");
+    	} else {
+    		throw new Exception("존재하지 않는 서비스 타입[" + serviceType + "]");
+    	}
+    	
+    	if ("Y".equalsIgnoreCase(useBlockChainYn)) {
+    		buffer.append("-bo");
+    	} else {
+    		buffer.append("-bx");
+    	}
+    	
+    	if ("Y".equalsIgnoreCase(useIotYn)) {
+    		buffer.append("-io");
+    	} else {
+    		buffer.append("-ix");
+    	}
+    	
+    	return buffer.toString();
+    }
+    
+	/**
+	 * 사용자 아이디를 DBVM 이름 형식에 맞게 이름을 바꾼다
+	 * 
+	 * @param userid
+	 * @return
+	 */
+	public static String getDbVmNameStruct(String userid, int contNo) {
+		return "user-db-" + userid + "-" + contNo;
+	}
+	
+	/**
+	 * 사용자 아이디를 WAS VM 이름 형식에 맞게 이름을 바꾼다
+	 * 
+	 * @param userid
+	 * @param contNo
+	 * @return
+	 */
+	public static String getWasVmNameStruct(String userid, int contNo) {
+		return "user-was-" + userid + "-" + contNo;
+	}
+	
+	/**
+	 * 사용자 아이디를 L4 이름 형식에 맞게 이름을 바꾼다
+	 * 
+	 * @param userid
+	 * @param contNo
+	 * @return
+	 */
+	public static String getL4NameStruct(String userid, int contNo) {
+		return "user-l4-" + userid + "-" + contNo;
+	}
+}

@@ -1,0 +1,304 @@
+package com.enc.batch;
+
+import java.util.Calendar; 
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.enc.batch.KTAPICommon;
+
+public class UsageVmAnalyze extends KTAPICommon {
+	public static VmMetricMap VMMETRICMAP 	= new VmMetricMap();
+	
+	public UsageVmAnalyze() {
+		
+	}
+	
+	/**
+	 * 조회가 가능한 모든 서버의 목록을 반환
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	private String listMetrics() throws Exception {
+		String listTemplateJson 	= prettyPrinterForJson(getAPIInfo(make(WATCH_URLADDR, "command=listMetrics&response=json")));
+		return listTemplateJson;
+	}
+	
+	/**
+	 * 네트워크 인바운드 정보 반환
+	 * 
+	 * @param dimensionValue
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 * @throws Exception
+	 */
+	public String getMetricStatisticsNetworkIn(String dimensionValue, String startTime, String endTime) throws Exception {
+		StringBuilder buffer 		= new StringBuilder("");
+		if (startTime != null ) buffer.append("&starttime=" + startTime);
+		if (endTime != null ) buffer.append("&endtime=" + endTime);
+		String listTemplateJson 	= prettyPrinterForJson(getAPIInfo(make(WATCH_URLADDR, "command=getMetricStatistics&response=json&metricname=NetworkIn&namespace=ucloud/server&dimensions.member.1.name=name&dimensions.member.1.value=" + dimensionValue+ "&unit=Bytes&period=10&statistics.member.1=Maximum&statistics.member.2=Minimum&statistics.member.3=Average&statistics.member.4=Sum&statistics.member.5=SampleCount" + buffer.toString())));
+		return listTemplateJson;
+	}
+	
+	/**
+	 * 네트워크 아웃바운드 정보 반환
+	 * 
+	 * @param dimensionValue
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 * @throws Exception
+	 */
+	public String getMetricStatisticsNetworkOut(String dimensionValue, String startTime, String endTime) throws Exception {
+		StringBuilder buffer 		= new StringBuilder("");
+		if (startTime != null ) buffer.append("&starttime=" + startTime);
+		if (endTime != null ) buffer.append("&endtime=" + endTime);
+		String listTemplateJson 	= prettyPrinterForJson(getAPIInfo(make(WATCH_URLADDR, "command=getMetricStatistics&response=json&metricname=NetworkOut&namespace=ucloud/server&dimensions.member.1.name=name&dimensions.member.1.value=" + dimensionValue+ "&unit=Bytes&period=10&statistics.member.1=Maximum&statistics.member.2=Minimum&statistics.member.3=Average&statistics.member.4=Sum&statistics.member.5=SampleCount" + buffer.toString())));
+		return listTemplateJson;
+	}
+	
+	/**
+	 * CPU 사용량 정보 반환
+	 * 
+	 * @param dimensionValue
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 * @throws Exception
+	 */
+	public String getMetricStatisticsCPUUtilization(String dimensionValue, String startTime, String endTime) throws Exception {
+		StringBuilder buffer 		= new StringBuilder("");
+		if (startTime != null ) buffer.append("&starttime=" + startTime);
+		if (endTime != null ) buffer.append("&endtime=" + endTime);
+		String listTemplateJson 	= prettyPrinterForJson(getAPIInfo(make(WATCH_URLADDR, "command=getMetricStatistics&response=json&metricname=CPUUtilization&namespace=ucloud/server&dimensions.member.1.name=name&dimensions.member.1.value=" + dimensionValue+ "&unit=Percent&period=10&statistics.member.1=Maximum&statistics.member.2=Minimum&statistics.member.3=Average&statistics.member.4=Sum&statistics.member.5=SampleCount" + buffer.toString())));
+		return listTemplateJson;
+	}
+	
+	/**
+	 * 메모리 사용량 정보 반환
+	 * 
+	 * @param dimensionValue
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 * @throws Exception
+	 */
+	public String getMetricStatisticsMemoryInternalFree(String dimensionValue, String startTime, String endTime) throws Exception {
+		StringBuilder buffer 		= new StringBuilder("");
+		if (startTime != null ) buffer.append("&starttime=" + startTime);
+		if (endTime != null ) buffer.append("&endtime=" + endTime);
+		String listTemplateJson 	= prettyPrinterForJson(getAPIInfo(make(WATCH_URLADDR, "command=getMetricStatistics&response=json&metricname=MemoryInternalFree&namespace=ucloud/server&dimensions.member.1.name=name&dimensions.member.1.value=" + dimensionValue+ "&unit=Bytes&period=10&statistics.member.1=Maximum&statistics.member.2=Minimum&statistics.member.3=Average&statistics.member.4=Sum&statistics.member.5=SampleCount" + buffer.toString())));
+		return listTemplateJson;
+	}
+	
+	/**
+	 * 메모리 사용량 정보 반환
+	 * 
+	 * @param dimensionValue
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 * @throws Exception
+	 */
+	public String getMetricStatisticsMemoryTarget(String dimensionValue, String startTime, String endTime) throws Exception {
+		StringBuilder buffer 		= new StringBuilder("");
+		if (startTime != null ) buffer.append("&starttime=" + startTime);
+		if (endTime != null ) buffer.append("&endtime=" + endTime);
+		String listTemplateJson 	= prettyPrinterForJson(getAPIInfo(make(WATCH_URLADDR, "command=getMetricStatistics&response=json&metricname=MemoryTarget&namespace=ucloud/server&dimensions.member.1.name=name&dimensions.member.1.value=" + dimensionValue+ "&unit=Bytes&period=10&statistics.member.1=Maximum&statistics.member.2=Minimum&statistics.member.3=Average&statistics.member.4=Sum&statistics.member.5=SampleCount" + buffer.toString())));
+		return listTemplateJson;
+	}
+	
+	public String getMetricStatisticsDiskReadBytes(String dimensionValue, String startTime, String endTime) throws Exception {
+		StringBuilder buffer 		= new StringBuilder("");
+		if (startTime != null ) buffer.append("&starttime=" + startTime);
+		if (endTime != null ) buffer.append("&endtime=" + endTime);
+		String listTemplateJson 	= prettyPrinterForJson(getAPIInfo(make(WATCH_URLADDR, "command=getMetricStatistics&response=json&metricname=DiskReadBytes&namespace=ucloud/server&dimensions.member.1.name=name&dimensions.member.1.value=" + dimensionValue+ "&unit=Bytes&period=10&statistics.member.1=Maximum&statistics.member.2=Minimum&statistics.member.3=Average&statistics.member.4=Sum&statistics.member.5=SampleCount" + buffer.toString())));
+		return listTemplateJson;
+	}
+	
+	public String getMetricStatisticsDiskWriteBytes(String dimensionValue, String startTime, String endTime) throws Exception {
+		StringBuilder buffer 		= new StringBuilder("");
+		if (startTime != null ) buffer.append("&starttime=" + startTime);
+		if (endTime != null ) buffer.append("&endtime=" + endTime);
+		String listTemplateJson 	= prettyPrinterForJson(getAPIInfo(make(WATCH_URLADDR, "command=getMetricStatistics&response=json&metricname=DiskWriteBytes&namespace=ucloud/server&dimensions.member.1.name=name&dimensions.member.1.value=" + dimensionValue+ "&unit=Bytes&period=10&statistics.member.1=Maximum&statistics.member.2=Minimum&statistics.member.3=Average&statistics.member.4=Sum&statistics.member.5=SampleCount" + buffer.toString())));
+		return listTemplateJson;
+	}
+	
+	public void usageProcess() throws Exception {
+		String listMetrics 	= listMetrics();
+		JSONObject rootObj 	= JSON.parseObject(listMetrics);
+		//System.out.println("listMetrics:" + listMetrics);
+		JSONObject listmetricsresponse = rootObj.getJSONObject("listmetricsresponse");
+		
+		int size 			= listmetricsresponse.getIntValue("count");
+		JSONArray metrics 	= listmetricsresponse.getJSONArray("metric");
+		for (int i = 0; i < size; i++) {
+			JSONObject metric 	= metrics.getJSONObject(i);
+			String metricname 	= metric.getString("metricname");
+			JSONObject dimensions 	= metric.getJSONObject("dimensions");
+			String unit 			= metric.getString("unit");
+			String vmname 			= null;
+			String dimensionValue 	= null;
+			int count 				= dimensions.getIntValue("count");
+			if (count > 0) {
+				JSONObject dimension 	= dimensions.getJSONArray("dimension").getJSONObject(0);
+				String name 			= dimensionValue = dimension.getString("value");
+				int pos 				= dimensionValue.indexOf("(");
+				if (pos != -1) {
+					String startTime 	= getCurrentTime(Calendar.MINUTE, -10);
+					String endTime 		= getCurrentTime(Calendar.MINUTE, 0);
+					vmname 				= dimensionValue.substring(0, pos);
+					if ("CPUUtilization".equalsIgnoreCase(metricname)) {
+						String jsonText 		= getMetricStatisticsCPUUtilization(dimensionValue, startTime, endTime);
+						//System.out.println(">>>>>>>>>>>>" + jsonText);
+						JSONObject jsonObj 		= JSON.parseObject(jsonText).getJSONObject("getmetricstatisticsresponse");
+						UsageVmAnalyze.VMMETRICMAP.put(VmMeticBean.INFO_TYPE_CPUU, dimensionValue, vmname, jsonObj);
+					} else if ("MemoryTarget".equalsIgnoreCase(metricname)) {
+						String jsonText 		= getMetricStatisticsMemoryTarget(dimensionValue, startTime, endTime);
+//						System.out.println(">>>>>>>>>>>>" + jsonText);
+						JSONObject jsonObj 		= JSON.parseObject(jsonText).getJSONObject("getmetricstatisticsresponse");
+						UsageVmAnalyze.VMMETRICMAP.put(VmMeticBean.INFO_TYPE_MEMT, dimensionValue, vmname, jsonObj);
+					} else if ("MemoryInternalFree".equalsIgnoreCase(metricname)) {
+						String jsonText 		= getMetricStatisticsMemoryInternalFree(dimensionValue, startTime, endTime);
+						JSONObject jsonObj 		= JSON.parseObject(jsonText).getJSONObject("getmetricstatisticsresponse");
+						UsageVmAnalyze.VMMETRICMAP.put(VmMeticBean.INFO_TYPE_MEMF, dimensionValue, vmname, jsonObj);
+					} else if ("DiskReadBytes".equalsIgnoreCase(metricname)) {
+						String jsonText 		= getMetricStatisticsDiskReadBytes(dimensionValue, startTime, endTime);
+//						System.out.println(">>>>>>>>>>>>" + jsonText);
+						JSONObject jsonObj 		= JSON.parseObject(jsonText).getJSONObject("getmetricstatisticsresponse");
+						UsageVmAnalyze.VMMETRICMAP.put(VmMeticBean.INFO_TYPE_DISKR, dimensionValue, vmname, jsonObj);
+					} else if ("DiskWriteBytes".equalsIgnoreCase(metricname)) {
+						String jsonText 		= getMetricStatisticsDiskWriteBytes(dimensionValue, startTime, endTime);
+//						System.out.println(">>>>>>>>>>>>" + jsonText);
+						JSONObject jsonObj 		= JSON.parseObject(jsonText).getJSONObject("getmetricstatisticsresponse");
+						UsageVmAnalyze.VMMETRICMAP.put(VmMeticBean.INFO_TYPE_DISKW, dimensionValue, vmname, jsonObj);	
+					} else if ("NetworkIn".equalsIgnoreCase(metricname)) {
+						String jsonText 		= getMetricStatisticsNetworkIn(dimensionValue, startTime, endTime);
+						JSONObject jsonObj 		= JSON.parseObject(jsonText).getJSONObject("getmetricstatisticsresponse");
+						UsageVmAnalyze.VMMETRICMAP.put(VmMeticBean.INFO_TYPE_NETI, dimensionValue, vmname, jsonObj);
+					} else if ("NetworkOut".equalsIgnoreCase(metricname)) {
+						String jsonText 		= getMetricStatisticsNetworkOut(dimensionValue, startTime, endTime);
+						JSONObject jsonObj 		= JSON.parseObject(jsonText).getJSONObject("getmetricstatisticsresponse");
+						UsageVmAnalyze.VMMETRICMAP.put(VmMeticBean.INFO_TYPE_NETO, dimensionValue, vmname, jsonObj);
+					}
+					
+					//UsageVmAnalyze.vmMeticMa.put("", value)
+					//System.out.println("vmname:" + vmname + ", metricname:" + metricname + ", unit:" + unit + ", dimensionValue:" + dimensionValue);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 테스트 MAIN
+networkIn:{
+  "getmetricstatisticsresponse" : {
+    "label" : "NetworkIn",
+    "count" : 1,
+    "metricstatistics" : [ {
+      "timestamp" : "2020-11-26T05:09:00.000",
+      "unit" : "Bytes",
+      "maximum" : 0.0,
+      "minimum" : 0.0,
+      "samplecount" : 0,
+      "sum" : 0.0,
+      "average" : 0.0
+    } ],
+    "responsemetadata" : {
+      "requestid" : "020ea0f1-31f9-41d4-9c5c-d95685dd4dc4"
+    }
+  }
+}
+networkOut:{
+  "getmetricstatisticsresponse" : {
+    "label" : "NetworkOut",
+    "count" : 1,
+    "metricstatistics" : [ {
+      "timestamp" : "2020-11-26T05:09:00.000",
+      "unit" : "Bytes",
+      "maximum" : 0.0,
+      "minimum" : 0.0,
+      "samplecount" : 0,
+      "sum" : 0.0,
+      "average" : 0.0
+    } ],
+    "responsemetadata" : {
+      "requestid" : "2d23e10f-1448-4b46-94d1-542968f6998c"
+    }
+  }
+}
+cpu:{
+  "getmetricstatisticsresponse" : {
+    "label" : "CPUUtilization",
+    "count" : 1,
+    "metricstatistics" : [ {
+      "timestamp" : "2020-11-26T05:09:00.000",
+      "unit" : "Percent",
+      "maximum" : 0.0,
+      "minimum" : 0.0,
+      "samplecount" : 0,
+      "sum" : 0.0,
+      "average" : 0.0
+    } ],
+    "responsemetadata" : {
+      "requestid" : "44d01b6a-99d0-4313-9fb9-498e32d7d227"
+    }
+  }
+}
+memory:{
+  "getmetricstatisticsresponse" : {
+    "label" : "MemoryInternalFree",
+    "count" : 1,
+    "metricstatistics" : [ {
+      "timestamp" : "2020-11-26T05:09:00.000",
+      "unit" : "Bytes",
+      "maximum" : 0.0,
+      "minimum" : 0.0,
+      "samplecount" : 0,
+      "sum" : 0.0,
+      "average" : 0.0
+    } ],
+    "responsemetadata" : {
+      "requestid" : "2e763113-c5a9-47e7-8472-ed202f5170dc"
+    }
+  }
+}
+
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		UsageVmAnalyze app 	= new UsageVmAnalyze();
+		try {
+			app.usageProcess();
+			
+			String listMetrics 	= app.listMetrics();
+			System.out.println("listMetrics:" + listMetrics);
+			
+			/*
+			String startTime 		= app.getCurrentTime(Calendar.MINUTE, -5);
+			String endTime 			= app.getCurrentTime(Calendar.MINUTE, 0);
+			
+			// 네트워크 인바운드 사용량
+			String networkIn 		= app.getMetricStatisticsNetworkIn("enc-cloud-portal-1(02f89ca2-26a2-4848-aa58-ffe901d00143)", startTime, endTime);
+			System.out.println("networkIn:" + networkIn);
+			
+			// 네트워크 아웃바운드 사용량
+			String networkOut 		= app.getMetricStatisticsNetworkOut("enc-cloud-portal-1(02f89ca2-26a2-4848-aa58-ffe901d00143)", startTime, endTime);
+			System.out.println("networkOut:" + networkOut);
+			
+			// CPU 사용량
+			String cpu 				= app.getMetricStatisticsCPUUtilization("enc-cloud-portal-1(02f89ca2-26a2-4848-aa58-ffe901d00143)", startTime, endTime);
+			System.out.println("cpu:" + cpu);
+			
+			// 메모리 사용량
+			String memory 			= app.getMetricStatisticsMemoryInternalFree("enc-cloud-portal-1(02f89ca2-26a2-4848-aa58-ffe901d00143)", startTime, endTime);
+			System.out.println("memory:" + memory);
+			*/
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

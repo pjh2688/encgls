@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enc.mapper.UserSQLMapper">
+	<insert id="insert" parameterType="JSON">
+		INSERT INTO USER (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			USERID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			PASSWORD, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(usernm)">
+			USERNM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			REGDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(statuscd)">
+			STATUSCD, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dropdt)">
+			DROPDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			MODIFYDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hphone)">
+			HPHONE, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(email)">
+			EMAIL, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ceonm)">
+			CEONM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_name)">
+			COMP_NAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(biznum)">
+			BIZNUM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cor_num)">
+			COR_NUM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_addr)">
+			COMP_ADDR, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_tel)">
+			COMP_TEL, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(approvaldt)">
+			APPROVALDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_fax)">
+			COMP_FAX, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktcloudid)">
+			KTCLOUDID, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			#{userid, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			#{password, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(usernm)">
+			#{usernm, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			#{regdt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(statuscd)">
+			#{statuscd, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dropdt)">
+			#{dropdt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			#{modifydt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hphone)">
+			#{hphone, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(email)">
+			#{email, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ceonm)">
+			#{ceonm, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_name)">
+			#{comp_name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(biznum)">
+			#{biznum, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cor_num)">
+			#{cor_num, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_addr)">
+			#{comp_addr, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_tel)">
+			#{comp_tel, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(approvaldt)">
+			#{approvaldt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_fax)">
+			#{comp_fax, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktcloudid)">
+			#{ktcloudid, jdbcType=VARCHAR}, 
+			</if>
+			
+		</trim>
+		)
+	</insert>
+	<select id="count" parameterType="JSON" resultType="java.lang.Integer">
+	SELECT
+		COUNT(*)
+	FROM USER
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			AND PASSWORD 				= #{password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(usernm)">
+			AND USERNM 				= #{usernm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(statuscd)">
+			AND STATUSCD 				= #{statuscd} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dropdt)">
+			AND DROPDT 				= #{dropdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hphone)">
+			AND HPHONE 				= #{hphone} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(email)">
+			AND EMAIL 				= #{email} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ceonm)">
+			AND CEONM 				= #{ceonm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_name)">
+			AND COMP_NAME 				= #{comp_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(biznum)">
+			AND BIZNUM 				= #{biznum} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cor_num)">
+			AND COR_NUM 				= #{cor_num} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_addr)">
+			AND COMP_ADDR 				= #{comp_addr} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_tel)">
+			AND COMP_TEL 				= #{comp_tel} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(approvaldt)">
+			AND APPROVALDT 				= #{approvaldt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_fax)">
+			AND COMP_FAX 				= #{comp_fax} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktcloudid)">
+			AND KTCLOUDID 				= #{ktcloudid} 
+		</if>
+		
+	</where>
+	</select>
+	<select id="select" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  USERID
+			, PASSWORD
+			, USERNM
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, STATUSCD
+			, DATE_FORMAT(DROPDT, '%Y-%m-%d %H:%i:%s') AS DROPDT
+			, DATE_FORMAT(MODIFYDT, '%Y-%m-%d %H:%i:%s') AS MODIFYDT
+			, HPHONE
+			, EMAIL
+			, CEONM
+			, COMP_NAME
+			, BIZNUM
+			, COR_NUM
+			, COMP_ADDR
+			, COMP_TEL
+			, DATE_FORMAT(APPROVALDT, '%Y-%m-%d %H:%i:%s') AS APPROVALDT
+			, COMP_FAX
+			, KTCLOUDID
+			
+	FROM USER
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			AND PASSWORD 				= #{password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(usernm)">
+			AND USERNM 				= #{usernm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(statuscd)">
+			AND STATUSCD 				= #{statuscd} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dropdt)">
+			AND DROPDT 				= #{dropdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hphone)">
+			AND HPHONE 				= #{hphone} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(email)">
+			AND EMAIL 				= #{email} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ceonm)">
+			AND CEONM 				= #{ceonm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_name)">
+			AND COMP_NAME 				= #{comp_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(biznum)">
+			AND BIZNUM 				= #{biznum} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cor_num)">
+			AND COR_NUM 				= #{cor_num} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_addr)">
+			AND COMP_ADDR 				= #{comp_addr} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_tel)">
+			AND COMP_TEL 				= #{comp_tel} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(approvaldt)">
+			AND APPROVALDT 				= #{approvaldt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_fax)">
+			AND COMP_FAX 				= #{comp_fax} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktcloudid)">
+			AND KTCLOUDID 				= #{ktcloudid} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_dynamic" parameterType="JSON" resultType="JSON">
+	SELECT 
+        <foreach collection="fieldset" item="field" index="index" separator=",">
+            ${field}
+        </foreach>
+	FROM USER
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			AND PASSWORD 				= #{password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(usernm)">
+			AND USERNM 				= #{usernm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(statuscd)">
+			AND STATUSCD 				= #{statuscd} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dropdt)">
+			AND DROPDT 				= #{dropdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hphone)">
+			AND HPHONE 				= #{hphone} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(email)">
+			AND EMAIL 				= #{email} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ceonm)">
+			AND CEONM 				= #{ceonm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_name)">
+			AND COMP_NAME 				= #{comp_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(biznum)">
+			AND BIZNUM 				= #{biznum} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cor_num)">
+			AND COR_NUM 				= #{cor_num} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_addr)">
+			AND COMP_ADDR 				= #{comp_addr} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_tel)">
+			AND COMP_TEL 				= #{comp_tel} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(approvaldt)">
+			AND APPROVALDT 				= #{approvaldt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_fax)">
+			AND COMP_FAX 				= #{comp_fax} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktcloudid)">
+			AND KTCLOUDID 				= #{ktcloudid} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_row" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  USERID
+			, PASSWORD
+			, USERNM
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, STATUSCD
+			, DATE_FORMAT(DROPDT, '%Y-%m-%d %H:%i:%s') AS DROPDT
+			, DATE_FORMAT(MODIFYDT, '%Y-%m-%d %H:%i:%s') AS MODIFYDT
+			, HPHONE
+			, EMAIL
+			, CEONM
+			, COMP_NAME
+			, BIZNUM
+			, COR_NUM
+			, COMP_ADDR
+			, COMP_TEL
+			, DATE_FORMAT(APPROVALDT, '%Y-%m-%d %H:%i:%s') AS APPROVALDT
+			, COMP_FAX
+			, KTCLOUDID
+			
+	FROM USER
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			AND PASSWORD 				= #{password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(usernm)">
+			AND USERNM 				= #{usernm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(statuscd)">
+			AND STATUSCD 				= #{statuscd} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(dropdt)">
+			AND DROPDT 				= #{dropdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hphone)">
+			AND HPHONE 				= #{hphone} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(email)">
+			AND EMAIL 				= #{email} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ceonm)">
+			AND CEONM 				= #{ceonm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_name)">
+			AND COMP_NAME 				= #{comp_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(biznum)">
+			AND BIZNUM 				= #{biznum} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cor_num)">
+			AND COR_NUM 				= #{cor_num} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_addr)">
+			AND COMP_ADDR 				= #{comp_addr} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_tel)">
+			AND COMP_TEL 				= #{comp_tel} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(approvaldt)">
+			AND APPROVALDT 				= #{approvaldt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(comp_fax)">
+			AND COMP_FAX 				= #{comp_fax} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktcloudid)">
+			AND KTCLOUDID 				= #{ktcloudid} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	LIMIT 1
+	</select>
+	<update id="update" parameterType="JSON">
+		UPDATE USER
+		<set>
+		<if test="_parameter.containsKey('password')">
+			PASSWORD 				= #{password}, 
+		</if>
+		<if test="_parameter.containsKey('usernm')">
+			USERNM 				= #{usernm}, 
+		</if>
+		<if test="_parameter.containsKey('regdt')">
+			REGDT 				= #{regdt}, 
+		</if>
+		<if test="_parameter.containsKey('statuscd')">
+			STATUSCD 				= #{statuscd}, 
+		</if>
+		<if test="_parameter.containsKey('dropdt')">
+			DROPDT 				= #{dropdt}, 
+		</if>
+		<if test="_parameter.containsKey('modifydt')">
+			MODIFYDT 				= #{modifydt}, 
+		</if>
+		<if test="_parameter.containsKey('hphone')">
+			HPHONE 				= #{hphone}, 
+		</if>
+		<if test="_parameter.containsKey('email')">
+			EMAIL 				= #{email}, 
+		</if>
+		<if test="_parameter.containsKey('ceonm')">
+			CEONM 				= #{ceonm}, 
+		</if>
+		<if test="_parameter.containsKey('comp_name')">
+			COMP_NAME 				= #{comp_name}, 
+		</if>
+		<if test="_parameter.containsKey('biznum')">
+			BIZNUM 				= #{biznum}, 
+		</if>
+		<if test="_parameter.containsKey('cor_num')">
+			COR_NUM 				= #{cor_num}, 
+		</if>
+		<if test="_parameter.containsKey('comp_addr')">
+			COMP_ADDR 				= #{comp_addr}, 
+		</if>
+		<if test="_parameter.containsKey('comp_tel')">
+			COMP_TEL 				= #{comp_tel}, 
+		</if>
+		<if test="_parameter.containsKey('approvaldt')">
+			APPROVALDT 				= #{approvaldt}, 
+		</if>
+		<if test="_parameter.containsKey('comp_fax')">
+			COMP_FAX 				= #{comp_fax}, 
+		</if>
+		<if test="_parameter.containsKey('ktcloudid')">
+			KTCLOUDID 				= #{ktcloudid}, 
+		</if>
+		
+		</set>
+		WHERE USERID 		= #{userid}
+	</update>
+	<delete id="delete" parameterType="JSON">
+		DELETE FROM USER
+		WHERE USERID 		= #{userid}
+	</delete>
+</mapper>

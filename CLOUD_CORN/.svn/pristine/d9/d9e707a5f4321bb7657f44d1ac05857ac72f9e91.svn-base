@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='MAIN'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="/front/inc_head"></th:block>
+
+<body>
+	<th:block th:include="/front/inc_topmenu"></th:block>
+
+  	<!-- Hero Section : e -->
+	<!-- main : s -->
+	<div id="main">
+		<!-- .breadcrumbs : s-->
+    	<section class="breadcrumbs">
+        	<h2>클라우드(SasS) WMS 요금체계</h2>
+    	</section>
+ 		<!-- .breadcrumbs : e-->
+ 		
+ 		<!-- Pricing Section : s -->
+    	<section id="pricing" class="pricing">
+      		<div class="container" data-aos="fade-up">
+
+        		<div class="section-title">
+          			<h2>CORN 요금제</h2>
+          			<p>SaaS 기반의 WMS 솔루션 CORN은 설치 비용이 없습니다.</p>
+          			<p>사용자가 선택한 서비스 버전에 따라 사용한 만큼만 서비스 이용료가 발생합니다.</p>
+        		</div>
+
+        		<div class="row">
+          			<div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            			<div class="box">
+              				<h3>라이트 6</h3>
+              				<h4><sup>₩</sup>600,000<span> / 월 이용료</span></h4>
+              				<ul>
+                				<h4><sup>건</sup>10,000<span> / 월간 출고량(Box)</span></h4>
+                				<h5>추가 서비스</h5>
+                				<li>블록체인 서비스<br/></li>
+                  				<li>IoT 실내측위 서비스</li>
+                  
+              				</ul>
+            			</div>
+         			</div>
+         			
+         			<div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            			<div class="box">
+              				<h3>라이트 8</h3>
+              				<h4><sup>₩</sup>800,000<span> / 월 이용료</span></h4>
+              				<ul>
+                				<h4><sup>건</sup>50,000<span> / 월간 출고량(Box)</span></h4>
+                				<h5>추가 서비스</h5>
+                				<li>블록체인 서비스</li>
+                  				<li>IoT 실내측위 서비스</li>
+                  
+              				</ul>
+            			</div>
+         			</div>
+         			
+         			<div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            			<div class="box">
+              				<h3>라이트 10</h3>
+              				<h4><sup>₩</sup>1,000,000<span> / 월 이용료</span></h4>
+              				<ul>
+                				<h4><sup>건</sup>100,000<span> / 월간 출고량(Box)</span></h4>
+                				<h5>추가 서비스</h5>
+                				<li>블록체인 서비스</li>
+                  				<li>IoT 실내측위 서비스</li>
+                  
+              				</ul>
+            			</div>
+         			</div>
+
+          			<div class="col-lg-3 col-md-6 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
+            			<div class="box">
+              				<span class="advanced">Advanced</span>
+              				<h3>프리미엄</h3>
+              				<h4><sup>₩</sup>1,500,000<span> / 월 이용료(+별도 협의)</span></h4>
+              				<ul>
+                				<h4><sup>건</sup>100,000+<span> / 월간 출고량(Box)</span></h4>
+                				<h5>추가 서비스</h5>
+                				<li>블록체인 서비스</li>
+                				<li>IoT 실내측위 서비스</li>
+                			</ul>
+                		</div>
+          			</div>
+          			
+        		</div>
+      		</div>
+    	</section>
+        <!-- Pricing Section : e -->			
+        
+        <!-- Add Pricing Section : s -->
+    	<section class="services1" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+      		<div class="container">
+        		<div class="row">
+         	    	<div class="col-lg-12">
+            			<form>
+                			<div class="accordion" id="accordionExample">
+                			
+                  				<div class="card">
+                  				
+                    				<div class="card-header" id="headingOne">
+                      					<h2 class="mb-0">
+                        					<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">선택 추가 서비스 요금</button>
+                      					</h2>
+                    				</div>
+                
+                    				<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                      					<div class="card-body">
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">* 블록체인 서비스 요금 : 월 100만원 (VAT 별도)</span>
+                        					</p>
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">* IoT 실내측위 서비스 요금</span>
+                        					</p>
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">- System 구축/운영비 : 월 7만원</span>
+                        					</p>
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">- 실내측위 단말기(Beacon) 구입/설치비 : 70만원 100평당(330m²)</span>
+                        					</p> 
+                      					</div>
+                    				</div>
+                    				
+                  				</div>
+                  				
+                			</div>
+             			</form>
+           			</div>
+        		</div>
+      		</div>
+    	</section>
+    	<!-- Add Pricing Section : e -->
+ 		
+ 		<!-- Clients Section : s -->
+    	<section id="clients" class="clients">
+    		<div class="container">
+
+        		<div class="section-title">
+          			<h2>고객사</h2>
+          			<p>오랜 시간 고객과의 두터운 신뢰관계는 가장 큰 자산입니다.</p>
+        		</div>
+
+        		<div class="owl-carousel clients-carousel">
+            		<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>	
+            		<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-3.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-4.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-5.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-6.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-7.png" alt=""></a>
+          		</div>
+      		</div>
+    	</section>
+		<!-- Clients Section : e -->
+	</div>
+	<!-- main : e -->
+
+	<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+	<th:block th:include="/front/inc_footer"></th:block>
+</body>
+</html>

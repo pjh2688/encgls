@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enc.mapper.VmmonitorSQLMapper">
+	<insert id="insert" parameterType="JSON">
+		INSERT INTO VMMONITOR (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hostname)">
+			HOSTNAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tophostname)">
+			TOPHOSTNAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_total)">
+			MEMORY_TOTAL, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_used)">
+			MEMORY_USED, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_percent)">
+			MEMORY_PERCENT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cpu_percent)">
+			CPU_PERCENT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_total)">
+			DISK_TOTAL, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_used)">
+			DISK_USED, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_percent)">
+			DISK_PERCENT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			MODIFYDT, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hostname)">
+			#{hostname, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tophostname)">
+			#{tophostname, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_total)">
+			#{memory_total, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_used)">
+			#{memory_used, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_percent)">
+			#{memory_percent, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cpu_percent)">
+			#{cpu_percent, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_total)">
+			#{disk_total, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_used)">
+			#{disk_used, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_percent)">
+			#{disk_percent, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			#{modifydt, jdbcType=VARCHAR}, 
+			</if>
+			
+		</trim>
+		)
+	</insert>
+	<insert id="insertORupdate" parameterType="JSON">
+		INSERT INTO VMMONITOR (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hostname)">
+			HOSTNAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tophostname)">
+			TOPHOSTNAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_total)">
+			MEMORY_TOTAL, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_used)">
+			MEMORY_USED, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_percent)">
+			MEMORY_PERCENT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cpu_percent)">
+			CPU_PERCENT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_total)">
+			DISK_TOTAL, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_used)">
+			DISK_USED, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_percent)">
+			DISK_PERCENT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			MODIFYDT, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hostname)">
+			#{hostname, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tophostname)">
+			#{tophostname, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_total)">
+			#{memory_total, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_used)">
+			#{memory_used, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_percent)">
+			#{memory_percent, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cpu_percent)">
+			#{cpu_percent, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_total)">
+			#{disk_total, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_used)">
+			#{disk_used, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_percent)">
+			#{disk_percent, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			#{modifydt, jdbcType=VARCHAR}, 
+			</if>
+			
+		</trim>
+		) ON DUPLICATE KEY UPDATE
+		<trim prefix="" suffixOverrides=",">
+		<if test="_parameter.containsKey('tophostname')">
+			TOPHOSTNAME 				= #{tophostname}, 
+		</if>
+		<if test="_parameter.containsKey('memory_total')">
+			MEMORY_TOTAL 				= #{memory_total}, 
+		</if>
+		<if test="_parameter.containsKey('memory_used')">
+			MEMORY_USED 				= #{memory_used}, 
+		</if>
+		<if test="_parameter.containsKey('memory_percent')">
+			MEMORY_PERCENT 				= #{memory_percent}, 
+		</if>
+		<if test="_parameter.containsKey('cpu_percent')">
+			CPU_PERCENT 				= #{cpu_percent}, 
+		</if>
+		<if test="_parameter.containsKey('disk_total')">
+			DISK_TOTAL 				= #{disk_total}, 
+		</if>
+		<if test="_parameter.containsKey('disk_used')">
+			DISK_USED 				= #{disk_used}, 
+		</if>
+		<if test="_parameter.containsKey('disk_percent')">
+			DISK_PERCENT 				= #{disk_percent}, 
+		</if>
+		<if test="_parameter.containsKey('modifydt')">
+			MODIFYDT 				= #{modifydt}, 
+		</if>
+		</trim>
+	</insert>
+	
+	
+	
+	
+	<select id="count" parameterType="JSON" resultType="java.lang.Integer">
+	SELECT
+		COUNT(*)
+	FROM VMMONITOR
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hostname)">
+			AND HOSTNAME 				= #{hostname} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tophostname)">
+			AND TOPHOSTNAME 				= #{tophostname} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_total)">
+			AND MEMORY_TOTAL 				= #{memory_total} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_used)">
+			AND MEMORY_USED 				= #{memory_used} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_percent)">
+			AND MEMORY_PERCENT 				= #{memory_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cpu_percent)">
+			AND CPU_PERCENT 				= #{cpu_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_total)">
+			AND DISK_TOTAL 				= #{disk_total} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_used)">
+			AND DISK_USED 				= #{disk_used} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_percent)">
+			AND DISK_PERCENT 				= #{disk_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		
+	</where>
+	</select>
+	<select id="select" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  HOSTNAME
+			, TOPHOSTNAME
+			, MEMORY_TOTAL
+			, MEMORY_USED
+			, MEMORY_PERCENT
+			, CPU_PERCENT
+			, DISK_TOTAL
+			, DISK_USED
+			, DISK_PERCENT
+			, DATE_FORMAT(MODIFYDT, '%Y-%m-%d %H:%i:%s') AS MODIFYDT
+			
+	FROM VMMONITOR
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hostname)">
+			AND HOSTNAME 				= #{hostname} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tophostname)">
+			AND TOPHOSTNAME 				= #{tophostname} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_total)">
+			AND MEMORY_TOTAL 				= #{memory_total} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_used)">
+			AND MEMORY_USED 				= #{memory_used} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_percent)">
+			AND MEMORY_PERCENT 				= #{memory_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cpu_percent)">
+			AND CPU_PERCENT 				= #{cpu_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_total)">
+			AND DISK_TOTAL 				= #{disk_total} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_used)">
+			AND DISK_USED 				= #{disk_used} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_percent)">
+			AND DISK_PERCENT 				= #{disk_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_dynamic" parameterType="JSON" resultType="JSON">
+	SELECT 
+        <foreach collection="fieldset" item="field" index="index" separator=",">
+            ${field}
+        </foreach>
+	FROM VMMONITOR
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hostname)">
+			AND HOSTNAME 				= #{hostname} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tophostname)">
+			AND TOPHOSTNAME 				= #{tophostname} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_total)">
+			AND MEMORY_TOTAL 				= #{memory_total} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_used)">
+			AND MEMORY_USED 				= #{memory_used} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_percent)">
+			AND MEMORY_PERCENT 				= #{memory_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cpu_percent)">
+			AND CPU_PERCENT 				= #{cpu_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_total)">
+			AND DISK_TOTAL 				= #{disk_total} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_used)">
+			AND DISK_USED 				= #{disk_used} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_percent)">
+			AND DISK_PERCENT 				= #{disk_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_row" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  HOSTNAME
+			, TOPHOSTNAME
+			, MEMORY_TOTAL
+			, MEMORY_USED
+			, MEMORY_PERCENT
+			, CPU_PERCENT
+			, DISK_TOTAL
+			, DISK_USED
+			, DISK_PERCENT
+			, DATE_FORMAT(MODIFYDT, '%Y-%m-%d %H:%i:%s') AS MODIFYDT
+			
+	FROM VMMONITOR
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hostname)">
+			AND HOSTNAME 				= #{hostname} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(tophostname)">
+			AND TOPHOSTNAME 				= #{tophostname} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_total)">
+			AND MEMORY_TOTAL 				= #{memory_total} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_used)">
+			AND MEMORY_USED 				= #{memory_used} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(memory_percent)">
+			AND MEMORY_PERCENT 				= #{memory_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cpu_percent)">
+			AND CPU_PERCENT 				= #{cpu_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_total)">
+			AND DISK_TOTAL 				= #{disk_total} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_used)">
+			AND DISK_USED 				= #{disk_used} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(disk_percent)">
+			AND DISK_PERCENT 				= #{disk_percent} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	LIMIT 1
+	</select>
+	<update id="update" parameterType="JSON">
+		UPDATE VMMONITOR
+		<set>
+		<if test="_parameter.containsKey('tophostname')">
+			TOPHOSTNAME 				= #{tophostname}, 
+		</if>
+		<if test="_parameter.containsKey('memory_total')">
+			MEMORY_TOTAL 				= #{memory_total}, 
+		</if>
+		<if test="_parameter.containsKey('memory_used')">
+			MEMORY_USED 				= #{memory_used}, 
+		</if>
+		<if test="_parameter.containsKey('memory_percent')">
+			MEMORY_PERCENT 				= #{memory_percent}, 
+		</if>
+		<if test="_parameter.containsKey('cpu_percent')">
+			CPU_PERCENT 				= #{cpu_percent}, 
+		</if>
+		<if test="_parameter.containsKey('disk_total')">
+			DISK_TOTAL 				= #{disk_total}, 
+		</if>
+		<if test="_parameter.containsKey('disk_used')">
+			DISK_USED 				= #{disk_used}, 
+		</if>
+		<if test="_parameter.containsKey('disk_percent')">
+			DISK_PERCENT 				= #{disk_percent}, 
+		</if>
+		<if test="_parameter.containsKey('modifydt')">
+			MODIFYDT 				= #{modifydt}, 
+		</if>
+		
+		</set>
+		WHERE HOSTNAME 		= #{hostname}
+	</update>
+	<delete id="delete" parameterType="JSON">
+		DELETE FROM VMMONITOR
+		WHERE HOSTNAME 		= #{hostname}
+	</delete>
+</mapper>

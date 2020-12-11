@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='04', TPSUB='04'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>클라우드 : CORN</title>
+  
+  <link href="/assets/css/board.css" rel="stylesheet">
+  <link href="/assets/css/basic.css" rel="stylesheet">
+  
+  <th:block th:include="/front/inc_header"></th:block>
+</head>
+<body>
+<th:block th:include="/front/inc_topmenu"></th:block>	
+																														
+<!-- Start #main -->
+<main id="main">
+    
+    <section class="breadcrumbs">
+        <h2>공실정보</h2>
+    </section><!-- End Our Portfolio Section -->
+    
+    <section class="blog" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+    	<div class="container">
+        	<div class="row">
+            	<div class="col-lg-12 entries">
+            		<div class="real-cont" style="padding: 38px 0;">
+            		
+                		<table class="table table-hover" id="tbl_list">
+                    		<thead class="thead-light">
+                        		<tr>
+                                	<th scope="col" style="width: %;">번호</th>
+                                	<th scope="col">센터명</th>
+                                	<th scope="col" style="width: 10%;">센터유형</th>
+                                	<th scope="col" style="width: 8%;"6>센터면적</th>
+                                	<th scope="col" style="width: 10%;">공개시작일</th>
+                                	<th scope="col" style="width: 10%;">공개종료일</th>
+                                	<th scope="col" style="width: 8%;">총로케이션CBM</th>
+                                	<th scope="col" style="width: 8%;">총로케이션수</th>
+                                	<th scope="col" style="width: 10%;">미사용로케이션CBM</th>
+                                	<th scope="col" style="width: 8%;">미사용로케이션수</th>
+                            	</tr>
+                        	</thead>
+                        	<tbody>
+                        		<tr th:each="board : ${list}">
+                            		<td>1</td>
+                                	<td th:text="${board.DCT_CD}">여긴 센터 코드로 센터 명을 가져온다.</td>
+                               	 	<td th:text="${board.VC_TEMP}">센터보관유형</td>
+                                	<td th:text="${board.VC_SQA}">센터면적</td>
+                                	<td th:text="${board.APPLY_STARTDT}">공개시작일이에요</td>
+                                	<td th:text="${board.APPLY_ENDDT}">공개종료일이에요</td>
+                                	<td th:text="${board.TOT_LOC_CBM}">총로케이션CBM</td>
+                                	<td th:text="${board.TOT_LOC_COUNT}">총로케이션수</td>
+                                	<td th:text="${board.NOT_USE_LOC_CBM}">미사용로케이션CBM</td>
+                                	<td th:text="${board.NOT_USE_LOC_COUNT}">미사용로케이션수</td>
+                            	</tr>
+                         	</tbody>
+                    	</table>
+                     
+                    	<!-- .paginate : s -->
+						<div class="paginate" th:with="start=${page.getStartPage()}, end=${page.getEndPage()}">
+							<!-- 왼쪽 화살표 -->
+							<a class="direction first" th:if="${!page.prev}" th:href="@{/front/04/04}">&laquo;</a>
+						
+							<!-- 페이징 -->
+							<a th:each="page : ${#numbers.sequence(start,end)}" th:text="${page}" th:href="@{/front/04/04(pageNum=${page})}"></a>
+						
+							<!-- 오른쪽 화살표 -->
+							<a class="direction last" th:if="${page.next}" th:href="@{/front/04/04(pageNum=${page.getPageNum()+1})}">&raquo;</a>
+						</div>
+						<!-- .paginate : e -->
+                          
+                    	<!-- .board-search : s -->
+						<div class="board-search">
+							<div class="search">
+								<form name="form1" method="get" action="#">
+									<input type="hidden" name="boardid" value="faq" title="게시판 아이디">
+									<input type="hidden" name="category" value="" title="카테고리">
+									<input type="hidden" name="goPage" value="" title="카테고리">
+									<input type="hidden" name="g_idx" value="" title="카테고리">
+									<label for="bbsOption" class="hide">검색옵션</label> 
+									<select name="sw" class="select" id="bbsOption" title="검색 구분 선택">
+										<option value='a'>센터명</option>
+									</select> 
+									<label for="keyword" class="hide">검색어</label>
+									<input type="text" name="sk" value="" id="keyword" class="input" placeholder="센터명을 입력해주세요."> 
+									<input type="submit" value="검색하기" class="btn-pack btn">
+								</form>
+							</div>
+						</div>
+						<!-- .board-search : e -->
+					</div>
+          	  	</div>    
+       		</div>
+      	</div>
+    </section>
+
+
+<form id="form_find" name="form_find">
+  <input type="hidden" name="cpage" id="cpage" value="1"/>
+</form>
+</main>
+<!-- End #main -->
+
+<th:block th:include="/front/inc_footer"></th:block>
+</body>
+
+</html>

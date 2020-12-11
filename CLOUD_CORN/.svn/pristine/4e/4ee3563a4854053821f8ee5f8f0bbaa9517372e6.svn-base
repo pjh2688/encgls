@@ -1,0 +1,131 @@
+package com.enc.dto;
+
+public class CloudWmptLoc {
+
+	String DCT_CD;
+	int TOT_LOC_CBM;
+	int TOT_LOC_COUNT;
+	int USE_LOC_CBM;
+	int USE_LOC_COUNT;
+	int NOT_USE_LOC_CBM;
+	int NOT_USE_LOC_COUNT;
+	String REG_USER;
+	String USERID;
+	String VC_TEMP;
+	String VC_SQA;
+	String APPLY_STARTDT;
+	String APPLY_ENDDT;
+	
+	public CloudWmptLoc() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getDCT_CD() {
+		return DCT_CD;
+	}
+
+	public void setDCT_CD(String dCT_CD) {
+		DCT_CD = dCT_CD;
+	}
+
+	public int getTOT_LOC_CBM() {
+		return TOT_LOC_CBM;
+	}
+
+	public void setTOT_LOC_CBM(int tOT_LOC_CBM) {
+		TOT_LOC_CBM = tOT_LOC_CBM;
+	}
+
+	public int getTOT_LOC_COUNT() {
+		return TOT_LOC_COUNT;
+	}
+
+	public void setTOT_LOC_COUNT(int tOT_LOC_COUNT) {
+		TOT_LOC_COUNT = tOT_LOC_COUNT;
+	}
+
+	public int getUSE_LOC_CBM() {
+		return USE_LOC_CBM;
+	}
+
+	public void setUSE_LOC_CBM(int uSE_LOC_CBM) {
+		USE_LOC_CBM = uSE_LOC_CBM;
+	}
+
+	public int getUSE_LOC_COUNT() {
+		return USE_LOC_COUNT;
+	}
+
+	public void setUSE_LOC_COUNT(int uSE_LOC_COUNT) {
+		USE_LOC_COUNT = uSE_LOC_COUNT;
+	}
+
+	public int getNOT_USE_LOC_CBM() {
+		return NOT_USE_LOC_CBM;
+	}
+
+	public void setNOT_USE_LOC_CBM(int nOT_USE_LOC_CBM) {
+		NOT_USE_LOC_CBM = nOT_USE_LOC_CBM;
+	}
+
+	public int getNOT_USE_LOC_COUNT() {
+		return NOT_USE_LOC_COUNT;
+	}
+
+	public void setNOT_USE_LOC_COUNT(int nOT_USE_LOC_COUNT) {
+		NOT_USE_LOC_COUNT = nOT_USE_LOC_COUNT;
+	}
+
+	public String getREG_USER() {
+		return REG_USER;
+	}
+
+	public void setREG_USER(String rEG_USER) {
+		REG_USER = rEG_USER;
+	}
+
+	public String getUSERID() {
+		return USERID;
+	}
+
+	public void setUSERID(String uSERID) {
+		USERID = uSERID;
+	}
+
+	public String getVC_TEMP() {
+		return VC_TEMP;
+	}
+
+	public void setVC_TEMP(String vC_TEMP) {
+		VC_TEMP = vC_TEMP;
+	}
+
+	public String getVC_SQA() {
+		return VC_SQA;
+	}
+
+	public void setVC_SQA(String vC_SQA) {
+		VC_SQA = vC_SQA;
+	}
+
+	public String getAPPLY_STARTDT() {
+		return APPLY_STARTDT;
+	}
+
+	public void setAPPLY_STARTDT(String aPPLY_STARTDT) {
+		APPLY_STARTDT = aPPLY_STARTDT;
+	}
+
+	public String getAPPLY_ENDDT() {
+		return APPLY_ENDDT;
+	}
+
+	public void setAPPLY_ENDDT(String aPPLY_ENDDT) {
+		APPLY_ENDDT = aPPLY_ENDDT;
+	}
+	
+	
+	
+	
+
+}

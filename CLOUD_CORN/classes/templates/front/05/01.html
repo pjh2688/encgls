@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='05', TPSUB='01'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>corn</title>
+  <th:block th:include="/front/inc_head"></th:block>
+</head>
+<body>
+<th:block th:include="/front/inc_topmenu"></th:block>
+
+<!-- Start #main -->
+<div id="main">
+	<!-- ======= Board write ======= -->
+    <section class="breadcrumbs">
+        <h2>회사 소개</h2>
+    </section><!-- End Our Portfolio Section -->
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<!-- .real-cont : s -->
+				<div class="real-cont">
+					<img src="/images/sub/sub01_n.jpg" width="100%" style="padding: 50px 0;" />
+				</div>
+				<!-- .real-cont : e -->
+        	</div>
+   		 </div>
+	</div>
+</div>
+<!-- End #main -->
+
+<th:block th:include="/front/inc_footer"></th:block>
+</body>
+</html>

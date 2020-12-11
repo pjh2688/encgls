@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="jdbcTypeForNull" value="NULL"/>
+        <setting name="safeResultHandlerEnabled" value="false"/>
+    </settings>
+    
+    <typeAliases>
+        <typeAlias alias="JSON" type="com.alibaba.fastjson.JSONObject"/>
+        <typeAlias alias="JSONArray" type="com.alibaba.fastjson.JSONArray"/>
+    </typeAliases>
+
+	<!-- 
+	<typeHandlers>
+		<typeHandler handler="com.typhoon.framework.json.JSONObjectTypeHandler" javaType="com.alibaba.fastjson.JSONObject"/>
+		<typeHandler handler="com.typhoon.framework.json.JSONArrayTypeHandler" javaType="com.alibaba.fastjson.JSONArray"/>
+	</typeHandlers>
+	-->
+</configuration>

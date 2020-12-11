@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enc.mapper.ServiceCloudSQLMapper">
+	<insert id="insert" parameterType="JSON">
+		INSERT INTO SERVICE_CLOUD (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ip)">
+			CLOUD_L4_PUBLIC_IP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ipid)">
+			CLOUD_L4_PUBLIC_IPID, 
+			</if>
+
+		
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_db_vmip)">
+			CLOUD_DB_VMIP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_vmip)">
+			CLOUD_L4_VMIP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_default_vmip)">
+			CLOUD_WASVM_DEFAULT_VMIP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_host_name)">
+			CLOUD_WASVM_HOST_NAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_host_name)">
+			CLOUD_DBVM_HOST_NAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_vmgrp)">
+			CLOUD_VMGRP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_grpnm)">
+			CLOUD_AUTOSCALE_GRPNM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			USERID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			CONT_NO, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_policy)">
+			CLOUD_AUTOSCALE_POLICY, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_osinfo)">
+			CLOUD_DBVM_OSINFO, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_password)">
+			CLOUD_DBVM_PASSWORD, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_templatename)">
+			CLOUD_DBVM_TEMPLATENAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_templatename)">
+			CLOUD_WASVM_TEMPLATENAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_password)">
+			CLOUD_WASVM_PASSWORD, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_osinfo)">
+			CLOUD_WASVM_OSINFO, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_name)">
+			CLOUD_L4_NAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_loadbalancerid)">
+			CLOUD_L4_LOADBALANCERID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_id)">
+			CLOUD_DBVM_ID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_id)">
+			CLOUD_WASVM_ID, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ip)">
+			#{cloud_l4_public_ip, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ipid)">
+			#{cloud_l4_public_ipid, jdbcType=VARCHAR}, 
+			</if>
+			
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_db_vmip)">
+			#{cloud_db_vmip, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_vmip)">
+			#{cloud_l4_vmip, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_default_vmip)">
+			#{cloud_wasvm_default_vmip, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_host_name)">
+			#{cloud_wasvm_host_name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_host_name)">
+			#{cloud_dbvm_host_name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_vmgrp)">
+			#{cloud_vmgrp, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_grpnm)">
+			#{cloud_autoscale_grpnm, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			#{userid, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			#{cont_no, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_policy)">
+			#{cloud_autoscale_policy, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_osinfo)">
+			#{cloud_dbvm_osinfo, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_password)">
+			#{cloud_dbvm_password, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_templatename)">
+			#{cloud_dbvm_templatename, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_templatename)">
+			#{cloud_wasvm_templatename, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_password)">
+			#{cloud_wasvm_password, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_osinfo)">
+			#{cloud_wasvm_osinfo, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_name)">
+			#{cloud_l4_name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_loadbalancerid)">
+			#{cloud_l4_loadbalancerid, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_id)">
+			#{cloud_dbvm_id, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_id)">
+			#{cloud_wasvm_id, jdbcType=VARCHAR}, 
+			</if>
+			
+		</trim>
+		)
+	</insert>
+	<select id="count" parameterType="JSON" resultType="java.lang.Integer">
+	SELECT
+		COUNT(*)
+	FROM SERVICE_CLOUD
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ip)">
+			AND CLOUD_L4_PUBLIC_IP 				= #{cloud_l4_public_ip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ipid)">
+			AND CLOUD_L4_PUBLIC_IPID 				= #{cloud_l4_public_ipid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_db_vmip)">
+			AND CLOUD_DB_VMIP 				= #{cloud_db_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_vmip)">
+			AND CLOUD_L4_VMIP 				= #{cloud_l4_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_default_vmip)">
+			AND CLOUD_WASVM_DEFAULT_VMIP 				= #{cloud_wasvm_default_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_host_name)">
+			AND CLOUD_WASVM_HOST_NAME 				= #{cloud_wasvm_host_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_host_name)">
+			AND CLOUD_DBVM_HOST_NAME 				= #{cloud_dbvm_host_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_vmgrp)">
+			AND CLOUD_VMGRP 				= #{cloud_vmgrp} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_grpnm)">
+			AND CLOUD_AUTOSCALE_GRPNM 				= #{cloud_autoscale_grpnm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_policy)">
+			AND CLOUD_AUTOSCALE_POLICY 				= #{cloud_autoscale_policy} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_osinfo)">
+			AND CLOUD_DBVM_OSINFO 				= #{cloud_dbvm_osinfo} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_password)">
+			AND CLOUD_DBVM_PASSWORD 				= #{cloud_dbvm_password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_templatename)">
+			AND CLOUD_DBVM_TEMPLATENAME 				= #{cloud_dbvm_templatename} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_templatename)">
+			AND CLOUD_WASVM_TEMPLATENAME 				= #{cloud_wasvm_templatename} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_password)">
+			AND CLOUD_WASVM_PASSWORD 				= #{cloud_wasvm_password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_osinfo)">
+			AND CLOUD_WASVM_OSINFO 				= #{cloud_wasvm_osinfo} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_name)">
+			AND CLOUD_L4_NAME 				= #{cloud_l4_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_loadbalancerid)">
+			AND CLOUD_L4_LOADBALANCERID 				= #{cloud_l4_loadbalancerid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_id)">
+			AND CLOUD_DBVM_ID 				= #{cloud_dbvm_id} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_id)">
+			AND CLOUD_WASVM_ID 				= #{cloud_wasvm_id} 
+		</if>
+		
+	</where>
+	</select>
+	<select id="select" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  CLOUD_L4_PUBLIC_IP
+		    , CLOUD_L4_PUBLIC_IPID
+			, CLOUD_DB_VMIP
+			, CLOUD_L4_VMIP
+			, CLOUD_WASVM_DEFAULT_VMIP
+			, CLOUD_WASVM_HOST_NAME
+			, CLOUD_DBVM_HOST_NAME
+			, CLOUD_VMGRP
+			, CLOUD_AUTOSCALE_GRPNM
+			, USERID
+			, CONT_NO
+			, CLOUD_AUTOSCALE_POLICY
+			, CLOUD_DBVM_OSINFO
+			, CLOUD_DBVM_PASSWORD
+			, CLOUD_DBVM_TEMPLATENAME
+			, CLOUD_WASVM_TEMPLATENAME
+			, CLOUD_WASVM_PASSWORD
+			, CLOUD_WASVM_OSINFO
+			, CLOUD_L4_NAME
+			, CLOUD_L4_LOADBALANCERID
+			, CLOUD_DBVM_ID
+			, CLOUD_WASVM_ID
+			
+	FROM SERVICE_CLOUD
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ip)">
+			AND CLOUD_L4_PUBLIC_IP 				= #{cloud_l4_public_ip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ipid)">
+			AND CLOUD_L4_PUBLIC_IPID 				= #{cloud_l4_public_ipid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_db_vmip)">
+			AND CLOUD_DB_VMIP 				= #{cloud_db_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_vmip)">
+			AND CLOUD_L4_VMIP 				= #{cloud_l4_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_default_vmip)">
+			AND CLOUD_WASVM_DEFAULT_VMIP 				= #{cloud_wasvm_default_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_host_name)">
+			AND CLOUD_WASVM_HOST_NAME 				= #{cloud_wasvm_host_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_host_name)">
+			AND CLOUD_DBVM_HOST_NAME 				= #{cloud_dbvm_host_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_vmgrp)">
+			AND CLOUD_VMGRP 				= #{cloud_vmgrp} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_grpnm)">
+			AND CLOUD_AUTOSCALE_GRPNM 				= #{cloud_autoscale_grpnm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_policy)">
+			AND CLOUD_AUTOSCALE_POLICY 				= #{cloud_autoscale_policy} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_osinfo)">
+			AND CLOUD_DBVM_OSINFO 				= #{cloud_dbvm_osinfo} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_password)">
+			AND CLOUD_DBVM_PASSWORD 				= #{cloud_dbvm_password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_templatename)">
+			AND CLOUD_DBVM_TEMPLATENAME 				= #{cloud_dbvm_templatename} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_templatename)">
+			AND CLOUD_WASVM_TEMPLATENAME 				= #{cloud_wasvm_templatename} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_password)">
+			AND CLOUD_WASVM_PASSWORD 				= #{cloud_wasvm_password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_osinfo)">
+			AND CLOUD_WASVM_OSINFO 				= #{cloud_wasvm_osinfo} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_name)">
+			AND CLOUD_L4_NAME 				= #{cloud_l4_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_loadbalancerid)">
+			AND CLOUD_L4_LOADBALANCERID 				= #{cloud_l4_loadbalancerid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_id)">
+			AND CLOUD_DBVM_ID 				= #{cloud_dbvm_id} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_id)">
+			AND CLOUD_WASVM_ID 				= #{cloud_wasvm_id} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_dynamic" parameterType="JSON" resultType="JSON">
+	SELECT 
+        <foreach collection="fieldset" item="field" index="index" separator=",">
+            ${field}
+        </foreach>
+	FROM SERVICE_CLOUD
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ip)">
+			AND CLOUD_L4_PUBLIC_IP 				= #{cloud_l4_public_ip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ipid)">
+			AND CLOUD_L4_PUBLIC_IPID 				= #{cloud_l4_public_ipid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_db_vmip)">
+			AND CLOUD_DB_VMIP 				= #{cloud_db_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_vmip)">
+			AND CLOUD_L4_VMIP 				= #{cloud_l4_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_default_vmip)">
+			AND CLOUD_WASVM_DEFAULT_VMIP 				= #{cloud_wasvm_default_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_host_name)">
+			AND CLOUD_WASVM_HOST_NAME 				= #{cloud_wasvm_host_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_host_name)">
+			AND CLOUD_DBVM_HOST_NAME 				= #{cloud_dbvm_host_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_vmgrp)">
+			AND CLOUD_VMGRP 				= #{cloud_vmgrp} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_grpnm)">
+			AND CLOUD_AUTOSCALE_GRPNM 				= #{cloud_autoscale_grpnm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_policy)">
+			AND CLOUD_AUTOSCALE_POLICY 				= #{cloud_autoscale_policy} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_osinfo)">
+			AND CLOUD_DBVM_OSINFO 				= #{cloud_dbvm_osinfo} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_password)">
+			AND CLOUD_DBVM_PASSWORD 				= #{cloud_dbvm_password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_templatename)">
+			AND CLOUD_DBVM_TEMPLATENAME 				= #{cloud_dbvm_templatename} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_templatename)">
+			AND CLOUD_WASVM_TEMPLATENAME 				= #{cloud_wasvm_templatename} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_password)">
+			AND CLOUD_WASVM_PASSWORD 				= #{cloud_wasvm_password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_osinfo)">
+			AND CLOUD_WASVM_OSINFO 				= #{cloud_wasvm_osinfo} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_name)">
+			AND CLOUD_L4_NAME 				= #{cloud_l4_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_loadbalancerid)">
+			AND CLOUD_L4_LOADBALANCERID 				= #{cloud_l4_loadbalancerid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_id)">
+			AND CLOUD_DBVM_ID 				= #{cloud_dbvm_id} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_id)">
+			AND CLOUD_WASVM_ID 				= #{cloud_wasvm_id} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_row" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  CLOUD_L4_PUBLIC_IP
+			, CLOUD_L4_PUBLIC_IPID
+			, CLOUD_DB_VMIP
+			, CLOUD_L4_VMIP
+			, CLOUD_WASVM_DEFAULT_VMIP
+			, CLOUD_WASVM_HOST_NAME
+			, CLOUD_DBVM_HOST_NAME
+			, CLOUD_VMGRP
+			, CLOUD_AUTOSCALE_GRPNM
+			, USERID
+			, CONT_NO
+			, CLOUD_AUTOSCALE_POLICY
+			, CLOUD_DBVM_OSINFO
+			, CLOUD_DBVM_PASSWORD
+			, CLOUD_DBVM_TEMPLATENAME
+			, CLOUD_WASVM_TEMPLATENAME
+			, CLOUD_WASVM_PASSWORD
+			, CLOUD_WASVM_OSINFO
+			, CLOUD_L4_NAME
+			, CLOUD_L4_LOADBALANCERID
+			, CLOUD_DBVM_ID
+			, CLOUD_WASVM_ID
+			
+	FROM SERVICE_CLOUD
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ip)">
+			AND CLOUD_L4_PUBLIC_IP 				= #{cloud_l4_public_ip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ipid)">
+			AND CLOUD_L4_PUBLIC_IPID 				= #{cloud_l4_public_ipid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_db_vmip)">
+			AND CLOUD_DB_VMIP 				= #{cloud_db_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_vmip)">
+			AND CLOUD_L4_VMIP 				= #{cloud_l4_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_default_vmip)">
+			AND CLOUD_WASVM_DEFAULT_VMIP 				= #{cloud_wasvm_default_vmip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_host_name)">
+			AND CLOUD_WASVM_HOST_NAME 				= #{cloud_wasvm_host_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_host_name)">
+			AND CLOUD_DBVM_HOST_NAME 				= #{cloud_dbvm_host_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_vmgrp)">
+			AND CLOUD_VMGRP 				= #{cloud_vmgrp} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_grpnm)">
+			AND CLOUD_AUTOSCALE_GRPNM 				= #{cloud_autoscale_grpnm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_policy)">
+			AND CLOUD_AUTOSCALE_POLICY 				= #{cloud_autoscale_policy} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_osinfo)">
+			AND CLOUD_DBVM_OSINFO 				= #{cloud_dbvm_osinfo} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_password)">
+			AND CLOUD_DBVM_PASSWORD 				= #{cloud_dbvm_password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_templatename)">
+			AND CLOUD_DBVM_TEMPLATENAME 				= #{cloud_dbvm_templatename} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_templatename)">
+			AND CLOUD_WASVM_TEMPLATENAME 				= #{cloud_wasvm_templatename} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_password)">
+			AND CLOUD_WASVM_PASSWORD 				= #{cloud_wasvm_password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_osinfo)">
+			AND CLOUD_WASVM_OSINFO 				= #{cloud_wasvm_osinfo} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_name)">
+			AND CLOUD_L4_NAME 				= #{cloud_l4_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_loadbalancerid)">
+			AND CLOUD_L4_LOADBALANCERID 				= #{cloud_l4_loadbalancerid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_id)">
+			AND CLOUD_DBVM_ID 				= #{cloud_dbvm_id} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_id)">
+			AND CLOUD_WASVM_ID 				= #{cloud_wasvm_id} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	LIMIT 1
+	</select>
+
+	<insert id="insertORupdate" parameterType="JSON">
+		INSERT INTO SERVICE_CLOUD (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ip)">
+			CLOUD_L4_PUBLIC_IP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ipid)">
+			CLOUD_L4_PUBLIC_IPID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_db_vmip)">
+			CLOUD_DB_VMIP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_vmip)">
+			CLOUD_L4_VMIP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_default_vmip)">
+			CLOUD_WASVM_DEFAULT_VMIP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_host_name)">
+			CLOUD_WASVM_HOST_NAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_host_name)">
+			CLOUD_DBVM_HOST_NAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_vmgrp)">
+			CLOUD_VMGRP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_grpnm)">
+			CLOUD_AUTOSCALE_GRPNM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			USERID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			CONT_NO, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_policy)">
+			CLOUD_AUTOSCALE_POLICY, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_osinfo)">
+			CLOUD_DBVM_OSINFO, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_password)">
+			CLOUD_DBVM_PASSWORD, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_templatename)">
+			CLOUD_DBVM_TEMPLATENAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_templatename)">
+			CLOUD_WASVM_TEMPLATENAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_password)">
+			CLOUD_WASVM_PASSWORD, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_osinfo)">
+			CLOUD_WASVM_OSINFO, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_name)">
+			CLOUD_L4_NAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_loadbalancerid)">
+			CLOUD_L4_LOADBALANCERID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_id)">
+			CLOUD_DBVM_ID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_id)">
+			CLOUD_WASVM_ID, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ip)">
+			#{cloud_l4_public_ip, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_public_ipid)">
+			#{cloud_l4_public_ipid, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_db_vmip)">
+			#{cloud_db_vmip, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_vmip)">
+			#{cloud_l4_vmip, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_default_vmip)">
+			#{cloud_wasvm_default_vmip, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_host_name)">
+			#{cloud_wasvm_host_name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_host_name)">
+			#{cloud_dbvm_host_name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_vmgrp)">
+			#{cloud_vmgrp, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_grpnm)">
+			#{cloud_autoscale_grpnm, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			#{userid, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			#{cont_no, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_autoscale_policy)">
+			#{cloud_autoscale_policy, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_osinfo)">
+			#{cloud_dbvm_osinfo, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_password)">
+			#{cloud_dbvm_password, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_templatename)">
+			#{cloud_dbvm_templatename, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_templatename)">
+			#{cloud_wasvm_templatename, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_password)">
+			#{cloud_wasvm_password, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_osinfo)">
+			#{cloud_wasvm_osinfo, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_name)">
+			#{cloud_l4_name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_l4_loadbalancerid)">
+			#{cloud_l4_loadbalancerid, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_dbvm_id)">
+			#{cloud_dbvm_id, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cloud_wasvm_id)">
+			#{cloud_wasvm_id, jdbcType=VARCHAR}, 
+			</if>
+			
+		</trim>
+		) ON DUPLICATE KEY UPDATE
+		<trim prefix="" suffixOverrides=",">
+
+
+		<if test="_parameter.containsKey('cloud_l4_public_ip')">
+			CLOUD_L4_PUBLIC_IP 				= #{cloud_l4_public_ip}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_l4_public_ipid')">
+			CLOUD_L4_PUBLIC_IPID 				= #{cloud_l4_public_ipid}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_db_vmip')">
+			CLOUD_DB_VMIP 				= #{cloud_db_vmip}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_l4_vmip')">
+			CLOUD_L4_VMIP 				= #{cloud_l4_vmip}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_default_vmip')">
+			CLOUD_WASVM_DEFAULT_VMIP 				= #{cloud_wasvm_default_vmip}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_host_name')">
+			CLOUD_WASVM_HOST_NAME 				= #{cloud_wasvm_host_name}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_dbvm_host_name')">
+			CLOUD_DBVM_HOST_NAME 				= #{cloud_dbvm_host_name}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_vmgrp')">
+			CLOUD_VMGRP 				= #{cloud_vmgrp}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_autoscale_grpnm')">
+			CLOUD_AUTOSCALE_GRPNM 				= #{cloud_autoscale_grpnm}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_autoscale_policy')">
+			CLOUD_AUTOSCALE_POLICY 				= #{cloud_autoscale_policy}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_dbvm_osinfo')">
+			CLOUD_DBVM_OSINFO 				= #{cloud_dbvm_osinfo}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_dbvm_password')">
+			CLOUD_DBVM_PASSWORD 				= #{cloud_dbvm_password}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_dbvm_templatename')">
+			CLOUD_DBVM_TEMPLATENAME 				= #{cloud_dbvm_templatename}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_templatename')">
+			CLOUD_WASVM_TEMPLATENAME 				= #{cloud_wasvm_templatename}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_password')">
+			CLOUD_WASVM_PASSWORD 				= #{cloud_wasvm_password}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_osinfo')">
+			CLOUD_WASVM_OSINFO 				= #{cloud_wasvm_osinfo}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_l4_name')">
+			CLOUD_L4_NAME 				= #{cloud_l4_name}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_l4_loadbalancerid')">
+			CLOUD_L4_LOADBALANCERID 				= #{cloud_l4_loadbalancerid}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_dbvm_id')">
+			CLOUD_DBVM_ID 				= #{cloud_dbvm_id}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_id')">
+			CLOUD_WASVM_ID 				= #{cloud_wasvm_id}, 
+		</if>
+		
+		</trim>
+	</insert>
+	<update id="update" parameterType="JSON">
+		UPDATE SERVICE_CLOUD
+		<set>
+		<if test="_parameter.containsKey('cloud_l4_public_ip')">
+			CLOUD_L4_PUBLIC_IP 				= #{cloud_l4_public_ip}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_l4_public_ipid')">
+			CLOUD_L4_PUBLIC_IPID 				= #{cloud_l4_public_ipid}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_db_vmip')">
+			CLOUD_DB_VMIP 				= #{cloud_db_vmip}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_l4_vmip')">
+			CLOUD_L4_VMIP 				= #{cloud_l4_vmip}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_default_vmip')">
+			CLOUD_WASVM_DEFAULT_VMIP 				= #{cloud_wasvm_default_vmip}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_host_name')">
+			CLOUD_WASVM_HOST_NAME 				= #{cloud_wasvm_host_name}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_dbvm_host_name')">
+			CLOUD_DBVM_HOST_NAME 				= #{cloud_dbvm_host_name}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_vmgrp')">
+			CLOUD_VMGRP 				= #{cloud_vmgrp}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_autoscale_grpnm')">
+			CLOUD_AUTOSCALE_GRPNM 				= #{cloud_autoscale_grpnm}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_autoscale_policy')">
+			CLOUD_AUTOSCALE_POLICY 				= #{cloud_autoscale_policy}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_dbvm_osinfo')">
+			CLOUD_DBVM_OSINFO 				= #{cloud_dbvm_osinfo}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_dbvm_password')">
+			CLOUD_DBVM_PASSWORD 				= #{cloud_dbvm_password}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_dbvm_templatename')">
+			CLOUD_DBVM_TEMPLATENAME 				= #{cloud_dbvm_templatename}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_templatename')">
+			CLOUD_WASVM_TEMPLATENAME 				= #{cloud_wasvm_templatename}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_password')">
+			CLOUD_WASVM_PASSWORD 				= #{cloud_wasvm_password}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_osinfo')">
+			CLOUD_WASVM_OSINFO 				= #{cloud_wasvm_osinfo}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_l4_name')">
+			CLOUD_L4_NAME 				= #{cloud_l4_name}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_l4_loadbalancerid')">
+			CLOUD_L4_LOADBALANCERID 				= #{cloud_l4_loadbalancerid}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_dbvm_id')">
+			CLOUD_DBVM_ID 				= #{cloud_dbvm_id}, 
+		</if>
+		<if test="_parameter.containsKey('cloud_wasvm_id')">
+			CLOUD_WASVM_ID 				= #{cloud_wasvm_id}, 
+		</if>
+		
+		</set>
+		WHERE USERID 		= #{userid} AND CONT_NO 		= #{cont_no}
+	</update>
+	<delete id="delete" parameterType="JSON">
+		DELETE FROM SERVICE_CLOUD
+		WHERE USERID 		= #{userid} AND CONT_NO 		= #{cont_no}
+	</delete>
+</mapper>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='04', TPSUB='05'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>클라우드 : CORN</title>
+  <th:block th:include="/front/inc_head"></th:block>
+  
+</head>
+<body>
+<th:block th:include="/front/inc_topmenu"></th:block>
+
+<!-- Start #main -->
+<div id="main">
+	<!-- ======= Board write ======= -->
+    <section class="breadcrumbs">
+        <h2>정보수정</h2>
+    </section><!-- End Our Portfolio Section -->
+
+	<!-- .sub-title : s -->
+	<div class="container">
+    	<div class="row">
+        	<div class="col-lg-12 entries">
+				<form id="form_modify" name="form_modify" method="post" style="padding: 50px;">
+          				
+                  	<h2>개인 정보 입력</h2><br/>
+					
+                  	<!-- table 1 -->
+					<table th:each="user : ${user}">
+						<colgroup>
+							<col style="width: 18.75%">
+							<col style="width: 81.25%">
+						</colgroup>
+						<!-- 특수문자 들어가면 ajax 통신할때 안되나봄 내일부터 -->
+						<tbody>
+							<!-- 아이디 -->
+							<tr>
+								<th scope="row">
+									<label for="userid">아이디</label>
+								</th>
+								<td>
+									<!-- autocomplete="off" -> submit 시 자동완성 내역 뜨는거 방지 --> 
+									<input type="text" class="input" id="userid" name="userid" style="width: 50%; background-color: #F5F5F5;" placeholder="아이디" min="5" th:value="${user.userid}" readonly="readonly"> <!-- dto 대소문자 주의 -->
+								</td>
+							</tr>
+
+							<!-- KT 클라우드 ID -->
+							<tr>
+								<th scope="row">
+									<label for="ktcloudid">KT 클라우드 ID<span style="color: red;">*</span></label>
+								</th>
+								<td>
+									<input type="text" class="input" id="ktcloudid" name="ktcloudid" style="width:50%; background-color: #F5F5F5;" placeholder="KT 클라우드 ID" th:value="${user.ktcloudid}" readonly="readonly">
+								</td>
+							</tr>
+								
+							<!-- 담당자 이름 -->
+							<tr>
+								<th scope="row">
+									<label for="usernm">담당자 이름<span style="color: red;">*</span></label>
+								</th>
+								<td>
+									<input type="text" class="input" id="usernm" name="usernm" style="width:50%; background-color: #F5F5F5;" placeholder="담당자 이름" PSS_BLANK th:value="${user.usernm}">
+								</td>
+							</tr>
+								
+							<!-- 휴대전화번호 -->
+							<tr>
+								<th scope="row">
+									<label for="hphone">휴대전화번호<span style="color: red;">*</span></label>
+								</th>
+								<td>
+									<input type="text" class="input" id="hphone" name="hphone" style="width:50%;" placeholder="휴대전화 번호" PSS_BLANK PSS_DIGIT th:value="${user.hphone}">
+								</td>
+							</tr>
+								
+							<!-- 이메일 -->
+							<tr>
+								<th scope="row">
+									<label for="email">이메일<span style="color: red;">*</span></label>
+								</th>
+								<td>
+									<input type="text" class="input" id="email" name="email" style="width:50%;" placeholder="이메일" PSS_BLANK PSS_EMAIL th:value="${user.email}">
+									<input type="hidden" class="input" id="db_email" name="db_email" th:value="${user.email}">
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+						
+					<br/>
+					<br/>
+					<h2>사업장 정보 입력</h2><br/>
+									
+					<!-- table 2 -->
+					<table th:each="user : ${user}">
+						<colgroup>
+							<col style="width: 18.75%">
+							<col style="width: 81.25%">
+						</colgroup>
+										
+						<tbody>
+							<!-- 사업자 상호 -->
+							<tr>
+								<th scope="row">
+									<label for="comp_name">사업자 상호<span style="color: red;">*</span></label>
+								</th>
+								<td>
+									<input type="text" class="input" id="comp_name" name="comp_name" th:value="${user.comp_name}" style="width:50%;" placeholder="사업자 상호" PSS_BLANK >
+								</td>
+							</tr>
+										
+							<!-- 사업자 CEO 이름 -->
+							<tr>
+								<th scope="row">
+									<label for="ceonm">사업자 CEO 이름</label>
+								</th>
+								<td>
+									<input type="text" class="input" id="ceonm" name="ceonm" style="width:50%;" placeholder="사업자 이름" th:value="${user.ceonm}">
+								</td>
+							</tr>
+											
+							<!-- 사업자 등록 번호 -->
+							<tr>
+								<th scope="row">
+									<label for="biznum">사업자 등록 번호<span style="color: red;">*</span></label>
+								</th>
+								<td>
+									<input type="text" class="input" id="biznum" name="biznum" style="width:50%;" placeholder="사업자 등록번호" PSS_BLANK PSS_DIGIT th:value="${user.biznum}">
+								</td>
+							</tr>
+											
+							<!-- 사업장 주소 -->
+							<tr>
+								<th scope="row">
+									<label for="comp_addr">사업장 주소<span style="color: red;">*</span></label>
+								</th>
+								<td>
+									<input type="text" class="input" id="comp_addr" name="comp_addr" style="width:80%;" placeholder="사업장 주소" PSS_BLANK th:value="${user.comp_addr}">
+								</td>
+							</tr>
+											
+							<!-- 사업장 FAX 번호 -->
+							<tr>
+								<th scope="row">
+									<label for="comp_fax">사업장 FAX 번호</label>
+								</th>
+								<td>
+									<input type="text" class="input" id="comp_fax" name="comp_fax" style="width:50%;" placeholder="사업장 FAX 번호" th:value="${user.comp_fax}">
+								</td>
+							</tr>
+											
+						</tbody>
+					</table>
+					<br><br>
+						
+					<!-- 가입하기  -->
+					<div class="text-center">  
+						<input type="submit" value="정보수정" class="btn btn-primary"/>
+                  	</div>
+                  		
+          		</form>            	
+ 
+            </div>
+    	</div>
+	</div>         
+</div>
+<!-- End #main -->
+
+<th:block th:include="/front/inc_footer"></th:block>
+</body>
+<script src="/assets/vendor/jquery/jquery-serialize-object.js"></script>
+
+<script type="text/javascript">
+// 1. form_modify check
+$(document).ready(function() {
+	$("#form_modify").on("submit", function(e) {
+		e.preventDefault();
+
+		if (pageContext.validBlank(this)) {
+			var formData = $('#form_modify').serializeObject();
+			
+			var input_email = $('input#email').val();
+			
+			var db_email = $('input#db_email').val();
+			
+			$.ajax({
+				data : input_email,  // 서버로 보낼 데이터
+				url : "05/emailDupCheck",  // 서버쪽 컨트롤러에 매핑될 url
+				type : "post",  // 데이터를 전송하는 방법을 지정한다. get, post를 사용할 수 있다.
+				dataType : "json",  // 서버 쪽에서 전송한 데이터를 어떤 형식의 데이터로 해석할 것인가를 지정한다. 값으로 올 수 있는 것은 xml, json, script, html이다.
+				contentType : "application/json; charset=UTF-8",
+				success : function(data) {
+					/*
+						1. JSON.parse : json 포맷 데이터를 json 객체로 변환.
+						2. JSON.stringify : json 객체를 json 포맷 데이터로 변환.
+					*/
+					
+					if(input_email != '') {  // 이메일 입력칸이 빈칸이 아닐때
+						if(input_email != db_email && data.result == 1) {  // 입력된 이메일이 이 계정의 원래 이메일이 아니면서 DB에서 보낸 이메일 체크 값으로 중복된다면
+							alert("이메일이 중복됩니다.");
+							$('#email').val('');
+							$('#email').focus();
+							return;
+						}
+					} 
+					
+					$.ajax({
+						data : JSON.stringify(formData),  // 서버로 보낼 데이터
+						url : "/front/04/05",  // 서버쪽 컨트롤러에 매핑될 url
+						type : "post",  // 데이터를 전송하는 방법을 지정한다. get, post를 사용할 수 있다.
+						dataType : "json",  // 서버 쪽에서 전송한 데이터를 어떤 형식의 데이터로 해석할 것인가를 지정한다. 값으로 올 수 있는 것은 xml, json, script, html이다.
+						contentType : "application/json; charset=UTF-8",
+						success : function(data) {
+							/*
+								1. JSON.parse : json 포맷 데이터를 json 객체로 변환.
+								2. JSON.stringify : json 객체를 json 포맷 데이터로 변환.
+							*/
+							location.href="/"
+									
+						},
+						error: function() {
+							alert("error");
+						}
+					});
+					
+				 
+				},
+				error: function() {
+					alert("error");
+				}
+			});
+		}
+	});
+});
+
+
+</script>
+</html>

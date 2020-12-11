@@ -1,0 +1,168 @@
+package com.enc.dto;
+
+import java.time.LocalDateTime;
+
+public class User {
+	
+	String userid;
+	String password;
+	String usernm;
+	LocalDateTime regdt;
+	String statuscd;
+	LocalDateTime dropdt;
+	LocalDateTime modifydt;
+	String hphone;
+	String email;
+	String comp_name;
+	String ceonm;
+	String biznum;
+	String cor_num;
+	String comp_addr;
+	LocalDateTime addrovaldt;
+	String comp_fax;
+	String ktcloudid;
+	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUsernm() {
+		return usernm;
+	}
+
+	public void setUsernm(String usernm) {
+		this.usernm = usernm;
+	}
+
+	public LocalDateTime getRegdt() {
+		return regdt;
+	}
+
+	public void setRegdt(LocalDateTime regdt) {
+		this.regdt = regdt;
+	}
+
+	public String getStatuscd() {
+		return statuscd;
+	}
+
+	public void setStatuscd(String statuscd) {
+		this.statuscd = statuscd;
+	}
+
+	public LocalDateTime getDropdt() {
+		return dropdt;
+	}
+
+	public void setDropdt(LocalDateTime dropdt) {
+		this.dropdt = dropdt;
+	}
+
+	public LocalDateTime getModifydt() {
+		return modifydt;
+	}
+
+	public void setModifydt(LocalDateTime modifydt) {
+		this.modifydt = modifydt;
+	}
+
+	public String getHphone() {
+		return hphone;
+	}
+
+	public void setHphone(String hphone) {
+		this.hphone = hphone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCeonm() {
+		return ceonm;
+	}
+
+	public void setCeonm(String ceonm) {
+		this.ceonm = ceonm;
+	}
+
+	public String getComp_name() {
+		return comp_name;
+	}
+
+	public void setComp_name(String comp_name) {
+		this.comp_name = comp_name;
+	}
+
+	public String getBiznum() {
+		return biznum;
+	}
+
+	public void setBiznum(String biznum) {
+		this.biznum = biznum;
+	}
+
+	public String getCor_num() {
+		return cor_num;
+	}
+
+	public void setCor_num(String cor_num) {
+		this.cor_num = cor_num;
+	}
+
+	public String getComp_addr() {
+		return comp_addr;
+	}
+
+	public void setComp_addr(String comp_addr) {
+		this.comp_addr = comp_addr;
+	}
+
+	public LocalDateTime getAddrovaldt() {
+		return addrovaldt;
+	}
+
+	public void setAddrovaldt(LocalDateTime addrovaldt) {
+		this.addrovaldt = addrovaldt;
+	}
+
+	public String getComp_fax() {
+		return comp_fax;
+	}
+
+	public void setComp_fax(String comp_fax) {
+		this.comp_fax = comp_fax;
+	}
+
+	public String getKtcloudid() {
+		return ktcloudid;
+	}
+
+	public void setKtcloudid(String ktcloudid) {
+		this.ktcloudid = ktcloudid;
+	}
+
+	
+	
+	
+}

@@ -1,0 +1,91 @@
+/*!50003 DROP FUNCTION IF EXISTS `next_seq` */;
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`encgls`@`%` FUNCTION `next_seq`(
+	`seqName` VARCHAR(100)
+
+) RETURNS int(11)
+BEGIN
+     DECLARE seqNo INT(10) UNSIGNED;
+ 
+		SELECT IFNULL(MAX(SEQUID), 0) + 1
+		  INTO seqNo
+		  FROM SEQUENCE
+		 WHERE SEQNM = seqName 
+		 FOR UPDATE
+		;
+		
+		IF seqNo = 1 THEN
+		    INSERT INTO SEQUENCE (SEQNM, SEQUID)
+			 VALUES (seqName, seqNo);
+		ELSE
+		    UPDATE SEQUENCE
+			 SET SEQUID = seqNo
+			 WHERE SEQNM = seqName;
+		END IF;
+      RETURN seqNo;
+END */$$
+DELIMITER ;
+
+
+
+
+
+INSERT INTO `encgls`.`admin`
+(`ADMINID`,
+`PASSWORD`,
+`REGDT`,
+`ADMINNM`)
+VALUES
+('admin',
+'*46ECD50022DD24C2FCDAB5B576C8BCF7985D946C',
+now(),
+'관리자');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+함수 만들기시 오류발생 ERROR 1418 (HY000): This function has none of DETERMINISTIC, NO SQL, or READS
+좋을 호, 클 홍, 넓을 홍, 웃음소리 호홍홍집 2015. 11. 25. 17:49
+참조 : http://blog.beany.co.kr/archives/495
+
+함수 만들기시에 아래와 같은 에러 발생시 조치는 위의 URL 참조!!
+
+ERROR 1418 (HY000): This function has none of DETERMINISTIC, NO SQL, or READS SQL DATA in its declaration and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable
+
+MySQL 의 관리자로 접속합니다.
+mysql -uroot -p mysql
+
+시스템 변수 log_bin_trust_function_creators 를 확인합니다.
+mysql> show global variables like 'log_bin_trust_function_creators';
++---------------------------------+-------+
+| Variable_name                   | Value |
++---------------------------------+-------+
+| log_bin_trust_function_creators | OFF   |
++---------------------------------+-------+
+1 row in set (0.00 sec)
+value 가 OFF 인 경우에는 아래의 명령으로 ON 으로 변경합니다.
+
+SET GLOBAL log_bin_trust_function_creators='ON';
+
+사용자 계정에 function select 권한 생성
+위의 작업만으로 function 을 사용할 수 있으나,
+Toad for MySQL 과 같은 Client Tool 에서는
+생성된 function 및 procedure 가 나타나지 않습니다.
+아래의 명령을 입력하여 SELECT 권한을 부여합니다.
+
+mysql> GRANT SELECT ON mysql.proc TO ishome@'%';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)

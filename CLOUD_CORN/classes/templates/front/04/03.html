@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='04', TPSUB='06'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>클라우드 : CORN</title>
+  
+  <link href="/assets/css/board.css" rel="stylesheet">
+  <link href="/assets/css/basic.css" rel="stylesheet">
+  
+  <th:block th:include="/front/inc_head"></th:block>
+</head>
+<body>
+<th:block th:include="/front/inc_topmenu"></th:block>
+
+<!-- Start #main -->
+<div id="main">
+	<!-- ======= Board write ======= -->
+    <section class="breadcrumbs">
+        <h2>서비스 관리</h2>
+    </section><!-- End Our Portfolio Section -->
+	
+	<section class="blog" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+    	<div class="container">
+        	<div class="row">
+            	<div class="col-lg-12 entries">
+            		<!-- .real-cont : s -->
+					<div class="real-cont">
+					<form id="pw_modify" name="pw_modify" method="post">
+						<!-- // mailform -->
+						<div class="mailform">
+							<h2>사용자 서버 관리</h2><br/>
+							<table>
+								<colgroup>
+									<col style="width: 18.75%">
+									<col style="width: 81.25%">
+								</colgroup>
+										
+								<tbody>	
+									<!-- 외부 IP -->
+									<tr>
+										<th scope="row">
+											<label for="external_ip">외부 IP</label>
+										</th>
+										<td>
+											210.2.235.120
+										</td>
+									</tr>
+									<!-- 기존서버 주소 -->
+									<tr>
+										<th scope="row">
+											<label for="newpw">기본제공 서버</label>
+										</th>
+										<td>
+											192.168.2.3
+										</td>
+									</tr>
+								
+									<!-- 사용자가 추가한 서버 -->
+									<tr>
+										<th scope="row">
+											<label for="newpw_re">사용자가 추가한 서버 1</label>
+										</th>
+										<td>
+											<span>172.16.0.71</span>
+											<span><a href="javascript:checkDupleKT();" class="btn-pack custom" style="height: 32px; margin-left: 30px;">삭제</a></span>
+										</td>
+									</tr>
+							</tbody>
+							</table>
+						</div>
+						<!-- mailform // -->
+						<div class="buttons" id="apply_div">
+							<div class="cen">
+								<input type="submit" value="서비스 서버 증설" style="width: 200px;" class="btn-pack custom focus">
+							</div>
+						</div>		
+					</form>	
+					</div>
+				<!-- .real-cont : e -->
+            	</div>
+            </div>
+        </div>
+    </section>
+	
+</div>
+<!-- End #main -->
+
+<th:block th:include="/front/inc_footer"></th:block>
+</body>
+</html>

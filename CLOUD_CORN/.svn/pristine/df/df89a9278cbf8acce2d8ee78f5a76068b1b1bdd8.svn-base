@@ -1,0 +1,17 @@
+<div class="container mt-3" th:each="bean, i: ${list}">
+
+<div class="card" style="wdith: 100%;">
+  <div class="card-header">
+    <div class="row">
+    <div class="col" th:text="|답변일 : ${bean.REGDT}"></div>
+    <div class="col-5" th:if="${bean.containsKey('FILE_NAME')}">
+      첨부파일 : <a th:attr="href=|javascript:downloadFile('${bean.FILE_NAME}', '${bean.FILE_ORIGINAL_NAME}')|">[[${bean.FILE_ORIGINAL_NAME}]]</a>
+    </div>
+    <div class="col-2 text-right">
+      <a th:attr="href=|javascript:deleteArticleRepl('${bean.BBS_QNAUID}', '${bean.BBS_QNA_REPLUID}')|"><img src="/images/be.png" width="13%" class="img-fluid" alt="">삭제</a>
+    </div>
+  </div>
+  </div>
+  <div class="card-body" th:utext="${bean.DOC_BODY_LONG}"></div>
+</div>
+</div>

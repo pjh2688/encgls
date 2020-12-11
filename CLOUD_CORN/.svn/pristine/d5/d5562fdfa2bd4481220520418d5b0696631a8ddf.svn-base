@@ -1,0 +1,77 @@
+        <div class="row">
+
+          <div class="col-lg-12 entries">
+            <article class="entry entry-single">
+              <div class="entry-img">
+                <img src="/images/hero-bgT.jpg" alt="" class="img-fluid">
+              </div>
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="icofont-user"></i> [[${bean.WRITER_NM}]]</li>
+                  <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i> <time datetime="" th:text="${bean.REGDT}">2020-12-31</time></li>
+                  <li class="d-flex align-items-center"><i class="icofont-signal"></i> 첨부파일 : <i th:if="${bean.containsKey('FILE_NAME')}"><a th:attr="href=|javascript:downloadFile('${bean.FILE_NAME}', '${bean.FILE_ORIGINAL_NAME}')|">[[${bean.FILE_ORIGINAL_NAME}]]</a></i></li>
+                </ul>
+              </div>
+			  <hr/>
+              <div class="entry-content">
+                <h3 th:text="|질문 : ${bean.TITLE}|"></h3>
+                <p th:utext="${bean.DOC_BODY_LONG}">
+                </p>
+              </div>
+
+              <div class="entry-footer clearfix">
+                <div class="float-left">
+                  <ul class="cats">
+                    <li><a th:attr="href=|javascript:editArticle('${bean.BBS_QNAUID}')|"><img src="/images/be.png" width="13%" class="img-fluid" alt="">수정</a></li>
+                  </ul>
+                  <ul class="cats">
+                    <li><a th:attr="href=|javascript:deleteArticle('${bean.BBS_QNAUID}')|"><img src="/images/be.png" width="13%" class="img-fluid" alt="">삭제</a></li>
+                  </ul>
+                </div>
+              </div>
+
+<!-- 답변시작 -->
+<div class="row m-1 mt-5">
+  <h3>답변글</h3>
+</div>
+<div class="section" id="repl_container">
+
+</div>
+<!-- 답변 끝 -->
+            </article><!-- End blog entry -->
+		</div>
+	</div>
+
+
+	<!-- 답변달기 -->
+        <div class="row">
+
+          <div class="col-lg-12 entries">
+    <article class="entry entry-single">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <form id="form_write" name="form_write" role="form" class="php-email-form" enctype="multipart/form-data">
+              <input type="hidden" name="bbs_qnauid" id="bbs_qnauid" th:attr="value=|${bean.BBS_QNAUID}|"/>
+              <div class="form-group">
+                <textarea class="form-control" name="doc_body_long" id="doc_body_long" rows="10" cols="100" placeholder="답변글" style="width:100%; height:322px; display:none;" PSS_BLANK></textarea>
+              </div>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="file" name="file" onchange="changeFileName(this)">
+                <label class="custom-file-label" for="validatedCustomFile" id="file_text">파일선택1</label>
+                <div class="invalid-feedback">파일 선택해 주세요</div>
+              </div>
+              <div class="text-center mt-3">
+              <button class="btn btn-primary" type="submit">저장</button>
+            </div>
+              </form>
+          </div>
+
+        </div>
+
+      </div>
+    </article><!-- End Contact Section -->
+    	</div>
+    </div>
+    
+    

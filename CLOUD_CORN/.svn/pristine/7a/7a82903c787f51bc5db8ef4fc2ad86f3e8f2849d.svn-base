@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='MAIN'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="/front/inc_head"></th:block>
+
+<head>
+	<style type="text/css">
+		.justify-content-center a {
+    		color: #aaaaaa;
+    		padding: 8px 17px;
+    		display: inline-block;
+		}
+		.justify-content-center a:hover {
+			color: #fff;
+			background: #68A4C4;
+    		border: 1px solid #68A4C4;
+    		padding: 7px 16px;
+		}
+	</style>
+</head>
+<body>
+	<th:block th:include="/front/inc_topmenu"></th:block>
+
+	<!-- main : s -->
+	<div id="main">
+	
+		<!--  -->
+    	<section class="breadcrumbs">
+        	<h2>공지사항</h2>
+    	</section>
+    	<!-- n -->
+	
+    	<!--  -->
+    	<section class="blog" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+      		<div class="container">
+      	 		<div class="row" id="article"></div>
+         		<div class="row">
+         			<div class="col-lg-12 entries">
+            			<table class="table table-hover" id="tbl_list" style="text-align: center;">
+                			
+                			<thead class="thead-light">
+                    			<tr>
+                        			<th scope="col" style="width: 8%;">번호</th>
+                            		<th scope="col" style="width: 40%;">제목</th>
+                            		<th scope="col" style="width: 10%;">작성자</th>
+                            		<th scope="col" style="width: 20%;">작성일</th>
+                            		<th scope="col" style="width: 8%;">조회수</th>
+                            		<th scope="col" style="width: 10%;">/</th>
+                        		</tr>
+                     		</thead>
+                     
+                     		<tbody>
+                     	 		<tr th:each="board : ${list}">
+						
+									<td th:text=${board.bbs_noticeuid}>번호</td>
+									<td th:text=${board.title}>제목</td>
+									<td th:text=${board.adminid}>작성자</td>
+									<td th:text=${board.regdt}>작성일</td>
+									<td th:text=${board.hit_viewer}>조회수</td>
+						
+									<td>
+										<a th:href="@{'/front/03/01/contentView?' + 'bbs_noticeuid=' + ${board.bbs_noticeuid} }">상세보기</a>
+									</td>
+								</tr>
+                     		</tbody>
+                 		</table>
+                 
+                 		<!-- .paginate : s -->
+						<div class="blog-pagination" th:with="start=${page.getStartPage()}, end=${page.getEndPage()}" >
+							<div class="justify-content-center" style="display: flex; list-style: none; height: 43px;">
+								<!-- 왼쪽 화살표 -->
+								<a class="" th:if="${page.prev}" th:href="@{/front/03/03(page=${page.getPageNum()-1})}">&laquo;</a>
+						
+								<!-- 페이징 -->
+								<a th:href="@{/front/03/03(page=${page})}" th:each="page : ${#numbers.sequence(start,end)}" th:text="${page}"></a>
+						
+								<!-- 오른쪽 화살표 -->
+								<a class="" th:if="${page.next}" th:href="@{/front/03/03(page=${page.getPageNum()+1})}">&raquo;</a>
+							</div>
+						</div>
+				 		<!-- .paginate : e -->
+          			</div>    
+        		</div>
+        	</div>
+		</section>
+		<br/><br/>
+
+
+		<form id="form_find" name="form_find">
+  			<input type="hidden" name="cpage" id="cpage" value="1"/>
+		</form>
+	
+		<!-- Clients Section : s -->
+    	<section id="clients" class="clients" style="padding-top: 30px;">
+    		<div class="container">
+
+        		<div class="section-title">
+          			<h2>고객사</h2>
+          			<p>오랜 시간 고객과의 두터운 신뢰관계는 가장 큰 자산입니다.</p>
+        		</div>
+
+        		<div class="owl-carousel clients-carousel">
+            		<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>	
+            		<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-3.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-4.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-5.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-6.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-7.png" alt=""></a>
+          		</div>
+      		</div>
+    	</section>
+		<!-- Clients Section : e -->	
+	</div>
+	<!-- main : e -->
+
+	<th:block th:include="/front/inc_footer"></th:block>
+</body>
+</html>

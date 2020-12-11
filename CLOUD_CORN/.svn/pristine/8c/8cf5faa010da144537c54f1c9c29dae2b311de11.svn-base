@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enc.mapper.AdminSQLMapper">
+	<insert id="insert" parameterType="JSON">
+		INSERT INTO ADMIN (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminid)">
+			ADMINID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			PASSWORD, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			REGDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminnm)">
+			ADMINNM, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminid)">
+			#{adminid, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			#{password, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			#{regdt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminnm)">
+			#{adminnm, jdbcType=VARCHAR}, 
+			</if>
+			
+		</trim>
+		)
+	</insert>
+	<select id="count" parameterType="JSON" resultType="java.lang.Integer">
+	SELECT
+		COUNT(*)
+	FROM ADMIN
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminid)">
+			AND ADMINID 				= #{adminid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			AND PASSWORD 				= #{password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminnm)">
+			AND ADMINNM 				= #{adminnm} 
+		</if>
+		
+	</where>
+	</select>
+	<select id="select" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  ADMINID
+			, PASSWORD
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, ADMINNM
+			
+	FROM ADMIN
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminid)">
+			AND ADMINID 				= #{adminid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			AND PASSWORD 				= #{password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminnm)">
+			AND ADMINNM 				= #{adminnm} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_row" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  ADMINID
+			, PASSWORD
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, ADMINNM
+			
+	FROM ADMIN
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminid)">
+			AND ADMINID 				= #{adminid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			AND PASSWORD 				= #{password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminnm)">
+			AND ADMINNM 				= #{adminnm} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	LIMIT 1
+	</select>
+	<update id="update" parameterType="JSON">
+		UPDATE ADMIN
+		<set>
+		<if test="_parameter.containsKey('password')">
+			PASSWORD 				= #{password}, 
+		</if>
+		<if test="_parameter.containsKey('regdt')">
+			REGDT 				= #{regdt}, 
+		</if>
+		<if test="_parameter.containsKey('adminnm')">
+			ADMINNM 				= #{adminnm}, 
+		</if>
+		
+		</set>
+		WHERE ADMINID 		= #{adminid}
+	</update>
+	<delete id="delete" parameterType="JSON">
+		DELETE FROM ADMIN
+		WHERE ADMINID 		= #{adminid}
+	</delete>
+</mapper>

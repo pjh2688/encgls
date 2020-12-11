@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enc.mapper.KtapiCommSQLMapper">
+	<insert id="insert" parameterType="JSON" useGeneratedKeys="true" keyProperty="ktapi_commuid">
+		INSERT INTO KTAPI_COMM (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			REGDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_comm)">
+			KTAPI_COMM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_req)">
+			KTAPI_REQ, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_res)">
+			KTAPI_RES, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btcuid)">
+			VMC_BTCUID, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			#{regdt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_comm)">
+			#{ktapi_comm, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_req)">
+			#{ktapi_req, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_res)">
+			#{ktapi_res, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btcuid)">
+			#{vmc_btcuid, jdbcType=INTEGER}, 
+			</if>
+			
+		</trim>
+		)
+	</insert>
+	<select id="count" parameterType="JSON" resultType="java.lang.Integer">
+	SELECT
+		COUNT(*)
+	FROM KTAPI_COMM
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_comm)">
+			AND KTAPI_COMM 				= #{ktapi_comm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_req)">
+			AND KTAPI_REQ 				= #{ktapi_req} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_res)">
+			AND KTAPI_RES 				= #{ktapi_res} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_commuid)">
+			AND KTAPI_COMMUID 				= #{ktapi_commuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btcuid)">
+			AND VMC_BTCUID 				= #{vmc_btcuid} 
+		</if>
+		
+	</where>
+	</select>
+	<select id="select" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, KTAPI_COMM
+			, KTAPI_REQ
+			, KTAPI_RES
+			, KTAPI_COMMUID
+			, VMC_BTCUID
+			
+	FROM KTAPI_COMM
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_comm)">
+			AND KTAPI_COMM 				= #{ktapi_comm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_req)">
+			AND KTAPI_REQ 				= #{ktapi_req} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_res)">
+			AND KTAPI_RES 				= #{ktapi_res} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_commuid)">
+			AND KTAPI_COMMUID 				= #{ktapi_commuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btcuid)">
+			AND VMC_BTCUID 				= #{vmc_btcuid} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_dynamic" parameterType="JSON" resultType="JSON">
+	SELECT 
+        <foreach collection="fieldset" item="field" index="index" separator=",">
+            ${field}
+        </foreach>
+	FROM KTAPI_COMM
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_comm)">
+			AND KTAPI_COMM 				= #{ktapi_comm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_req)">
+			AND KTAPI_REQ 				= #{ktapi_req} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_res)">
+			AND KTAPI_RES 				= #{ktapi_res} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_commuid)">
+			AND KTAPI_COMMUID 				= #{ktapi_commuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btcuid)">
+			AND VMC_BTCUID 				= #{vmc_btcuid} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_row" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, KTAPI_COMM
+			, KTAPI_REQ
+			, KTAPI_RES
+			, KTAPI_COMMUID
+			, VMC_BTCUID
+			
+	FROM KTAPI_COMM
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_comm)">
+			AND KTAPI_COMM 				= #{ktapi_comm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_req)">
+			AND KTAPI_REQ 				= #{ktapi_req} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_res)">
+			AND KTAPI_RES 				= #{ktapi_res} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(ktapi_commuid)">
+			AND KTAPI_COMMUID 				= #{ktapi_commuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btcuid)">
+			AND VMC_BTCUID 				= #{vmc_btcuid} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	LIMIT 1
+	</select>
+	<update id="update" parameterType="JSON">
+		UPDATE KTAPI_COMM
+		<set>
+		<if test="_parameter.containsKey('regdt')">
+			REGDT 				= #{regdt}, 
+		</if>
+		<if test="_parameter.containsKey('ktapi_comm')">
+			KTAPI_COMM 				= #{ktapi_comm}, 
+		</if>
+		<if test="_parameter.containsKey('ktapi_req')">
+			KTAPI_REQ 				= #{ktapi_req}, 
+		</if>
+		<if test="_parameter.containsKey('ktapi_res')">
+			KTAPI_RES 				= #{ktapi_res}, 
+		</if>
+		<if test="_parameter.containsKey('vmc_btcuid')">
+			VMC_BTCUID 				= #{vmc_btcuid}, 
+		</if>
+		
+		</set>
+		WHERE KTAPI_COMMUID 		= #{ktapi_commuid}
+	</update>
+	<delete id="delete" parameterType="JSON">
+		DELETE FROM KTAPI_COMM
+		WHERE KTAPI_COMMUID 		= #{ktapi_commuid}
+	</delete>
+</mapper>

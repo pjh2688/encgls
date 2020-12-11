@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enc.mapper.BbsQnaReplSQLMapper">
+	<insert id="insert" parameterType="JSON" useGeneratedKeys="true" keyProperty="bbs_qna_repluid">
+
+		<selectKey keyProperty="bbs_qna_repluid" resultType="long" order="BEFORE">
+
+		SELECT next_seq('BBS_QNA_REPL.BBS_QNA_REPLUID')
+
+		</selectKey>
+		INSERT INTO BBS_QNA_REPL (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qna_repluid)">
+			BBS_QNA_REPLUID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			BBS_QNAUID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			DOC_BODY_LONG, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			REGDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminid)">
+			ADMINID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			FILE_NAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			FILE_ORIGINAL_NAME, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qna_repluid)">
+			#{bbs_qna_repluid, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			#{bbs_qnauid, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			#{doc_body_long, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			#{regdt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminid)">
+			#{adminid, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			#{file_name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			#{file_original_name, jdbcType=VARCHAR}, 
+			</if>
+			
+		</trim>
+		)
+	</insert>
+	<select id="count" parameterType="JSON" resultType="java.lang.Integer">
+	SELECT
+		COUNT(*)
+	FROM BBS_QNA_REPL
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qna_repluid)">
+			AND BBS_QNA_REPLUID 				= #{bbs_qna_repluid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			AND BBS_QNAUID 				= #{bbs_qnauid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			AND DOC_BODY_LONG 				= #{doc_body_long} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminid)">
+			AND ADMINID 				= #{adminid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	</select>
+	<select id="select" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  BBS_QNA_REPLUID
+			, BBS_QNAUID
+			, DOC_BODY_LONG
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, ADMINID
+			, FILE_NAME
+			, FILE_ORIGINAL_NAME
+			
+	FROM BBS_QNA_REPL
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qna_repluid)">
+			AND BBS_QNA_REPLUID 				= #{bbs_qna_repluid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			AND BBS_QNAUID 				= #{bbs_qnauid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			AND DOC_BODY_LONG 				= #{doc_body_long} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminid)">
+			AND ADMINID 				= #{adminid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_dynamic" parameterType="JSON" resultType="JSON">
+	SELECT 
+        <foreach collection="fieldset" item="field" index="index" separator=",">
+            ${field}
+        </foreach>
+	FROM BBS_QNA_REPL
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qna_repluid)">
+			AND BBS_QNA_REPLUID 				= #{bbs_qna_repluid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			AND BBS_QNAUID 				= #{bbs_qnauid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			AND DOC_BODY_LONG 				= #{doc_body_long} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminid)">
+			AND ADMINID 				= #{adminid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_row" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  BBS_QNA_REPLUID
+			, BBS_QNAUID
+			, DOC_BODY_LONG
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, ADMINID
+			, FILE_NAME
+			, FILE_ORIGINAL_NAME
+			
+	FROM BBS_QNA_REPL
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qna_repluid)">
+			AND BBS_QNA_REPLUID 				= #{bbs_qna_repluid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			AND BBS_QNAUID 				= #{bbs_qnauid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			AND DOC_BODY_LONG 				= #{doc_body_long} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(adminid)">
+			AND ADMINID 				= #{adminid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	LIMIT 1
+	</select>
+	<update id="update" parameterType="JSON">
+		UPDATE BBS_QNA_REPL
+		<set>
+		<if test="_parameter.containsKey('doc_body_long')">
+			DOC_BODY_LONG 				= #{doc_body_long}, 
+		</if>
+		<if test="_parameter.containsKey('regdt')">
+			REGDT 				= #{regdt}, 
+		</if>
+		<if test="_parameter.containsKey('adminid')">
+			ADMINID 				= #{adminid}, 
+		</if>
+		<if test="_parameter.containsKey('file_name')">
+			FILE_NAME 				= #{file_name}, 
+		</if>
+		<if test="_parameter.containsKey('file_original_name')">
+			FILE_ORIGINAL_NAME 				= #{file_original_name}, 
+		</if>
+		
+		</set>
+		WHERE BBS_QNA_REPLUID 		= #{bbs_qna_repluid} AND BBS_QNAUID 		= #{bbs_qnauid}
+	</update>
+	<delete id="delete" parameterType="JSON">
+		DELETE FROM BBS_QNA_REPL
+		WHERE BBS_QNA_REPLUID 		= #{bbs_qna_repluid} AND BBS_QNAUID 		= #{bbs_qnauid}
+	</delete>
+</mapper>

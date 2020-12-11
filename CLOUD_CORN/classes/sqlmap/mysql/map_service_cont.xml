@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enc.mapper.ServiceContSQLMapper">
+	<insert id="insert" parameterType="JSON" useGeneratedKeys="true" keyProperty="cont_no">
+		<selectKey keyProperty="cont_no" resultType="long" order="BEFORE">
+		SELECT next_seq('SERVICE_CONT.CONT_NO')
+		</selectKey>
+		INSERT INTO SERVICE_CONT (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			USERID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			REGDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			MODIFYDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_iot_yn)">
+			SERVICE_IOT_YN, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_block_yn)">
+			SERVICE_BLOCK_YN, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_status)">
+			SERVICE_STATUS, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			CONT_NO, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_type_pl)">
+			SERVICE_TYPE_PL, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			#{userid, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			#{regdt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			#{modifydt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_iot_yn)">
+			#{service_iot_yn, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_block_yn)">
+			#{service_block_yn, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_status)">
+			#{service_status, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			#{cont_no, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_type_pl)">
+			#{service_type_pl, jdbcType=VARCHAR}, 
+			</if>
+			
+		</trim>
+		)
+	</insert>
+	<select id="count" parameterType="JSON" resultType="java.lang.Integer">
+	SELECT
+		COUNT(*)
+	FROM SERVICE_CONT
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_iot_yn)">
+			AND SERVICE_IOT_YN 				= #{service_iot_yn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_block_yn)">
+			AND SERVICE_BLOCK_YN 				= #{service_block_yn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_status)">
+			AND SERVICE_STATUS 				= #{service_status} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_type_pl)">
+			AND SERVICE_TYPE_PL 				= #{service_type_pl} 
+		</if>
+		
+	</where>
+	</select>
+	<select id="select" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  USERID
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, DATE_FORMAT(MODIFYDT, '%Y-%m-%d %H:%i:%s') AS MODIFYDT
+			, SERVICE_IOT_YN
+			, SERVICE_BLOCK_YN
+			, SERVICE_STATUS
+			, CONT_NO
+			, SERVICE_TYPE_PL
+			
+	FROM SERVICE_CONT
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_iot_yn)">
+			AND SERVICE_IOT_YN 				= #{service_iot_yn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_block_yn)">
+			AND SERVICE_BLOCK_YN 				= #{service_block_yn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_status)">
+			AND SERVICE_STATUS 				= #{service_status} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_type_pl)">
+			AND SERVICE_TYPE_PL 				= #{service_type_pl} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_dynamic" parameterType="JSON" resultType="JSON">
+	SELECT 
+        <foreach collection="fieldset" item="field" index="index" separator=",">
+            ${field}
+        </foreach>
+	FROM SERVICE_CONT
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_iot_yn)">
+			AND SERVICE_IOT_YN 				= #{service_iot_yn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_block_yn)">
+			AND SERVICE_BLOCK_YN 				= #{service_block_yn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_status)">
+			AND SERVICE_STATUS 				= #{service_status} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_type_pl)">
+			AND SERVICE_TYPE_PL 				= #{service_type_pl} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_row" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  USERID
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, DATE_FORMAT(MODIFYDT, '%Y-%m-%d %H:%i:%s') AS MODIFYDT
+			, SERVICE_IOT_YN
+			, SERVICE_BLOCK_YN
+			, SERVICE_STATUS
+			, CONT_NO
+			, SERVICE_TYPE_PL
+			
+	FROM SERVICE_CONT
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(modifydt)">
+			AND MODIFYDT 				= #{modifydt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_iot_yn)">
+			AND SERVICE_IOT_YN 				= #{service_iot_yn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_block_yn)">
+			AND SERVICE_BLOCK_YN 				= #{service_block_yn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_status)">
+			AND SERVICE_STATUS 				= #{service_status} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(service_type_pl)">
+			AND SERVICE_TYPE_PL 				= #{service_type_pl} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	LIMIT 1
+	</select>
+	<update id="update" parameterType="JSON">
+		UPDATE SERVICE_CONT
+		<set>
+		<if test="_parameter.containsKey('regdt')">
+			REGDT 				= #{regdt}, 
+		</if>
+		<if test="_parameter.containsKey('modifydt')">
+			MODIFYDT 				= #{modifydt}, 
+		</if>
+		<if test="_parameter.containsKey('service_iot_yn')">
+			SERVICE_IOT_YN 				= #{service_iot_yn}, 
+		</if>
+		<if test="_parameter.containsKey('service_block_yn')">
+			SERVICE_BLOCK_YN 				= #{service_block_yn}, 
+		</if>
+		<if test="_parameter.containsKey('service_status')">
+			SERVICE_STATUS 				= #{service_status}, 
+		</if>
+		<if test="_parameter.containsKey('service_type_pl')">
+			SERVICE_TYPE_PL 				= #{service_type_pl}, 
+		</if>
+		
+		</set>
+		WHERE USERID 		= #{userid} AND CONT_NO 		= #{cont_no}
+	</update>
+	<delete id="delete" parameterType="JSON">
+		DELETE FROM SERVICE_CONT
+		WHERE USERID 		= #{userid} AND CONT_NO 		= #{cont_no}
+	</delete>
+	
+	<select id="int">
+		select count(*) from service_cont
+	</select>
+</mapper>

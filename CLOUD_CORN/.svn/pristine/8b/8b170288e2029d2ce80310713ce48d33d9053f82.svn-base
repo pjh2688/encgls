@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='MAIN'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="/front/inc_head"></th:block>
+
+<body>
+	<th:block th:include="/front/inc_topmenu"></th:block>
+
+	<!-- main : s -->
+	<div id="main">
+		<!-- .breadcrumbs : s-->
+    	<section class="breadcrumbs">
+        	<h2>FAQ</h2>
+    	</section>
+ 		<!-- .breadcrumbs : e-->
+ 		
+ 		<!-- Contact Section : s -->
+    	<section class="contact" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+      		<div class="container">
+        		<div class="row">
+          			<div class="col-lg-12">
+            			<form>
+                			<h5>무엇이든 물어보세요</h5><br/>
+                			<div class="accordion" id="accordionExample">
+                  				<div class="card">
+                  				
+                    				<div class="card-header" id="headingOne">
+                      					<h2 class="mb-0">
+                        					<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          						견적을 요청하고 싶습니다.
+                        					</button>
+                      					</h2>
+                    				</div>
+                
+                    				<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                      					<div class="card-body">
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">홈페이지 또는 유선으로 견적 상담 가능하십니다.</span>
+                       						 </p>
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">
+                            						홈페이지&gt;고객지원&gt;물류비 상담에서 해당 내용 작성하시어서 문의하여 주시면 담당자가 확인 후 바로 연락드리겠습니다.
+                          						</span>
+                        					</p>
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">물류운영, 위탁 문의 031-526-0035 / E-mail : 3pl@encgls.com</span>
+                        					</p>
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">유선전화 또는 메일로도 문의하시면 연락드리겠습니다.</span>
+                        					</p> 
+                      					</div>
+                    				</div>
+                  				</div>
+                  				
+                  				<div class="card">
+                    				<div class="card-header" id="headingTwo">
+                      					<h2 class="mb-0">
+                       						<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          						냉장/냉동상품, 고가상품, 특수상품도 가능한가요?
+                        					</button>
+                      					</h2>
+                    				</div>
+                    				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                      					<div class="card-body">
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">냉장/냉동상품, 고가 상품, 특수 상품도 물류 운영 가능합니다.</span>
+                        					</p>
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">자세한 사항은 담당자가 상담 드리겠습니다.</span>
+                        					</p> 
+                      					</div>
+                    				</div>
+                  				</div>
+                  				
+                  				<div class="card">
+                    				<div class="card-header" id="headingThree">
+                      					<h2 class="mb-0">
+                        					<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                          						재고관리는 어떻게 되나요?
+                        					</button>
+                      					</h2>
+                    				</div>
+                    				
+                    				<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                     					<div class="card-body">
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">재고관리는 WMS 통해 실시간 확인 가능합니다.</span>
+                        					</p>
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">정기적인 재고 실사 확인을 통해 고객사의 효율적인 재고 관리를 제공하고 있습니다.</span>
+                        					</p>
+                        					<p style="line-height: 1.8;">
+                          						<span style="font-size: 11pt;">자세한 사항은 담당자가 상담 드리겠습니다.</span>
+                        					</p> 
+                      					</div>
+                    				</div>
+                  				</div>
+                			</div> 
+                		</form>
+           			</div>
+        		</div>
+      		</div>
+    	</section>
+ 		<!-- Contact Section : e -->		
+ 		
+ 		<!-- Clients Section : s -->
+    	<section id="clients" class="clients">
+    		<div class="container">
+
+        		<div class="section-title">
+          			<h2>고객사</h2>
+          			<p>오랜 시간 고객과의 두터운 신뢰관계는 가장 큰 자산입니다.</p>
+        		</div>
+
+        		<div class="owl-carousel clients-carousel">
+            		<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>	
+            		<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-3.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-4.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-5.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-6.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-7.png" alt=""></a>
+          		</div>
+      		</div>
+    	</section>
+		<!-- Clients Section : e -->
+	</div>
+	<!-- main : e -->
+
+	<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+	<th:block th:include="/front/inc_footer"></th:block>
+</body>
+</html>

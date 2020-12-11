@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='03', TPSUB='03'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>corn</title>
+  <th:block th:include="/front/inc_head"></th:block>
+</head>
+<body>
+<th:block th:include="/front/inc_topmenu"></th:block>
+
+  
+<div id="main">
+    <!-- ======= Board list ======= -->
+    <section class="breadcrumbs">
+       <h2>문의내용</h2>
+    </section>
+    
+    <!-- ======= Board list Section ======= -->
+    <section class="blog aos-init aos-animate" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+    	<div class="container" id="article">
+        	<div class="row">
+          		<div class="col-lg-12 entries" th:each="board : ${qna}">
+          			<h4 class="animate__animated animate__fadeInDown" th:text="${board.title}"></h4>
+          		
+          			<article class="entry entry-single">
+          			
+          				<!-- 문의하기 상세보기 이미지 -->
+          				<div class="entry-img">
+          					<img src="/images/hero-bgT.jpg" class="img-fluid">
+          				</div>
+          				
+          				<div class="entry-meta">
+          					<ul>
+          						<li class="d-flex align-items-center">
+          							<i class="icofont-user"></i>
+          							<a th:text="${board.writer_nm}"></a>
+          						</li>
+                  				<li class="d-flex align-items-center" >
+                  					<i class="icofont-wall-clock"></i>
+                  					<a th:text="${board.regdt}"></a>
+                  				</li>
+          						<li class="d-flex align-items-center" >
+          							<i class="icofont-signal"></i>
+          							<a th:href="@{#}" th:text="${board.file_original_name}"></a>
+          						</li>
+          					</ul>
+          				</div>
+          				<hr>
+          				
+          				<div class="entry-content">
+          					<p th:text="${board.doc_body_long}"></p>
+          				</div>
+          				
+          				<div class="entry-footer clearfix">
+                			<div class="float-left">
+                  				<ul class="cats">
+                    				<li><a th:href="@{/front/03/03/contentView(bbs_qnauid=${board.bbs_qnauid}-1)}">이전글</a></li>
+                  				</ul>
+                  				<ul class="tags">
+                    				<li><a th:href="@{/front/03/03/modify(bbs_qnauid=${board.bbs_qnauid})}">수정</a></li>
+                  				</ul>
+                  				<ul class="cats">        
+                    				<li><a th:href="@{/front/03/03/delete(bbs_qnauid=${board.bbs_qnauid})}">삭제</a></li>
+                  				</ul>
+                  				<ul class="tags">
+                    				<li><a th:href="@{/front/03/03/contentView(bbs_qnauid=${board.bbs_qnauid}+1)}">다음글</a></li>
+                  				</ul>
+                			</div>
+
+                			<div class="float-right share">
+                				<a th:href="@{/front/03/03}"><i class="icofont-navigation-menu">목록</i></a>
+                			</div>
+              			</div>
+          			</article>
+            	
+              		
+              		
+          		</div>
+        	</div>
+      	</div>
+	</section><!-- End Contact Section -->
+	
+	<!-- Clients Section : s -->
+    <section id="clients" class="clients" style="padding-top: 30px;">
+    	<div class="container">
+
+        	<div class="section-title">
+          		<h2>고객사</h2>
+          		<p>오랜 시간 고객과의 두터운 신뢰관계는 가장 큰 자산입니다.</p>
+        	</div>
+
+        	<div class="owl-carousel clients-carousel">
+            	<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>	
+            	<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>
+            	<a href="#" class="con"><img src="/assets/img/clients/client-3.png" alt=""></a>
+            	<a href="#" class="con"><img src="/assets/img/clients/client-4.png" alt=""></a>
+            	<a href="#" class="con"><img src="/assets/img/clients/client-5.png" alt=""></a>
+            	<a href="#" class="con"><img src="/assets/img/clients/client-6.png" alt=""></a>
+            	<a href="#" class="con"><img src="/assets/img/clients/client-7.png" alt=""></a>
+          	</div>
+      	</div>
+    </section>
+	<!-- Clients Section : e -->	
+
+</div>
+    
+<th:block th:include="/front/inc_footer"></th:block>  
+ 
+<!-- Vendor JS Files -->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+<script src="/assets/vendor/php-email-form/validate.js"></script>
+<script src="/assets/vendor/venobox/venobox.min.js"></script>
+<script src="/assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+<script src="/assets/vendor/counterup/counterup.min.js"></script>
+<script src="/assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+<script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="/assets/vendor/aos/aos.js"></script>
+<!-- Template Main JS File -->
+<script src="/assets/js/front/main.js"></script>
+<script src="/assets/vendor/typhoon/typhoon_common.js"></script>
+<script src="/assets/vendor/typhoon/paging.js"></script>
+<script type="text/javascript" src="/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script>
+var oEditors = [];
+
+$(document).ready(function() {
+	
+	$("#form_inquire").on("submit", function(e) {
+		e.preventDefault();
+		
+		if (pageContext.validBlank(this)) {
+			var formData 	= pageContext.getFormData("form_inquire");
+			
+			$.ajax({
+	            type: "POST",
+	            data: formData,
+	            url: "/front/03/03/inquire",
+	            dataType: 'json',
+	            processData: false,
+	            contentType: false,
+	            enctype: 'multipart/form-data',
+	            success: function (data) {
+	                alert("completed!");
+	                location.href = "/front/03/03";
+	            },
+	            error : function(){
+	                alert("failed! ")
+	            }
+	        });
+		}
+    });
+	
+});
+
+
+</script>
+</body>
+</html>

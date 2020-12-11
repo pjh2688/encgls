@@ -1,0 +1,184 @@
+<!--Popup Start -->
+
+<style>
+.window{
+      display: none;
+      position:absolute;  
+      left:100px;
+      top:100px;
+      z-index:10000;
+    }
+.layerpop{
+    width:400px;
+    height:630px;
+    overflow:auto;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:100px;
+
+    padding:10px;
+    
+}
+.table1{
+    
+    width:400px;
+    margin-left:auto;
+    margin-right:auto;
+
+}
+.table2{
+    
+    width:400px;
+    margin-left:auto;
+    margin-right:auto;
+
+}
+</style>
+<div id="mask"></div>
+    <div id="layerbox" class="layerpop">
+        <article class="layerpop_area">
+        <div class="title">고객정보</div>
+        <a href="javascript:popupClose();" class="layerpop_close" id="layerbox_close">X</a><br>
+        <div class="content">
+
+
+       <div class="col-lg-12 entries">
+            <h4 class="animate__animated animate__fadeInDown"></h4>
+              
+            <article class="entry entry-single">
+        
+		<table class="table1">
+			<colgroup>
+				<col style="width: 45%">
+				<col style="width: 55%">
+			</colgroup>
+			
+			<tbody>
+				<tr>
+					<th scope="row">
+						<label for="userid" class="d-flex align-items-center">아이디</label>
+					</th>
+					<td class="input" id="userid" name="userid" th:text="${bean.USERID}">
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">
+						<label for="ktcloudid" class="d-flex align-items-center">KT 클라우드 ID</label>
+					</th>
+					<td class="input" id="ktcloudid" name="ktcloudid" th:text="${bean.KTCLOUDID}">
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">
+						<label for="usernm">담당자 이름</label>
+					</th>
+					<td class="input" id="usernm" name="usernm" th:text="${bean.USERNM}">
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">
+						<label for="hphone">휴대전화번호</label>
+					</th>
+					<td class="input" id="hphone" name="hphone" th:text="${bean.HPHONE}">
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">
+						<label for="email">이메일</label>
+					</th>
+					<td class="input" id="email" name="email" th:text="${bean.EMAIL}">
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+		
+		
+		<!-- table 1 -->
+		<br/>
+		<br/>
+		<p align=center>사업장 정보 입력</p><br/>
+		
+		<!-- // table 2 -->
+		<table class="table2">
+			<colgroup>
+				<col style="width: 45%">
+				<col style="width: 55%">
+			</colgroup>
+			
+			<tbody>
+				<!-- 사업자 상호 -->
+				<tr>
+					<th scope="row">
+						<label for="comp_name">사업자 상호</label>
+					</th>
+					<td class="input" id="comp_name" name="comp_name" th:text="${bean.COMP_NAME}">
+					</td>
+				</tr>
+				
+				<!-- 사업자 CEO 이름 -->
+				<tr>
+					<th scope="row">
+						<label for="ceonm">사업자 CEO 이름</label>
+					</th>
+					<td class="input" id="ceonm" name="ceonm" th:text="${bean.CEONM}">
+					</td>
+				</tr>
+				
+				<!-- 사업자 등록 번호 -->
+				<tr>
+					<th scope="row">
+						<label for="biznum">사업자 등록 번호</label>
+					</th>
+					<td class="input" id="biznum" name="biznum" th:text="${bean.BIZNUM}">
+					</td>
+				</tr>
+				
+				<!-- 사업장 주소 -->
+				<tr>
+					<th scope="row">
+						<label for="comp_addr">사업장 주소</label>
+					</th>
+					<td class="input" id="comp_addr" name="comp_addr" th:text="${bean.COMP_ADDR}">
+					</td>
+				</tr>
+				
+				<!-- 사업장 FAX 번호 -->
+				<tr>
+					<th scope="row">
+						<label for="comp_fax">사업장 FAX 번호</label>
+					</th>
+					<td class="input" id="comp_fax" name="comp_fax" th:text="${bean.COMP_FAX}">
+					</td>
+				</tr>
+				<!-- 사업장 전화번호 -->
+				<tr>
+					<th scope="row">
+						<label for="email">사업장 전화번호</label>
+					</th>
+					<td class="input" id="email" name="email" th:text="${bean.COMP_TEL}">
+					</td>
+				</tr>
+				<!-- 법인등록번호 -->
+				<tr>
+					<th scope="row">
+						<label for="email">법인등록번호</label>
+					</th>
+					<td class="input" id="email" name="email" th:text="${bean.COR_NUM}">
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+              
+          </article><!-- End blog entry -->
+		
+	</div>
+        </article>
+    </div> 
+    <!--Popup End -->	
+<script src="/assets/js/admin/0301.js"></script>

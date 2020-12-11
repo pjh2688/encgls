@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='03', TPSUB='02'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>클라우드 : CORN</title>
+  <th:block th:include="/front/inc_header"></th:block>
+</head>
+<body>
+<th:block th:include="/front/inc_topmenu"></th:block>
+<!-- Start #main -->
+<main id="main">
+
+    <!-- ======= Board write ======= -->
+    <section class="breadcrumbs">
+        <h2>FAQ</h2>
+    </section><!-- End Our Portfolio Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section class="contact" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <form>
+                <h5>무엇이든 물어보세요</h5>
+                <div class="accordion" id="accordionExample">
+                
+                  <div class="card" th:each="article, i: ${list}">
+                    <div class="card-header" id="headingOne">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" th:text="${article.FAQ_QUESTION}">
+                        </button>
+                      </h2>
+                    </div>
+                
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                      <div class="card-body" th:utext="${article.FAQ_ANSWER}">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                  
+                </div> 
+                </form>
+           </div>
+        </div>
+      </div>
+    </section><!-- End Contact Section -->
+
+</main>
+<!-- End #main -->
+
+<th:block th:include="/front/inc_footer"></th:block>
+</body>
+</html>

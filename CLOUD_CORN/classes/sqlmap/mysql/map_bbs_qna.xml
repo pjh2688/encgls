@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enc.mapper.BbsQnaSQLMapper">
+	<insert id="insert" parameterType="JSON" useGeneratedKeys="true" keyProperty="bbs_qnauid">
+
+		<selectKey keyProperty="bbs_qnauid" resultType="long" order="BEFORE">
+
+		SELECT next_seq('BBS_QNA.BBS_QNAUID')
+
+		</selectKey>
+		INSERT INTO BBS_QNA (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			BBS_QNAUID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(title)">
+			TITLE, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_type)">
+			DOC_TYPE, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			DOC_BODY_LONG, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hit_viewer)">
+			HIT_VIEWER, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_ip)">
+			WRITER_IP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(readip)">
+			READIP, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			REGDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			PASSWORD, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_nm)">
+			WRITER_NM, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_mail)">
+			WRITER_MAIL, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(secuyn)">
+			SECUYN, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			FILE_NAME, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			FILE_ORIGINAL_NAME, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			#{bbs_qnauid, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(title)">
+			#{title, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_type)">
+			#{doc_type, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			#{doc_body_long, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hit_viewer)">
+			#{hit_viewer, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_ip)">
+			#{writer_ip, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(readip)">
+			#{readip, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			#{regdt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			#{password, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_nm)">
+			#{writer_nm, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_mail)">
+			#{writer_mail, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(secuyn)">
+			#{secuyn, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			#{file_name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			#{file_original_name, jdbcType=VARCHAR}, 
+			</if>
+			
+		</trim>
+		)
+	</insert>
+	<select id="count" parameterType="JSON" resultType="java.lang.Integer">
+	SELECT
+		COUNT(*)
+	FROM BBS_QNA
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			AND BBS_QNAUID 				= #{bbs_qnauid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(title)">
+			AND TITLE 				= #{title} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_type)">
+			AND DOC_TYPE 				= #{doc_type} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			AND DOC_BODY_LONG 				= #{doc_body_long} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hit_viewer)">
+			AND HIT_VIEWER 				= #{hit_viewer} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_ip)">
+			AND WRITER_IP 				= #{writer_ip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(readip)">
+			AND READIP 				= #{readip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			AND PASSWORD 				= #{password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_nm)">
+			AND WRITER_NM 				= #{writer_nm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_mail)">
+			AND WRITER_MAIL 				= #{writer_mail} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(secuyn)">
+			AND SECUYN 				= #{secuyn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	</select>
+	<select id="select" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  BBS_QNAUID
+			, TITLE
+			, DOC_TYPE
+			, DOC_BODY_LONG
+			, HIT_VIEWER
+			, WRITER_IP
+			, READIP
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, PASSWORD
+			, WRITER_NM
+			, WRITER_MAIL
+			, SECUYN
+			, FILE_NAME
+			, FILE_ORIGINAL_NAME
+			, (SELECT COUNT(*) FROM BBS_QNA_REPL A WHERE A.BBS_QNAUID = BBS_QNAUID) AS REPLCNT
+	FROM BBS_QNA
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			AND BBS_QNAUID 				= #{bbs_qnauid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(title)">
+			AND TITLE 				= #{title} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_type)">
+			AND DOC_TYPE 				= #{doc_type} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			AND DOC_BODY_LONG 				= #{doc_body_long} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hit_viewer)">
+			AND HIT_VIEWER 				= #{hit_viewer} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_ip)">
+			AND WRITER_IP 				= #{writer_ip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(readip)">
+			AND READIP 				= #{readip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			AND PASSWORD 				= #{password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_nm)">
+			AND WRITER_NM 				= #{writer_nm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_mail)">
+			AND WRITER_MAIL 				= #{writer_mail} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(secuyn)">
+			AND SECUYN 				= #{secuyn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_dynamic" parameterType="JSON" resultType="JSON">
+	SELECT 
+        <foreach collection="fieldset" item="field" index="index" separator=",">
+            ${field}
+        </foreach>
+	FROM BBS_QNA
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			AND BBS_QNAUID 				= #{bbs_qnauid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(title)">
+			AND TITLE 				= #{title} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_type)">
+			AND DOC_TYPE 				= #{doc_type} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			AND DOC_BODY_LONG 				= #{doc_body_long} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hit_viewer)">
+			AND HIT_VIEWER 				= #{hit_viewer} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_ip)">
+			AND WRITER_IP 				= #{writer_ip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(readip)">
+			AND READIP 				= #{readip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			AND PASSWORD 				= #{password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_nm)">
+			AND WRITER_NM 				= #{writer_nm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_mail)">
+			AND WRITER_MAIL 				= #{writer_mail} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(secuyn)">
+			AND SECUYN 				= #{secuyn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_row" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  BBS_QNAUID
+			, TITLE
+			, DOC_TYPE
+			, DOC_BODY_LONG
+			, HIT_VIEWER
+			, WRITER_IP
+			, READIP
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, PASSWORD
+			, WRITER_NM
+			, WRITER_MAIL
+			, SECUYN
+			, FILE_NAME
+			, FILE_ORIGINAL_NAME
+			
+	FROM BBS_QNA
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(bbs_qnauid)">
+			AND BBS_QNAUID 				= #{bbs_qnauid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(title)">
+			AND TITLE 				= #{title} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_type)">
+			AND DOC_TYPE 				= #{doc_type} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(doc_body_long)">
+			AND DOC_BODY_LONG 				= #{doc_body_long} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(hit_viewer)">
+			AND HIT_VIEWER 				= #{hit_viewer} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_ip)">
+			AND WRITER_IP 				= #{writer_ip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(readip)">
+			AND READIP 				= #{readip} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(password)">
+			AND PASSWORD 				= #{password} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_nm)">
+			AND WRITER_NM 				= #{writer_nm} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(writer_mail)">
+			AND WRITER_MAIL 				= #{writer_mail} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(secuyn)">
+			AND SECUYN 				= #{secuyn} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_name)">
+			AND FILE_NAME 				= #{file_name} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(file_original_name)">
+			AND FILE_ORIGINAL_NAME 				= #{file_original_name} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	LIMIT 1
+	</select>
+	<update id="update" parameterType="JSON">
+		UPDATE BBS_QNA
+		<set>
+		<if test="_parameter.containsKey('title')">
+			TITLE 				= #{title}, 
+		</if>
+		<if test="_parameter.containsKey('doc_type')">
+			DOC_TYPE 				= #{doc_type}, 
+		</if>
+		<if test="_parameter.containsKey('doc_body_long')">
+			DOC_BODY_LONG 				= #{doc_body_long}, 
+		</if>
+		<if test="_parameter.containsKey('hit_viewer')">
+			HIT_VIEWER 				= #{hit_viewer}, 
+		</if>
+		<if test="_parameter.containsKey('writer_ip')">
+			WRITER_IP 				= #{writer_ip}, 
+		</if>
+		<if test="_parameter.containsKey('readip')">
+			READIP 				= #{readip}, 
+		</if>
+		<if test="_parameter.containsKey('regdt')">
+			REGDT 				= #{regdt}, 
+		</if>
+		<if test="_parameter.containsKey('password')">
+			PASSWORD 				= #{password}, 
+		</if>
+		<if test="_parameter.containsKey('writer_nm')">
+			WRITER_NM 				= #{writer_nm}, 
+		</if>
+		<if test="_parameter.containsKey('writer_mail')">
+			WRITER_MAIL 				= #{writer_mail}, 
+		</if>
+		<if test="_parameter.containsKey('secuyn')">
+			SECUYN 				= #{secuyn}, 
+		</if>
+		<if test="_parameter.containsKey('file_name')">
+			FILE_NAME 				= #{file_name}, 
+		</if>
+		<if test="_parameter.containsKey('file_original_name')">
+			FILE_ORIGINAL_NAME 				= #{file_original_name}, 
+		</if>
+		
+		</set>
+		WHERE BBS_QNAUID 		= #{bbs_qnauid}
+	</update>
+	<update id="update_hit" parameterType="JSON">
+		UPDATE BBS_QNA
+		SET
+		HIT_VIEWER = HIT_VIEWER + 1, 
+		READIP 				= #{readip}
+		WHERE BBS_QNAUID = #{bbs_qnauid} AND READIP != #{readip}
+	</update>
+	<delete id="delete" parameterType="JSON">
+		DELETE FROM BBS_QNA
+		WHERE BBS_QNAUID 		= #{bbs_qnauid}
+		<if test="!_parameter.containsKey('SUPER_USER')">
+		AND PASSWORD 			= #{password}
+		</if>
+	</delete>
+</mapper>

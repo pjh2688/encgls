@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='MAIN'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<style type="text/css">
+		ul {list-style: none;}
+	</style>
+</head>
+
+
+<th:block th:include="/front/inc_head"></th:block>
+
+<body>
+	
+	<!-- ======= Header ======= : 색이 달라서 이렇게 둠-->
+  	<header id="header" class="fixed-top header-transparent" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+    	<div class="container">
+      		<div class="logo float-left">
+      			<!-- Uncomment below if you prefer to use an image logo -->
+       			<h1 class="text-light"><a href="/"><span>CORN</span></a></h1>
+        		<a href="/"><img src="/images/corn-logo.png" alt="" class="img-fluid"></a>   
+      		</div>
+
+      		<nav class="nav-menu float-right d-none d-lg-block">
+        	<ul>
+          		<li class=""><a href="/">Home</a></li>
+          		<li th:classappend="${TPMENU == '01'} ? 'drop-down active': 'drop-down'"><a href="/front/01">제품소개</a>
+                	<ul>
+                  		<li th:classappend="${TPMENU == '01' && TPSUB == '01'} ? 'active': ''"><a href="/front/01/01">Corn</a></li>
+                	</ul>
+          		</li>
+          		<li th:classappend="${TPMENU == '02'} ? 'drop-down active': 'drop-down'"><a href="/front/02/01">Services</a>
+                	<ul>
+                  		<li th:classappend="${TPMENU == '02' && TPSUB == '01'} ? 'active': ''"><a href="/front/02/01">서비스 이용절차</a></li>
+	              		<li th:classappend="${TPMENU == '02' && TPSUB == '02'} ? 'active': ''"><a href="/front/02/02">클라우드(Saas) WMS 요금체계</a></li>
+                	</ul>
+          		</li>
+          		<li th:classappend="${TPMENU == '03'} ? 'drop-down active': 'drop-down'"><a href="/front/03/01">고객지원</a>
+                	<ul>
+                  		<li th:classappend="${TPMENU == '03' && TPSUB == '01'} ? 'active': ''"><a href="/front/03/01">공지사항</a></li>
+                  		<li th:classappend="${TPMENU == '03' && TPSUB == '02'} ? 'active': ''"><a href="/front/03/02">FAQ</a></li>
+                  		<li th:classappend="${TPMENU == '03' && TPSUB == '03'} ? 'active': ''"><a href="/front/03/03">문의하기</a></li>
+                	</ul>
+          		</li>
+          		<li th:classappend="${TPMENU == '04'} ? 'drop-down active': 'drop-down'" th:if="${T(com.enc.config.MemberSession).isLogged(#request) && !T(com.enc.config.MemberSession).isAdmin(#request)}"><a href="/front/04/01">My Page</a>
+                	<ul>
+                  		<li th:classappend="${TPMENU == '04' && TPSUB == '01'} ? 'active': ''"><a href="/front/04/01">대시보드</a></li>
+                  		<li th:classappend="${TPMENU == '04' && TPSUB == '02'} ? 'active': ''"><a href="/front/04/02">서비스이용현황</a></li>
+                		<!--   <li th:classappend="${TPMENU == '04' && TPSUB == '03'} ? 'active': ''"><a href="/front/04/03">서비스관리</a></li> --> 
+                  		<li th:classappend="${TPMENU == '04' && TPSUB == '04'} ? 'active': ''"><a href="/front/04/04">공실정보</a></li>
+                  		<li th:classappend="${TPMENU == '04' && TPSUB == '05'} ? 'active': ''"><a href="/front/04/05">정보수정</a></li>
+                  		<li th:classappend="${TPMENU == '04' && TPSUB == '06'} ? 'active': ''"><a href="/front/04/06">회원탈퇴</a></li>
+                	</ul>
+          		</li>
+          		<li th:classappend="${TPMENU == '05'} ? 'drop-down active': 'drop-down'"><a href="/front/05/01">About Us</a>
+                	<ul>
+                  		<li th:classappend="${TPMENU == '05' && TPSUB == '01'} ? 'active': ''"><a href="/front/05/01">회사소개</a></li>
+                  		<li th:classappend="${TPMENU == '05' && TPSUB == '02'} ? 'active': ''"><a href="/front/05/02">오시는길</a></li>
+                	</ul>
+          		</li>
+
+          		<li th:unless="${T(com.enc.config.MemberSession).isLogged(#request)}"><a href="/front/member/join">회원가입</a></li>
+          		<li th:unless="${T(com.enc.config.MemberSession).isLogged(#request)}"><a href="/front/member/login">로그인</a></li>
+          		<li th:if="${T(com.enc.config.MemberSession).isLogged(#request)}"><a href="/front/member/logout">로그아웃</a></li>
+        	</ul>
+      		</nav>
+    	</div>
+    </header><!-- End Header -->
+
+  	<!-- Hero Section : s -->
+    <section id="hero" class="d-flex flex-column justify-content-end align-items-center">
+    <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
+
+      	<div class="carousel-item active">
+        	<div class="carousel-container">
+          		<h2 class="animate__animated animate__fadeInDown">안녕하세요 <font color="#fec464">콘</font>입니다.</h2>
+          		<p class="animate__animated animate__fadeInUp">"클라우드 기반 WMS + 최신 IT 기술 접목 (블록체인&amp; IoT HSSE)"</p>
+          		<p class="animate__animated animate__fadeInUp">"차별화된 신개념 <font color="#fec464">창고관리 시스템</font> 입니다."</p>
+          		<a href="/front/01/01" class="btn-get-started animate__animated animate__fadeInUp">자세히 보기</a>
+        	</div>
+      	</div>
+
+      	<a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
+        	<span class="carousel-control-prev-icon bx bx-chevron-left" aria-hidden="true"></span>
+        	<span class="sr-only">Previous</span>
+      	</a>
+
+      	<a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
+        	<span class="carousel-control-next-icon bx bx-chevron-right" aria-hidden="true"></span>
+        	<span class="sr-only">Next</span>
+      	</a>
+    </div>
+    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+    	<defs>
+        	<path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+      	</defs>
+      	<g class="wave1">
+        	<use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+      	</g>
+      	<g class="wave2">
+        	<use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+      	</g>
+      	<g class="wave3">
+        	<use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+     	 </g>
+    </svg>
+  	</section>
+  	<!-- Hero Section : e -->
+	<!-- main : s -->
+	<div id="main">
+
+   		<!-- Features Section : s -->
+    	<section class="features">
+    		<div class="container">
+
+      			<div class="section-title">
+          			<h2>CORN으로 나만의 스마트 물류 창고를 만들어 보세요.</h2><br>
+          			<p>프로세스 ON/OFF를 통해 고객 맞춤형 물류시스템을 제공합니다.</p><br>
+          			<p>물류관리에 필요한 스마트 기능을 설치비용 없이 저렴한 사용료로 자신에게 맞게 구성해 보세요.</p>
+        		</div>
+
+        		<div class="row" data-aos="fade-up">
+        		
+          			<div class="col-md-5">
+            			<a href="/front/01/01/corn-wms"><img src="/assets/img/features-4.svg" class="img-fluid" alt=""></a>
+          			</div>
+          			
+	          		<div class="col-md-7 pt-4">
+            			<h3>맞춤형 WMS</h3>
+            			<p class="font-italic">나의 물류창고에 꼭 필요한 기능만 선택 후 사용 </p>
+            			<ul>
+              				<li><i class="icofont-check"></i> 별도의 구축 비용 및 시간 소요 없이 적용</li>
+              				<li><i class="icofont-check"></i> 실시간 공실정보 제공으로 운영 효울성 향상</li>
+              				<li><i class="icofont-check"></i> 고객의 물품 특성 및 프로세스에 따라 원하는 기능을 설정하여 업무지원 시스템 운영 가능</li>
+            			</ul>
+          			</div>
+        		</div>
+
+        		<div class="row" data-aos="fade-up">
+          			<div class="col-md-5 order-1 order-md-2">
+            			<a href="/front/01/01/corn-cloud"><img src="/assets/img/features-2.svg" class="img-fluid" alt=""></a>
+          			</div>
+          		
+          			<div class="col-md-7 pt-5 order-2 order-md-1">
+            			<h3>SaaS형 Cloud 서비스</h3>
+            			<p class="font-italic">별도의 시스템 설치없이 Web을 통해 언제, 어디서나 사용 가능</p>
+            			<ul>
+              				<li><i class="icofont-check"></i>실제 입출고 물동량에 기반한 종량제 과금</li>
+              				<li><i class="icofont-check"></i>급격한 물량 변동에도 유연하고 신속한 대응 가능</li>
+            			</ul>
+          			</div>
+        		</div>
+
+        		<div class="row" data-aos="fade-up">
+          			<div class="col-md-5">
+            			<a href="/front/01/01/corn-block"><img src="/assets/img/features-1.svg" class="img-fluid" alt=""></a>
+          			</div>
+          			
+          			<div class="col-md-7 pt-4">
+            			<h3>Blockchain</h3>
+            			<p class="font-italic">하이퍼레저페브릭 방식으로 허가된 회원들만 참여하는 기업형 프라이빗 블록체인</p>
+            			<ul>
+              				<li><i class="icofont-check"></i>분산 저장방식을 통해 Data의 신뢰성과 정확도가 높고 위변조 예방</li>
+              				<li><i class="icofont-check"></i>시스템 상호운영성 보장 기술</li>
+            			</ul>
+          			</div>
+        		</div>
+        
+        		<div class="row" data-aos="fade-up">
+          			<div class="col-md-5 order-1 order-md-2">
+            			<a href="/front/01/01/corn-iot"><img src="/assets/img/features-3.svg" class="img-fluid" alt=""></a>
+          			</div>
+          
+          			<div class="col-md-7 pt-5 order-2 order-md-1">
+            			<h3>IoT HSSE 시스템</h3>
+            			<p class="font-italic">언텍트 시대 최적의 인적자원 관리 솔루션</p>
+            			<ul>
+              				<li><i class="icofont-check"></i> 실시간 위치 정보를 통한 작업자 안전 및 생산성 관리</li>
+              				<li><i class="icofont-check"></i> 물류센터의 효율적 안전시스템(HSSE)역할</li>
+            			</ul>
+          			</div>
+        		</div>
+      		</div>
+		</section>
+		<!-- Features Section : e -->
+ 	
+ 		<!-- Clients Section : s -->
+    	<section id="clients" class="clients">
+    		<div class="container">
+
+        		<div class="section-title">
+          			<h2>고객사</h2>
+          			<p>오랜 시간 고객과의 두터운 신뢰관계는 가장 큰 자산입니다.</p>
+        		</div>
+
+        		<div class="owl-carousel clients-carousel">
+            		<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>	
+            		<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-3.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-4.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-5.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-6.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-7.png" alt=""></a>
+          		</div>
+      		</div>
+    	</section>
+		<!-- Clients Section : e -->
+	</div>
+	<!-- main : e -->
+
+	<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+	<th:block th:include="/front/inc_footer"></th:block>
+</body>
+</html>

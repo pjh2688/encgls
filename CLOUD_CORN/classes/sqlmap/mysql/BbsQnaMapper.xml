@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.enc.mapper.IBbsQnaMapper">
+	<!-- 일단은 무조건 데이터 1개가 삽입되어있어야 정상적으로 시퀀스를 만들어서 동작(데이터가 초기에 한개라도 없으면 시퀀스 계산을 할 수 없기 때문에 에러남) -->
+	<insert id="insertQna" parameterType="com.enc.dto.BoardQna">
+		insert into bbs_qna(bbs_qnauid, writer_ip, title, doc_type, writer_nm, writer_mail, `password`, doc_body_long, secuyn, file_original_name, hit_viewer) VALUES( (SELECT * FROM (SELECT MAX(bbs_qnauid)+1 FROM bbs_qna) next), #{writer_ip}, #{title}, #{doc_type}, #{writer_nm}, #{writer_mail}, #{password}, #{doc_body_long}, #{secuyn}, #{file_original_name}, 0);
+	</insert>
+	
+	<select id="selectEmail" resultType="String" parameterType="String">
+		select email from user where userid = #{userid}
+	</select>
+	
+	<!-- #으로 안뽑고 데이터를 $로 뽑은 이유는 dto에서 넘어오는 값이 int형이기 때문 #으로 가져와서 string으로 변환해서 쓰면 안됨 -->
+	<select id="selectQna" resultType="com.enc.dto.BoardQna" parameterType="com.enc.dto.PageMaker">
+		select * from bbs_qna order by bbs_qnauid desc limit ${contentNum*(pageNum-1)}, 10
+	</select>
+	
+	<select id="countQna" resultType="int">
+		select count(*) from bbs_qna
+	</select>
+	
+	<select id="selectOne" resultType="com.enc.dto.BoardQna" parameterType="String">
+		select * from bbs_qna where bbs_qnauid = #{bbs_qnauid}
+	</select>
+	
+	<update id="upHit" parameterType="String">
+		update bbs_qna set hit_viewer = hit_viewer + 1 where bbs_qnauid = #{bbs_qnauid}
+	</update>
+	
+	<update id="updateQna" parameterType="com.enc.dto.BoardQna">
+		update bbs_qna set title = #{title}, writer_nm = #{writer_nm}, doc_body_long = #{doc_body_long}, secuyn = #{secuyn}, file_original_name = #{file_original_name} where bbs_qnauid = #{bbs_qnauid}
+	</update>
+	
+	<select id="selectQnaRepl" resultType="com.enc.dto.BoardQnaRepl" parameterType="String">
+		select * from bbs_qna_repl join bbs_qna on bbs_qna.bbs_qnauid = #{bbs_qnauid} and bbs_qna_repl.bbs_qnauid = #{bbs_qnauid}
+	</select>
+</mapper>
+
+<!-- 
+	1. #{}
+	 - 사용자의 입력을 받는 경우 또는 데이터가 많은 경우 사용
+	2. ${} 
+	 - 자주 바뀌지 않는 데이터이거나 사용자으 입력을 받는 경우가 아닐 때 사용.
+	
+ -->

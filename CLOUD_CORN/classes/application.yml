@@ -1,0 +1,27 @@
+#spring.main.allow-bean-definition-overriding: true
+spring:
+    application:
+        name: enc_portal
+    servlet:
+        multipart:
+            file-size-threshold: 1MB
+            location: /D:/usr/local/service/enc_portal/upload/temp
+            max-file-size: 100MB
+            max-request-size: 100MB
+    thymeleaf:
+        prefix: classpath:/templates
+
+mybatis:
+    mapper-locations: classpath:sqlmap/mysql/**/*.xml
+
+server:
+    port: 8088
+
+typhoon:
+    rootdir: /D:/usr/local/service/enc_portal
+    uploaddir: /D:/usr/local/service/enc_portal/upload
+    mailSender: sspark@encgls.com
+    mailPasswd: ssp0916##
+    mailHost: smtp.encgls.com
+    mailPort: 465
+

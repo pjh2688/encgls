@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='MAIN'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:include="/front/inc_head"></th:block>
+
+<body>
+	<th:block th:include="/front/inc_topmenu"></th:block>
+
+  	<!-- Hero Section : e -->
+	<!-- main : s -->
+	<div id="main">
+		<!-- .breadcrumbs : s-->
+    	<section class="breadcrumbs">
+        	<h2>CORN</h2>
+    	</section>
+ 		<!-- .breadcrumbs : e-->
+ 		
+ 		<!-- Features Section : s -->
+    	<section id="features" class="features">
+    		 <div class="container">
+    		 	
+    		 	<!--  -->
+    		 	<div class="row">
+    		 		<div class="col-lg-7 order-2 order-lg-1 mt-3 mt-lg-0">
+            			<h3>CORN은 차별화된 신개념 창고관리 시스템 입니다</h3>
+            			<ul>
+             				<li style="line-height:200%; font-size:17px;"> 클라우드을 통해 언제 어디에서든 물류센터 운영 데이터를 확인할 수 있습니다.</li>
+             				<li style="line-height:200%; font-size:17px;"> 물류센터에서 운영하는 데이터의 신뢰성은 블록체인이 보장합니다.</li>
+             				<li style="line-height:200%; font-size:17px;"> 물류에 대한 정보 뿐만 아니라 작업자의 안전과 효율을 제공하는 국내 유일의 WMS솔루션입니다.</li>
+           				</ul>
+          			</div>
+          			
+          			<div class="col-lg-5 order-1 order-lg-2 text-center">
+            			<img src="/assets/img/corn_system.png" alt="" class="img-fluid">
+         			</div>
+    		 	</div>
+
+				<!--  -->
+				<ul class="nav nav-tabs row d-flex">
+					<li class="nav-item col-3" data-aos="zoom-in">
+						<a class="nav-link" data-toggle="tab" href="#tab-1">
+							<i class="icofont-dashboard-web"></i>
+							<h4 class="d-none d-lg-block">맞춤형 WMS</h4>
+						</a>
+					</li>
+					<li class="nav-item col-3" data-aos="zoom-in" data-aos-delay="100">
+						<a class="nav-link active show" data-toggle="tab" href="#tab-2"> 
+							<i class="icofont-cloud"></i>
+							<h4 class="d-none d-lg-block">클라우드</h4>
+						</a>
+					</li>
+					<li class="nav-item col-3" data-aos="zoom-in" data-aos-delay="200">
+						<a class="nav-link" data-toggle="tab" href="#tab-3">
+							<i class="icofont-connection"></i>
+							<h4 class="d-none d-lg-block">블록체인</h4>
+						</a>
+					</li>
+					<li class="nav-item col-3" data-aos="zoom-in" data-aos-delay="300">
+						<a class="nav-link" data-toggle="tab" href="#tab-4"> 
+							<i class="icofont-aim"></i>
+							<h4 class="d-none d-lg-block">IoT HSSE</h4>
+						</a>
+					</li>
+				</ul>
+				
+				<!-- tab-content  -->
+				<div class="tab-content" data-aos="fade-up">
+					<!-- tab-1 : 맞춤형 WMS -->
+          			<div class="tab-pane" id="tab-1">
+           				
+           				<div class="row">
+           					<div class="col-lg-12 order-2 order-lg-1 mt-3 mt-lg-0" data-aos="fade-up">
+           						<h3>CORN의 업무지원 시스템</h3><br/>
+              					<ul>
+                					<li><i class="icofont-check"></i> CORN은 입고, 보관, 출고 지원 기능을 활용하여 다양한 업무에 맞는 고객 맞춤형 시스템을 제공합니다.</li>
+                					<li><i class="icofont-check"></i> 고객의 물품 특성 및 프로세스에 따라 원하는 기능을 설정하여 업무지원 시스템을 운영할 수 있습니다.</li>
+             					</ul>
+           					</div>	
+           				</div>
+           				
+           				<!-- wms 서비스 소개 -->
+           				<section class="services">
+              				<div class="container">
+                 				<div class="row">
+                 				
+                 					<!-- wms service 1 -->
+                 					<div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up">
+                     					<div class="icon-box icon-box-pink">
+                      						<div class="icon"><i class="bx bx-archive-in"></i></div>
+                      						<h4 class="title"><a href="">입고지원기능</a></h4>
+                      						<p class="description"><i class="icofont-check"></i> 프로세스에 맞춘 커스터마이징</p>
+                      						<p class="description"><i class="icofont-check"></i> 상품, 협력사, 검수방식 등 고객의 상품 특성에 따라 업무 프로세스 조정이 가능합니다.</p>
+                    					</div>
+                  					</div>
+                  					<!-- wms service 2 -->
+                  					<div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                    					<div class="icon-box icon-box-cyan">
+                      						<div class="icon"><i class="bx bx-grid-alt"></i></div>
+                      						<h4 class="title"><a href="">보관지원기능</a></h4>
+                      						<p class="description"><i class="icofont-check"></i> 재고관리 및 작업자 업무 효율성 향상</p>
+                      						<p class="description"><i class="icofont-check"></i> 상품특성 및 사용자의 기준에 따라 전략적으로 보관 Location을 추천할 수 있습니다.</p>
+                    					</div>
+                  					</div>
+        							<!-- wms service 3 -->
+                  					<div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                    					<div class="icon-box icon-box-blue">
+                      						<div class="icon"><i class="bx bx-archive-out"></i></div>
+                      						<h4 class="title"><a href="">출고지원기능</a></h4>
+                      						<p class="description"><i class="icofont-check"></i> 출고시간의 감소</p>
+                      						<p class="description"><i class="icofont-check"></i> 주문별 출고 방식에 따라 물품 피킹지시를 자동으로 생성할 수 있습니다.</p>
+                    					</div>
+                  					</div>
+                 				
+                 				</div>
+                 			</div>
+                 		</section>
+                 		
+                 		<!-- WMS 기능 : CORN의 프로세스 ON/OFF -->
+                 		<div class="row">
+              				<div class="col-lg-5 order-2 order-lg-1 mt-3 mt-lg-0" data-aos="fade-up">
+                				<h3>CORN의 프로세스 ON/OFF</h3><br/>
+                				<ul>
+                  					<li><i class="icofont-check"></i> CORN은 상품 특성에 따라 특정 기능을 ON/OFF 할 수 있습니다.</li>
+                  					<li><i class="icofont-check"></i> 고객별 작업 환경에 따라 프로세스 단계 조정이 가능하여 시스템 운영의 유연성을 제공합니다.</li>
+               					</ul>
+              				</div>
+              				<div class="col-lg-7 order-1 order-lg-2 text-center" data-aos="fade-up">
+                				<img src="/assets/img/CONR-onoff.png" alt="" class="img-fluid">
+              				</div>
+            			</div><br>
+            			
+            			
+            	        <!-- WMS 기능 : CORN WMS 오더기반 방식 -->
+           				<div class="row">
+            				<div class="col-lg-5 order-1 order-lg-1 mt-3 mt-lg-0" data-aos="fade-up">
+              					<h3>CORN WMS 오더기반 방식</h3><br/>
+              					<ul>
+                					<li><i class="icofont-check"></i> 모든 물류업무는 고객오더(주문) 및 내부오더(작업지시)에 의해서만 처리가능한 구조로 임의 작업 방지, 작업의 추적성 확보, 업무 정확도 향상, 효율적인 실적 및 업무관리 등을 제공합니다.</li>
+              					</ul>
+            				</div>
+            				<div class="col-lg-7 order-2 order-lg-2 text-center" data-aos="fade-up">
+              					<img src="/assets/img/CONR-wms.png" alt="" class="img-fluid">
+              				</div>
+            			</div><br>
+            			
+            			<!-- WMS 기능 : CORN PDA(개인정보단말기)활용 -->
+            			<div class="row">
+            				<div class="col-lg-5 order-2 order-lg-2 mt-3 mt-lg-0" data-aos="fade-up">
+              					<h3>CORN PDA(개인정보단말기)활용</h3><br/>
+              					<ul>
+                					<li><i class="icofont-check"></i> Android O/S를 통하여 편리한 UI 및 촬영, 사진첨부 등의 기능으로 파손물품 발생 시 즉시 공유가 가능합니다.</li>
+                					<li><i class="icofont-check"></i> PDA 부족 시(대량 처리 시) 스마트폰으로 대체하여 외부에서도 확인이 가능하여 업무 효율성을 높입니다.</li>
+              					</ul>
+            				</div>
+            				<div class="col-lg-7 order-1 order-lg-2 text-center" data-aos="fade-up">
+              					<img src="/assets/img/corn-pda.png" alt="" class="img-fluid">
+              				</div>
+            			</div><br>
+            			
+            			<!-- WMS 기능 : CORN 재고관리 편리성 -->
+            			<div class="row">
+            				<div class="col-lg-5 order-2 order-lg-2 mt-3 mt-lg-0" data-aos="fade-up">
+              					<h3>CORN 재고관리 편리성</h3><br/>
+             				 	<ul>
+                					<li><i class="icofont-check"></i> 물류센터 내 재고상황을 한 눈에 볼수 있어 출고, 반품 등의 처리 시간이 절약되고 비용 및 물품관리에 용이합니다.</li>
+              					</ul>
+            				</div>
+            				<div class="col-lg-7 order-1 order-lg-2 text-center" data-aos="fade-up">
+              					<img src="/assets/img/CONR-visibility.png" alt="" class="img-fluid">
+            				</div>
+            			</div><br>
+           				
+           				
+           				
+           			</div>
+           		
+           			<!-- tab-2 : 클라우드 --> <!-- 문제점 발견 : 탭 1을 끝까지 안내리고 2로 넘어가면 마지막 푸터가 안보임 -->
+           			<div class="tab-pane active show" id="tab-2">
+            			<!-- 클라우드 : row 1 -->
+            			<div class="row">
+              				
+              				<div class="col-lg-7 order-2 order-lg-1 mt-3 mt-lg-0">
+              					<h3>클라우드 컴퓨팅</h3><br/>
+               					<ul>
+                 					<li><i class="icofont-check"></i> 인터넷을 통해 소프트웨어, 서버, 스토로지, 분석, 데이터베이스 등의 컴퓨팅 서비스를 제공하는 것입니다.</li>
+                 					<li><i class="icofont-check"></i> 클라우딩 컴퓨팅을 통해 더 빠른 혁신과 유연한 리소스를 제공하기 때문에 고객 요구사항의 변화에 따라 규모를 조정할 수 있습니다.</li>
+                 					<li><i class="icofont-check"></i> 그뿐 만 아니라, 사용한 클라우드 서비스에 대해서만 요금을 지불하므로, 운영 비용을 절감할 수 있습니다.</li>
+              					 </ul>
+              				</div>
+              				
+              				<div class="col-lg-5 order-1 order-lg-2 text-center">
+                				<img src="/assets/img/saas.png" alt="" class="img-fluid">
+              				</div>
+            
+              			</div>
+			
+              			<h3>클라우드 CORN의 특징</h3>
+      
+            			<section class="services">
+              				<div class="container">
+                 				<div class="row">
+                 					<!-- 안전성 -->
+                 					<div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+                     					<div class="icon-box icon-box-pink">
+                      						<div class="icon"><i class="bx bx-been-here"></i></div>
+                      						<h4 class="title"><a href="">안전성</a></h4>
+                      						<p class="description"><i class="icofont-check"></i> DDoS 사전 침입차단 및 네트워크 분리로 보안성 보장, 귀중한 정보 보호가 가능합니다.</p>
+                      						<p class="description"><i class="icofont-check"></i> KT CLOUD는 GLOBAL 수준 99.5% SLA 품질을 보장합니다.</p>
+                    					</div>
+                  					</div>
+                  					
+                  					<!-- 유연성 -->
+                  					<div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                    					<div class="icon-box icon-box-cyan">
+                      						<div class="icon"><i class="bx bx-coin-stack"></i></div>
+                     	 					<h4 class="title"><a href="">유연성</a></h4>
+                      						<p class="description"><i class="icofont-check"></i> 클라우드 확장은 컴퓨팅 서비스의 큰 이점입니다.</p>
+                      						<p class="description"><i class="icofont-check"></i> 사용량에 따라 스케일 인/아웃 (SCALE In/Out)이 가능해 필요에 따라 서버를 증감할 수 있습니다.</p>
+                    					</div>
+                  					</div>
+                  					
+        							<!-- 접근성 -->
+                  					<div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                    					<div class="icon-box icon-box-green">
+                      						<div class="icon"><i class="bx bx-collapse"></i></div>
+                      						<h4 class="title"><a href="">접근성</a></h4>
+                      						<p class="description"><i class="icofont-check"></i> On-demand 서비스로 웹 포털을 통해 서비스 신청 및 제공을 받을 수 있습니다.</p>
+                      						<p class="description"><i class="icofont-check"></i> 웹 포털 대시보드를 통해 별도의 요청 없이 사용량을 확인할 수 있습니다.</p>
+                    					</div>
+                  					</div>
+                  				
+        				
+        							<!-- 합리성 -->
+                  					<div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                    					<div class="icon-box icon-box-blue">
+                      						<div class="icon"><i class="bx bx-like"></i></div>
+                      						<h4 class="title"><a href="">합리성</a></h4>
+                      						<p class="description"><i class="icofont-check"></i> 클라우드 컴퓨팅을 사용하면 하드웨어 및 소프트웨어를 따로 구입할 필요가 없어 저렴하게 서비스 이용이 가능합니다.</p>
+                    					</div>
+                  					</div>
+                  					
+                 				</div>
+                 			</div>
+                 		</section>
+						
+						<!-- 클라우드 : row 2 -->
+                 		<div class="row">
+              				<div class="col-lg-5 order-2 order-lg-1 mt-3 mt-lg-0" data-aos="fade-up">
+                				<h3>SaaS형 클라우드</h3><br/>
+                 				<ul>
+                  					<li><i class="icofont-check"></i> 고객을 대신하여 소프트웨어와 데이터를 제공하고 관리합니다.</li>
+                  					<li><i class="icofont-check"></i> 서비스를 공급하는 업체는 데이터, 미들웨어 서버 및 스토로지와 같은 기술적 문제를 관리하기 때문에 고객은 유지보수 및 자원을 간소화 하면서 비즈니스에 집중할 수 있습니다.</li>
+                 				</ul>
+              				</div>
+              				
+              				<div class="col-lg-7 order-1 order-lg-2 text-center" data-aos="fade-up">
+                				<img src="/assets/img/saascloud.png" alt="" class="img-fluid">
+              				</div>
+            			</div>
+              			
+              		</div>
+              		
+              		<!-- tab-3 : 블록체인 -->
+              		<div class="tab-pane" id="tab-3">
+              			<!-- 블록 체인 : row 1 -->
+              			<div class="row">
+              				<div class="col-lg-7 order-2 order-lg-1 mt-3 mt-lg-0" data-aos="fade-up">
+                				<h3>블록체인</h3><br/>
+                				<ul>
+                  					<li><i class="icofont-check"></i> 블록체인은 다양한 거래 기록을 신뢰할 수 있는, 새로운 형식으로 기록한 분산장부입니다. 다양한 거래를 새로운 합의방식으로 기록하기 때문에 완전한 안정성과 무결성이 보장 됩니다.</li>
+                  					<li><i class="icofont-check"></i> 블록체인 시스템에서 관리 대상 데이터는 분산되어 저장되므로 데이터를 임의로 수정할 수 없고 위⦁변조 방지가 가능합니다.</li>
+                  					<li><i class="icofont-check"></i> 블록체인 시스템을 통해 화주와 물류센터 간 WMS CORN 데이터의 신뢰성을 향상할 수 있습니다.</li>
+                				</ul>
+              				</div>
+              				
+              				<div class="col-lg-5 order-1 order-lg-2 text-center" data-aos="fade-up">
+                				<img src="/assets/img/blockchain.png" alt="" class="img-fluid">
+              				</div>
+            			</div>	
+            			
+            			<!-- 블록 체인 : row 2 -->
+            			<div class="row">
+              				<div class="col-lg-9 order-2 order-lg-1 mt-3 mt-lg-0" data-aos="fade-up">
+                				<h3>CORN은 왜 하이퍼레저 패브릭 방식 블록체인인가</h3><br/>
+                				<ul>
+                  					<li><i class="icofont-check"></i> 인증 시스템에 허가 된 사용자만 참여 가능한 허가형 프라이빗 블록체인으로 임의로 데이터 수정이 불가하며, 분산을 통해 데이터 위⦁변조 방지가 가능하여 데이터 신뢰성의 핵심 역할을 합니다.</li>
+                  					<li><i class="icofont-check"></i> CORN은 물류분야 내 하이퍼레저 패브릭 최초 적용 사례로서 고객에게 안전한 물류 거래와 데이터를 보증합니다.</li>
+                				</ul>
+              				</div>
+              				
+              				<div class="col-lg-3 order-1 order-lg-2 text-center" data-aos="fade-up">
+               				 	<img src="/assets/img/fabric.png" alt="" class="img-fluid">
+              				</div>
+            			</div>
+            			
+            			<!-- 블록 체인 : row 3 -->
+            			<div class="row">
+              				<div class="col-lg-12 order-2 order-lg-1 mt-3 mt-lg-0" data-aos="fade-up">
+               				<!-- <h3></h3>-->
+                				<ul>
+                  					<li><i class="icofont-check"></i> CORN은 블록체인을 구성하는 관계자들 중 화주, 물류센터 등 데이터를 공유하고자 하는 노드 간에만 별도의 원장을 생성할 수 있습니다.</li>
+                  					<li><i class="icofont-check"></i> 고객이 원하는 구성원에게만 데이터를 공유할 수 있습니다.</li>
+                  					<li><i class="icofont-check"></i> 구성원들 간 정확한 데이터 공유가 가능하여 수불이원화에 기반한 물류데이터 오류를 사전에 방지할 수 있습니다.</li>
+                  					<li><i class="icofont-check"></i> 일반 프로그래밍 언어 사용을 통해 쉽게 사용 가능하며 모듈형 구조로 다양한 네트워크 구성을 하여 물량 증감에 신속 정확한 대응 및 환경 변화에 빠른 대처가 가능합니다.</li>
+               					</ul>
+              				</div>
+              
+              				<div class="col-lg-12 order-1 order-lg-2 text-center" data-aos="fade-up">
+                				<img src="/assets/img/node.png" alt="" class="img-fluid">
+              				</div>
+            			</div>
+            			
+            			
+              		</div>
+              		
+              		<!-- tab-4 : IoT 실내측위-->
+              		<div class="tab-pane" id="tab-4">
+            			<div class="row">
+            			
+            				<div class="col-lg-7 order-2 order-lg-1 mt-3 mt-lg-0" data-aos="fade-up">
+               		 			<h3>IoT 실내측위</h3><br/>
+                				<ul>
+                  					<li><i class="icofont-check"></i> 비콘과 스마트폰을 활용하여 적은 비용으로 실시간 위치 정보를  산출하는 미니멈 컨택트 시대 최적의 물류관리 솔루션입니다.</li>
+                  					<li><i class="icofont-check"></i> 물류창고 내 Beacon 단말기가 발신하는 위치신호를 작업자의 스마트폰이 인식하고 Bluetooth를 활용하여 위치정보 전송 후 Server에서 수신하여 작업자 동선관리, 위험지역 접근 알림 등 다양한 서비스와 정보를 제공합니다.</li>  
+               					</ul>
+              				</div>
+              
+              				<div class="col-lg-5 order-1 order-lg-2 text-center" data-aos="fade-up">
+                				<img src="/assets/img/iot.png" alt="" class="img-fluid">
+             	 			</div>
+   
+            			</div>
+            			
+	      			
+            			<div class="row">
+            			
+                			<div class="col-lg-5 order-2 order-lg-1 mt-3 mt-lg-0" data-aos="fade-up">
+                  				<h3>IoT 실내측위 서비스는<br/><br/> 물류센터의 효율적 안전시스템(HSSE)</h3><br/>
+                  				<ul>
+                    				<li><i class="icofont-check"></i> 작업자의 스마트폰으로 작업자 간 안전거리 유지 알림을 전송하여 작업 환경 개선 및 COVID-19 등 감염병에 취약한 물류센터의 단점을 보완합니다.</li>
+                    				<li><i class="icofont-check"></i> 관리자용 Dashboard를 통하여 작업자의 실시간 위치를 확인하고 위험지역 접근, 화재발생, 지게차 충돌 위험 시 경고 알림을 보냅니다.</li>  
+                 				</ul>
+                			</div>
+                
+                			<div class="col-lg-7 order-1 order-lg-2 text-center" data-aos="fade-up">
+                  				<img src="/assets/img/hsse.png" alt="" class="img-fluid">
+                			</div>
+                			
+              			</div> 
+              			
+              			<div class="row">
+              			
+                  			<div class="col-lg-7 order-2 order-lg-1 mt-3 mt-lg-0" data-aos="fade-up">
+                    			<h3>Beacon과 스마트폰으로 산출한 위치 정보를 통해<br/><br/> 물류센터 효율성 향상 및 근무 환경 개선</h3><br/>
+                    			<ul>
+                      				<li><i class="icofont-check"></i> 작업자에게 개별적 고유 번호를 부여하고 관리하여 작업자의 익명성 보장 등 개인정보를 보호합니다.</li>
+                      				<li><i class="icofont-check"></i> 비콘을 통해 측정된 위치정보 데이터베이스, 작업자 위치 데이터를 기반으로 히트맵을 통해 작업자 동선 관리 및 최적화 가능합니다.</li>  
+                   				</ul>
+                  			</div>
+                  			
+                  			<div class="col-lg-5 order-1 order-lg-2 text-center" data-aos="fade-up">
+                    			<img src="/assets/img/iot-beacon.svg" alt="" class="img-fluid">
+                  			</div>
+                
+                		</div>
+            			
+            		</div>
+              		
+           		</div>
+			</div>
+      	</section>
+        <!-- Features Section : e -->				
+ 		
+ 		<!-- Clients Section : s -->
+    	<section id="clients" class="clients">
+    		<div class="container">
+
+        		<div class="section-title">
+          			<h2>고객사</h2>
+          			<p>오랜 시간 고객과의 두터운 신뢰관계는 가장 큰 자산입니다.</p>
+        		</div>
+
+        		<div class="owl-carousel clients-carousel">
+            		<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>	
+            		<a href="#" class="con"><img src="/assets/img/clients/client-2.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-3.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-4.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-5.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-6.png" alt=""></a>
+            		<a href="#" class="con"><img src="/assets/img/clients/client-7.png" alt=""></a>
+          		</div>
+      		</div>
+    	</section>
+		<!-- Clients Section : e -->
+	</div>
+	<!-- main : e -->
+
+	<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+	<th:block th:include="/front/inc_footer"></th:block>
+</body>
+</html>

@@ -1,0 +1,6 @@
+hostname: userdata-testdb
+users:
+ - userdata userdata
+shell_commands:
+ - "touch /usr/local/@USERID@_test_file"
+ 

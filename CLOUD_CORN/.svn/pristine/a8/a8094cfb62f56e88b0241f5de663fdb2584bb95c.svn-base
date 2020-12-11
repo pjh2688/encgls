@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enc.mapper.VmcBtcSQLMapper">
+	<insert id="insert" parameterType="JSON" useGeneratedKeys="true" keyProperty="vmc_btcuid">
+		INSERT INTO VMC_BTC (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status)">
+			VMC_BTC_STATUS, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status_msg)">
+			VMC_BTC_STATUS_MSG, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			REGDT, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			USERID, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			CONT_NO, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_step)">
+			VMC_BTC_STEP, 
+			</if>
+			
+		</trim>
+		) VALUES (
+		<trim prefix="" suffixOverrides=",">
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status)">
+			#{vmc_btc_status, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status_msg)">
+			#{vmc_btc_status_msg, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			#{regdt, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			#{userid, jdbcType=VARCHAR}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			#{cont_no, jdbcType=INTEGER}, 
+			</if>
+			<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_step)">
+			#{vmc_btc_step, jdbcType=INTEGER}, 
+			</if>
+			
+		</trim>
+		)
+	</insert>
+	<select id="count" parameterType="JSON" resultType="java.lang.Integer">
+	SELECT
+		COUNT(*)
+	FROM VMC_BTC
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btcuid)">
+			AND VMC_BTCUID 				= #{vmc_btcuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status)">
+			AND VMC_BTC_STATUS 				= #{vmc_btc_status} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status_msg)">
+			AND VMC_BTC_STATUS_MSG 				= #{vmc_btc_status_msg} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_step)">
+			AND VMC_BTC_STEP 				= #{vmc_btc_step} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(find_vmc_btc_status)">
+			AND VMC_BTC_STATUS IN  
+			<foreach item="item" index="index" collection="find_vmc_btc_status" open="(" separator="," close=")">
+        		#{item}
+  			</foreach>
+		</if>
+	</where>
+	</select>
+	<select id="select" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  VMC_BTCUID
+			, VMC_BTC_STATUS
+			, VMC_BTC_STATUS_MSG
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, USERID
+			, CONT_NO
+			, VMC_BTC_STEP
+			
+	FROM VMC_BTC
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btcuid)">
+			AND VMC_BTCUID 				= #{vmc_btcuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status)">
+			AND VMC_BTC_STATUS 				= #{vmc_btc_status} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status_msg)">
+			AND VMC_BTC_STATUS_MSG 				= #{vmc_btc_status_msg} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_step)">
+			AND VMC_BTC_STEP 				= #{vmc_btc_step} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(find_vmc_btc_status)">
+			AND VMC_BTC_STATUS IN  
+			<foreach item="item" index="index" collection="find_vmc_btc_status" open="(" separator="," close=")">
+        		#{item}
+  			</foreach>
+		</if>
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_dynamic" parameterType="JSON" resultType="JSON">
+	SELECT 
+        <foreach collection="fieldset" item="field" index="index" separator=",">
+            ${field}
+        </foreach>
+	FROM VMC_BTC
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btcuid)">
+			AND VMC_BTCUID 				= #{vmc_btcuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status)">
+			AND VMC_BTC_STATUS 				= #{vmc_btc_status} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status_msg)">
+			AND VMC_BTC_STATUS_MSG 				= #{vmc_btc_status_msg} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_step)">
+			AND VMC_BTC_STEP 				= #{vmc_btc_step} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	<if test="iDisplayStart != null">
+	LIMIT #{iDisplayStart}
+		<if test="iDisplayEnd != null">
+		, #{iDisplayEnd}
+		</if>
+	</if>
+	</select>
+	<select id="select_row" parameterType="JSON" resultType="JSON">
+	SELECT 
+		  VMC_BTCUID
+			, VMC_BTC_STATUS
+			, VMC_BTC_STATUS_MSG
+			, DATE_FORMAT(REGDT, '%Y-%m-%d %H:%i:%s') AS REGDT
+			, USERID
+			, CONT_NO
+			, VMC_BTC_STEP
+			
+	FROM VMC_BTC
+	<where>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btcuid)">
+			AND VMC_BTCUID 				= #{vmc_btcuid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status)">
+			AND VMC_BTC_STATUS 				= #{vmc_btc_status} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_status_msg)">
+			AND VMC_BTC_STATUS_MSG 				= #{vmc_btc_status_msg} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(regdt)">
+			AND REGDT 				= #{regdt} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(userid)">
+			AND USERID 				= #{userid} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(cont_no)">
+			AND CONT_NO 				= #{cont_no} 
+		</if>
+		<if test="@com.typhoon.framework.json.JSONValidation@notEmpty(vmc_btc_step)">
+			AND VMC_BTC_STEP 				= #{vmc_btc_step} 
+		</if>
+		
+	</where>
+	<if test="sort != null">
+	ORDER BY ${sort}
+	</if>
+	LIMIT 1
+	</select>
+	<update id="update" parameterType="JSON">
+		UPDATE VMC_BTC
+		<set>
+		<if test="_parameter.containsKey('vmc_btc_status')">
+			VMC_BTC_STATUS 				= #{vmc_btc_status}, 
+		</if>
+		<if test="_parameter.containsKey('vmc_btc_status_msg')">
+			VMC_BTC_STATUS_MSG 				= #{vmc_btc_status_msg}, 
+		</if>
+		<if test="_parameter.containsKey('regdt')">
+			REGDT 				= #{regdt}, 
+		</if>
+		<if test="_parameter.containsKey('userid')">
+			USERID 				= #{userid}, 
+		</if>
+		<if test="_parameter.containsKey('cont_no')">
+			CONT_NO 				= #{cont_no}, 
+		</if>
+		<if test="_parameter.containsKey('vmc_btc_step')">
+			VMC_BTC_STEP 				= #{vmc_btc_step}, 
+		</if>
+		
+		</set>
+		WHERE VMC_BTCUID 		= #{vmc_btcuid}
+	</update>
+	<delete id="delete" parameterType="JSON">
+		DELETE FROM VMC_BTC
+		WHERE VMC_BTCUID 		= #{vmc_btcuid}
+	</delete>
+</mapper>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='04', TPSUB='05'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>클라우드 : CORN</title>
+  <th:block th:include="/front/inc_header"></th:block>
+</head>
+<body>
+<th:block th:include="/front/inc_topmenu"></th:block>
+<section id="hero" class="d-flex justify-cntent-center align-items-center"></section>
+<!-- Start #main -->
+<main id="main">
+	서비스탈퇴
+</main>
+<!-- End #main -->
+
+<th:block th:include="/front/inc_footer"></th:block>
+</body>
+</html>
