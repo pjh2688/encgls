@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style type="text/css">
+	.writeForm {
+		max-width: 1000px;
+	}
+	
+	.writeForm table {
+		width: 100%;
+		border: 1px solid #242424;
+	}
+	
+	.writeForm table th, td {
+		border: 1px solid #242424;
+	}
+	
+</style>
+</head>
+<body>
+	<a href="/board/list">게시판</a>
+	<p th:if="${session.userid != null}">
+		안녕하세요 <span th:utext="${session.userid}"></span>님
+	</p>
+	
+	<div class="container">
+		
+		<form id="writeForm" name="writeForm" method="post">
+			<table>
+				<caption>글 작성 페이지</caption>
+				<colgroup>
+					<col style="width:10%">
+					<col style="width:80%">
+				</colgroup>
+				
+				<tbody>
+					<tr>
+						<th scope="row"><label for="b_tit">제목</label></th>
+						<td>
+							<input type="text" id="b_tit" name="b_tit" class="input" style="width:99%; height:30px;" placeholder="제목">
+							<input type="hidden" id="userid" name="userid" class="input" th:value="${session.userid}">
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row"><label for="b_cont">내용</label></th>
+						<td>
+							<textarea id="b_cont" name="b_cont" class="input" style="width:99.4%; height:300px;" placeholder="내용"></textarea>
+						</td>
+					</tr>
+					
+					<tr>
+						<th scope="row"><label for="usernm">작성자</label></th>
+						<td>
+							<input type="text" id="usernm" name="usernm" class="input" style="width:99%; height:30px; background-color: activecaption;" th:value="${user.usernm}" readonly="readonly">
+							
+						</td>
+					</tr>
+					
+					<tr>
+						<th scope="row"><label for="b_file">파일 업로드</label></th>
+						<td>
+							<div>
+                				<input type="file" id="file" name="file" onchange="changeFileName(this)">
+              				</div>
+						</td>
+					</tr>
+					
+					
+					<tr>
+						<th scope="row"><label for="b_pw">비밀번호 </label></th>
+						<td>
+							<input type="password" id="b_pw" name="b_pw" class="input" style="width:99%; height:30px;">				
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+			<input type="submit" value="글쓰기">
+			<input type="button" value="취소" th:onclick="history.back();">
+		</form>			
+	</div>
+	
+</body>
+<script src="/assets/js/jquery-3.5.1.min.js"></script> <!-- 1. static 파일은 모두 절대경로 / 를 사용  -->
+<script src="/assets/js/jquery-serialize-object.js"></script> <!-- 2. 폼 객체를 json 객체로 변환해서 보낼려면 추가. -->
+<script type="text/javascript">
+
+//submit시 체크박스 체크 여부
+$(document).ready(function() {
+	$("#writeForm").on("submit", function(e) {
+		e.preventDefault();  // 3-1. submit 동작을 막는다.
+		
+		if($('input#b_tit').val() == "" || $('input#b_tit').val() == null) {
+			alert("제목을 입력해주세요.");
+			$('#b_tit').focus();
+			return;
+		} else if($('textarea#b_cont').val() == "" || $('textarea#b_cont').val() == null) {
+			alert("내용을 입력해주세요.");
+			$('#b_cont').focus();
+			return;  // 내용 글자 수 제한 추가해야한다. 
+		} else if($('input#b_pw').val() == "" || $('input#b_pw').val() == null) {
+			alert("게시글 비밀번호를 입력해주세요.");
+			$('#b_pw').focus();
+			return;
+		} else {
+			var formData = $("#writeForm").serializeObject();  // 컨트롤러에서 object로 받으니 ajax에서도 object 형태의 데이터를 만들어서 JSON.stringify로 json string형태로 바꿔 전송해줘야한다. 
+			
+			alert(JSON.stringify(formData));
+			
+			// 2020-11-24 -> 글쓰기 폼 ajax로 동작하게 하는중
+			$.ajax({
+				data : JSON.stringify(formData),
+				url : "/board/write",
+				type : "post",
+				dataType : "json",
+				contentType : "application/json; charset=UTF-8",
+				success : function(data) {
+				
+					location.href = "/board/list?page="+data.totalPage;  // url mapping은 상대경로("~"), href나 return은 절대경로("/~")
+					alert(data.board.userid);
+				},
+				error: function() {
+					alert("error");
+				}
+			});
+		}
+		
+	});
+});
+
+function changeFileName(obj) {
+	$("#file_text").text(obj.value);	
+	
+}
+</script>
+
+</html>

@@ -8,9 +8,13 @@
 		insert into user(id, pw) value(#{id}, #{pw})
 	</insert>
 	
-	<insert id="insertUser" parameterType="com.ajax.dto.User">
+	<insert id="insert" parameterType="com.ajax.dto.User">
 		insert into user values(#{userid}, #{password}, #{usernm}, #{regdt}, #{statuscd}, #{dropdt}, #{modifydt}, #{hphone}, #{email}, #{ceonm}, #{comp_name}, #{biznum}, #{cor_num}, #{comp_addr}, #{comp_tel}, #{approvaldt}, #{comp_fax}, #{ktcloudid})
 	</insert>
+	
+	<select id="count" resultType="int" parameterType="com.ajax.dto.User">
+		select count(*) from user where userid=#{userid} and password=#{password}
+	</select>
 	
 	<select id="id_check" resultType="int" parameterType="String">
 		select count(userid) from user where userid = #{userid}
@@ -20,8 +24,9 @@
 		select count(ktcloudid) from user where ktcloudid = #{ktcloudid}
 	</select>
 	
-	<select id="selectUser" resultType="int" parameterType="com.ajax.dto.User">
-		select count(*) from user where userid=#{userid} and password=#{password}
+	<select id="select_row" resultType="com.ajax.dto.User" parameterType="String">
+		select * from user where userid = #{userid}
 	</select>
+	
 
 </mapper>

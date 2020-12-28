@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>list.html</title>
+<style type="text/css">
+	
+	.default-board {
+		width: 1200px;
+	}
+	table {
+		border: 1px solid #ddd;
+		/* table과 th,td 색을 겹쳐준다. */
+		border-collapse: collapse;
+		text-align: center;
+	}
+	table caption {padding-bottom: 10px;}
+	th, td {
+		border: 1px solid #ddd;
+	}
+	table tbody tr:hover {background-color: #c0c0c0;}
+	
+	a {text-decoration: none; padding: 2px;}
+	a:hover {color: #222;}
+	
+</style>
+</head>
+<body>
+	<a href="/">메인페이지</a>
+	<p th:if="${session.userid != null}">
+		안녕하세요 <span th:utext="${session.userid}"></span>님
+	</p>
+	
+	<div class="container">
+		<a>---------------</a>
+		<h1>게시판</h1>
+		<a>---------------</a>
+		<div class="default-board">
+			<table>
+				<caption>기본 게시판</caption>
+				<colgroup>
+					<col width="50">
+					<col width="500">
+					<col width="80">
+					<col width="80">
+					<col width="80">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">번호</th>
+						<th scope="col">제목</th>
+						<th scope="col">작성자</th>
+						<th scope="col">작성일</th>
+						<th scope="col">조회수</th>
+						
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="board : ${list}" th:onclick="'location.href=\'' + @{/board/contentView(b_no = ${board.b_no}, bbs_no = ${board.bbs_no},  page = ${param.page}) } + '\''" style="cursor: pointer;">
+						
+						<td th:text=${board.bbs_no}>번호</td>
+						<td th:text=${board.b_tit}>제목</td>
+						<td th:text=${board.usernm}>작성자</td>
+						<td th:text=${board.reg_date}>작성일</td>
+						<td th:text=${board.b_hit}>조회수</td>
+
+					</tr>
+				</tbody>
+			</table>
+			
+			<!-- 글쓰기 -->
+			<div class="write">
+				<a th:href="@{ '/board/write'}">글쓰기</a> <!--  + 'userid=' + ${session.userid}  -->
+			</div>
+			
+			<!-- .paginate : s -->
+			<div class="paginate" th:with="start=${page.getStartPage()}, end=${page.getEndPage()}">
+				
+				<!-- 왼쪽 화살표 -->
+				<a class="" th:if="${page.prev}" th:href="@{/board/list(page=${page.getPageNum()-1})}">&lt;</a> <!-- &laquo; -->
+						
+				<!-- 페이징 -->
+				<a th:href="@{/board/list(page=${page})}" th:each="page : ${#numbers.sequence(start,end)}" th:text="${page}"></a>
+						
+				<!-- 오른쪽 화살표 -->
+				<a class="" th:if="${page.next}" th:href="@{/board/list(page=${page.getPageNum()+1})}">&gt;</a> <!-- &raquo; -->
+				
+		
+			</div>
+		</div>
+	</div>
+</body>
+
+<script src="/assets/js/jquery-3.5.1.min.js"></script> <!-- 1. static 파일은 모두 절대경로 / 를 사용  -->
+<script src="/assets/js/jquery-serialize-object.js"></script> <!-- 2. 폼 객체를 json 객체로 변환해서 보낼려면 추가. -->
+</html>

@@ -145,7 +145,7 @@ public class HomeController {
 		result.put("pw", dto.getPw());
 		
 		// 4. DB에 insert
-		um.signUp(dto);
+//		um.signUp(dto);
 		
 		System.out.println(result.get("id"));
 		System.out.println(result.get("pw"));

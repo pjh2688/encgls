@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="kr" th:with="TPMENU='04', TPSUB='02'" xmlns:layout="http://www.thymeleaf.org/" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>corn</title>
+  <th:block th:include="/front/inc_head"></th:block>
+</head>
+<body>
+<th:block th:include="/front/inc_topmenu"></th:block>
+
+<!-- Start #main -->
+<div id="main">
+
+	<!-- ======= Pricing Section ======= -->
+    <section id="pricing" class="pricing">
+		<div class="container" data-aos="fade-up">
+			<div class="section-title">
+          		<h2>WMS Corn 신청하기</h2>
+          		<p>SaaS WMS인 Corn은 월 비용 형태로 제공합니다.</p>
+          		<p>제공되는 서비스 유형에 따라 별도의 가격 정책이 적용되면, 사용자가 직접 선택한 서비스의 수수료만을 지불하시면 됩니다.</p>
+       		</div>	
+			<div class="row">
+        		<div class="col-lg-3 col-md-6" id="service_l6" data-aos="fade-up" data-aos-delay="100">
+        		<form name="form_l6" id="form_l6">
+        			<input type="hidden" name="service_type_pl" id="service_type_pl" value="l6"/>
+        			<div class="box mt-3 mb-3">
+              			<h3>라이트 6</h3>
+              			<h4><sup>₩</sup>600,000<span> / 월 이용료</span></h4>
+              			<ul>
+                			<h4><sup>건</sup>10,000<span> / 월간 출고량(Box)</span></h4>
+                			<div class="form-group form-check">
+                				<li>블록체인 서비스</li>
+                  				<input type="checkbox" class="form-check-input" name="block_chain_use_yn" id="block_chain_use_yn" value="Y"/>
+                  				<label class="form-check-label" for="exampleCheck1">선택</label>
+                			</div>
+                			<div class="form-group form-check">
+                  				<li>IoT 실내측위 서비스</li>
+                  				<input type="checkbox" class="form-check-input" name="iot_use_yn" id="iot_use_yn" value="Y"/>
+                  				<label class="form-check-label" for="exampleCheck1">선택</label>
+               	 			</div>
+              			</ul>
+              			<div class="btn-wrap">
+                			<input type="submit" class="btn-buy" style="border: 0px; outline: none;" value="신청하기" />
+              			</div>
+            		</div>
+        		</form>
+        		</div>
+        		
+        		<div class="col-lg-3 col-md-6 mt-4 mt-md-0" id="service_l8" data-aos="fade-up" data-aos-delay="200">
+        			<form name="form_l8" id="form_l8">
+        			<input type="hidden" name="service_type_pl" id="service_type_pl" value="l8"/>
+            		<div class="box mt-3 mb-3">
+             			<h3>라이트 8</h3>
+              			<h4><sup>₩</sup>800,000<span> / 월 이용료</span></h4>
+              			<ul>
+                			<h4><sup>건</sup>50,000<span> / 월간 출고량(Box)</span></h4>
+                			<div class="form-group form-check">
+                				<li>블록체인 서비스</li>
+                  				<input type="checkbox" class="form-check-input" name="block_chain_use_yn" id="block_chain_use_yn" value="Y"/>
+                  				<label class="form-check-label" for="exampleCheck1">선택</label>
+                			</div>
+                			<div class="form-group form-check">
+                  				<li>IoT 실내측위 서비스</li>
+                  				<input type="checkbox" class="form-check-input" name="iot_use_yn" id="iot_use_yn" value="Y"/>
+                  				<label class="form-check-label" for="exampleCheck1">선택</label>
+               	 			</div>
+              			</ul>
+              			<div class="btn-wrap">
+                			<input type="submit" class="btn-buy" style="border: 0px; outline: none;" value="신청하기" />
+              			</div>
+            		</div>
+            		</form>
+          		</div>
+        		
+          		<div class="col-lg-3 col-md-6 mt-4 mt-lg-0" id="service_l10" data-aos="fade-up" data-aos-delay="300">
+            		<form name="form_l10" id="form_l10">
+            		<input type="hidden" name="service_type_pl" id="service_type_pl" value="l10"/>
+            		<div class="box mt-3 mb-3">
+              			<h3>라이트 10</h3>
+              			<h4><sup>₩</sup>1,000,000<span> / 월 이용료</span></h4>
+              			<ul>
+                			<h4><sup>건</sup>100,000<span> / 월간 출고량(Box)</span></h4>
+                			<div class="form-group form-check">
+                				<li>블록체인 서비스</li>
+                  				<input type="checkbox" class="form-check-input" name="block_chain_use_yn" id="block_chain_use_yn" value="Y"/>
+                  				<label class="form-check-label" for="exampleCheck1">선택</label>
+                			</div>
+                			<div class="form-group form-check">
+                  				<li>IoT 실내측위 서비스</li>
+                  				<input type="checkbox" class="form-check-input" name="iot_use_yn" id="iot_use_yn" value="Y"/>
+                  				<label class="form-check-label" for="exampleCheck1">선택</label>
+               	 			</div>
+              			</ul>
+              			<div class="btn-wrap">
+                			<input type="submit" class="btn-buy" style="border: 0px; outline: none;" value="신청하기" />
+              			</div>
+            		</div>
+            		</form>
+          		</div>
+          		
+          		<div class="col-lg-3 col-md-6 mt-4 mt-lg-0" id="service_p" data-aos="fade-up" data-aos-delay="400">
+          			<form name="form_p" id="form_p">
+          			<input type="hidden" name="service_type_pl" id="service_type_pl" value="p"/>
+            		<div class="box mt-3 mb-3">
+              			<span class="advanced">Advanced</span>
+              			<h3>프리미엄</h3>
+              			<h4><sup>₩</sup>1,500,000<span> / 월 이용료(+별도 협의)</span></h4>
+              			<ul>
+                			<h4><sup>건</sup>100,000+<span> / 월간 출고량(Box)</span></h4>
+                			<div class="form-group form-check">
+                				<li>블록체인 서비스</li>
+                  				<input type="checkbox" class="form-check-input" name="block_chain_use_yn" id="block_chain_use_yn" value="Y"/>
+                  				<label class="form-check-label" for="exampleCheck1">선택</label>
+                			</div>
+                			<div class="form-group form-check">
+                  				<li>IoT 실내측위 서비스</li>
+                  				<input type="checkbox" class="form-check-input" name="iot_use_yn" id="iot_use_yn" value="Y"/>
+                  				<label class="form-check-label" for="exampleCheck1">선택</label>
+               	 			</div>
+              			</ul>
+              			<div class="btn-wrap">
+                			<input type="submit" class="btn-buy" style="border: 0px; outline: none;" value="신청하기" />
+              			</div>
+            		</div>
+            		</form>
+          		</div>
+        	</div>
+			<div class="section-title mt-5 mb-5" id="service_message">
+          		
+       		</div>
+			<div class="center-block col-md-auto mt-5 mb-5 justify-content-md-center" id="service_end" style="visibility:hidden; display:none;">
+				<div class="container"  style="display: inline-block;text-align: center;">
+				    <a href="javascript:setviceStop();"><button class="btn-buy btn-lg" style="border: 0px; outline: none;" value="">서비스 종료 요청</button></a>
+				</div>
+
+          		
+       		</div>
+       		
+		</div>
+	</section>
+</div>
+<!-- End #main -->
+
+<th:block th:include="/front/inc_footer"></th:block>
+</body>
+<script src="/assets/js/front/myhome/0402.js"></script>
+</html>

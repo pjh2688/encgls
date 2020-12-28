@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ajax.dao.IBoardMapper">
+	<select id="select" parameterType="com.ajax.dto.PageMaker" resultType="com.ajax.dto.Board">
+		<!--  select * from board order by b_no limit ${contentNum*(pageNum-1)}, 10-->
+		select @rownum:=@rownum+1 AS bbs_no, A.* from board A, (select @rownum:=0) R order by @rownum:=@rownum+1 limit ${contentNum*(pageNum-1)}, 10
+	</select>
+	
+	<select id="select_row" parameterType="int" resultType="com.ajax.dto.Board">
+		select * from board where b_no = #{b_no}
+	</select>
+	
+	<insert id="insert" parameterType="com.ajax.dto.Board">
+		insert into board(b_tit, b_cont, usernm, reg_date, userid, b_pw) values(#{b_tit}, #{b_cont}, #{usernm}, default, #{userid}, #{b_pw})
+	</insert>
+	
+	<update id="update" parameterType="com.ajax.dto.Board">
+		update board set b_tit = #{b_tit}, b_cont = #{b_cont} where b_no = #{b_no}
+	</update>
+	
+	<select id="count" resultType="int">
+		select count(*) from board
+	</select>
+	
+	<update id="upHit" parameterType="int">
+		update board set b_hit = b_hit + 1 where b_no = #{b_no}
+	</update>
+	
+	<select id="select_pw" parameterType="int" resultType="int">
+		select b_pw from board where b_no = #{b_no}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from board where b_no = #{b_no}
+	</delete>
+
+</mapper>
